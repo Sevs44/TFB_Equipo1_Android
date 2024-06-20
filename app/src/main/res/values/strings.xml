@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">easyChat</string>
+
+    //Login
+    <string name="hint_user">Usuario</string>
+    <string name="biometric">Iniciar sesión con Biometría</string>
+    <string name="keep_session">Mantener sesión iniciada</string>
+    <string name="btn_login">Iniciar Sesión</string>
+    <string name="tv_no_account">¿No tienes cuenta?</string>
+    <string name="tv_register">Registrate</string>
+
+    //Register
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_repeat_password">Repetir Contraseña</string>
+    <string name="btn_register">Registrarse</string>
+    <string name="tv_have_account">¿Ya tienes cuenta?</string>
+    <string name="tv_login">Iniciar sesión</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Recuperar contraseña</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="btn_recover">Enviar</string>"
+
+    //Profile
+    <string name="profile_settings">Ajustes de perfil</string>
+    <string name="privacity">Privacidad</string>
+    <string name="chat_setings">Ajustes del chat</string>
+    <string name="storage">Almacenamiento</string>
+    <string name="language_settings">Ajustes de idioma</string>
+    <string name="delete_account">Borrar cuenta</string>
+    <string name="close_session">Cerrar Sesión</string>
+    <string name="edit_photo">Edita la foto de perfil</string>
+    <string name="take_photo">Tomar foto</string>
+    <string name="select_photo">Seleccionar foto</string>
+    <string name="delete_photo">Eliminar foto</string>
+
+    //Chat
+    <string name="notifications">Notificaciones</string>
+    <string name="block">Bloquear</string>
+    <string name="messages">Mensajes</string>
+    <string name="mute_notifications">Silenciar notificaciones</string>
+    <string name="alert_tune">Tono de alerta</string>
+    <string name="send_messages">Enviar un mensaje</string>
+    <string name="recent_photos">Fotos Recientes</string>
 </resources>
