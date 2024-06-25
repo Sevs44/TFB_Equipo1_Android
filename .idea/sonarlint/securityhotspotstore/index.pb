@@ -46,3 +46,15 @@ G.idea/sonarlint/issuestore/d/b/dbcff70658daf80b53ce624f6adcaa529df5ed8d,5\9\59
 Q.idea/sonarlint/securityhotspotstore/d/2/d2a4383452aad84a18429a5844d31330a012a9e6,7\f\7fcac164c7a46b8fc6411ea93226c884af6044db
 Å
 Q.idea/sonarlint/securityhotspotstore/d/b/dbcff70658daf80b53ce624f6adcaa529df5ed8d,e\c\ec4317fc3093e8c354ef226260d7fd566c3957fb
+h
+8app/src/main/java/com/saulhervas/easychat/main_splash.kt,3\7\3701a44938cd017110d5f77b168d68b7c60be751
+m
+=app/src/main/java/com/saulhervas/easychat/MainSplashScreen.kt,e\c\ec5637a98de0532f15c59f49f2566a493a37d87a
+w
+Gapp/src/main/java/com/saulhervas/easychat/ui/splash/MainSplashScreen.kt,d\d\ddd24642a65a665b9ae3198a7ac74f52a31d6be5
+b
+2app/src/main/java/com/saulhervas/easychat/login.kt,1\4\148d5c0cf210957f43849e80d14ca339083aa7d1
+f
+6app/src/main/java/com/saulhervas/easychat/UserLogin.kt,3\a\3a04f53e592cf3753d5f632961398b34ceff69d4
+t
+Dapp/src/main/java/com/saulhervas/easychat/ui/navigation/UserLogin.kt,3\9\393aa34a1106b6d8a2acd65a36f40c70bebd2b35
