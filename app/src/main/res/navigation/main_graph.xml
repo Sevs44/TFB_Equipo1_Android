@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/userLogin">
 
+    <fragment
+        android:id="@+id/userLogin"
+        android:name="com.saulhervas.easychat.ui.navigation.UserLogin"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

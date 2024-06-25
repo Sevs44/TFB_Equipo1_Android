@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="2dp"
+        android:right="2dp"
+        android:top="4dp"
+        android:bottom="4dp">
+        <shape>
+            <solid android:color="#37000000" /> <!-- Sombra con color semi-transparente -->
+            <corners android:radius="16dp" /> <!-- El mismo radio que en rounded_background.xml -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="@android:color/white" />
+            <corners android:radius="16dp" /> <!-- El mismo radio que en rounded_background.xml -->
+            <stroke
+                android:width="1dp"
+                android:color="#000000" /> <!-- Borde negro de 1dp -->
+        </shape>
+    </item>
+</layer-list>
