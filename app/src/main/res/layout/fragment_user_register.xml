@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.navigation.UserLogin">
+    tools:context=".ui.navigation.UserRegister">
 
     <ImageView
         android:id="@+id/iv_logo"
@@ -22,12 +22,13 @@
         android:layout_width="240dp"
         android:layout_height="43dp"
         android:layout_marginTop="20dp"
-        android:inputType="text"
         android:background="@drawable/rounded_background"
         android:drawableStart="@drawable/ic_user"
         android:elevation="25dp"
         android:hint="@string/hint_user"
-        android:paddingStart="15dp"
+        android:inputType="text"
+        android:paddingStart="18dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
@@ -37,106 +38,98 @@
         android:layout_width="240dp"
         android:layout_height="43dp"
         android:layout_marginTop="30dp"
-        android:inputType="textPassword"
         android:background="@drawable/rounded_background"
+        android:drawableStart="@drawable/ic_block"
+        android:drawableEnd="@drawable/ic_password_visibility"
         android:elevation="25dp"
         android:hint="@string/hint_password"
-        android:drawableEnd="@drawable/ic_password_visibility"
+        android:inputType="textPassword"
         android:paddingHorizontal="15dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_user" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/tv_biometric"
+    <EditText
+        android:id="@+id/et_password_repeat"
         android:layout_width="240dp"
         android:layout_height="43dp"
-        android:layout_marginTop="35dp"
-        android:textSize="12sp"
-        android:background="@drawable/btn_shadow_biometric"
-        android:clickable="true"
-        android:drawableStart="@drawable/ic_faci_id"
-        android:textAllCaps="false"
-        android:focusable="true"
-        android:gravity="center"
-        android:paddingStart="15dp"
-        android:text="@string/biometric"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_background"
+        android:drawableStart="@drawable/ic_block"
+        android:drawableEnd="@drawable/ic_password_visibility"
+        android:elevation="25dp"
+        android:hint="@string/hint_repeat_password"
+        android:inputType="textPassword"
+        android:paddingHorizontal="15dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
-
-    <CheckBox
-        android:id="@+id/cb_remember"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_keep_session"
-        app:layout_constraintHorizontal_bias="0.868"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_biometric" />
-
-    <TextView
-        android:id="@+id/tv_keep_session"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="104dp"
-        android:text="@string/keep_session"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_biometric" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="240dp"
         android:layout_height="53dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/btn_shadow"
-        android:text="@string/btn_login"
+        android:text="@string/btn_register"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_keep_session" />
+        app:layout_constraintTop_toBottomOf="@+id/et_password_repeat" />
 
     <TextView
         android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/tv_no_account"
-        app:layout_constraintEnd_toStartOf="@+id/tv_register"
-        app:layout_constraintHorizontal_bias="0.761"
+        android:layout_marginTop="46dp"
+        android:text="@string/tv_have_account"
+        app:layout_constraintEnd_toStartOf="@+id/tv_session"
+        app:layout_constraintHorizontal_bias="0.778"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <TextView
-        android:id="@+id/tv_register"
+        android:id="@+id/tv_session"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="96dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="onClick"
+        android:onClick="onClickSession"
         android:padding="10dp"
-        android:text="@string/tv_register"
+        android:text="@string/tv_login"
         android:textColor="@color/color_app"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintEnd_toStartOf="@+id/iv_logo"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_recover_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="44dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="onClickRecover"
+        android:onClick="onClickRecoverPass"
         android:padding="10dp"
         android:text="@string/tv_recover_password"
         android:textColor="@color/color_app"
@@ -144,8 +137,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_register" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_session" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
