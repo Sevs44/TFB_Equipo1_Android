@@ -17,5 +17,9 @@ class UserLogin : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    fun onClick(view: View) {
+
+    }
+
 
 }
