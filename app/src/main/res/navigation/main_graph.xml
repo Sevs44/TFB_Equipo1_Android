@@ -9,5 +9,60 @@
         android:id="@+id/userLogin"
         android:name="com.saulhervas.easychat.ui.navigation.UserLogin"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_userLogin_to_userRegister"
+            app:destination="@id/userRegister"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userLogin_to_userRecoverPass"
+            app:destination="@id/userRecoverPass"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegister"
+        android:name="com.saulhervas.easychat.ui.navigation.UserRegister"
+        android:label="fragment_user_register"
+        tools:layout="@layout/fragment_user_register">
+        <action
+            android:id="@+id/action_userRegister_to_userLogin"
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userRegister_to_userRecoverPass"
+            app:destination="@id/userRecoverPass"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRecoverPass"
+        android:name="com.saulhervas.easychat.ui.navigation.UserRecoverPass"
+        android:label="fragment_recover_pass"
+        tools:layout="@layout/fragment_recover_pass">
+        <action
+            android:id="@+id/action_userRecoverPass_to_userLogin"
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userRecoverPass_to_userRegister"
+            app:destination="@id/userRegister"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
 </navigation>
