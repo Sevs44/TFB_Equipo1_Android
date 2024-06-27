@@ -25,6 +25,7 @@
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/userRegister"
         android:name="com.saulhervas.easychat.ui.navigation.UserRegister"
@@ -45,6 +46,7 @@
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/userRecoverPass"
         android:name="com.saulhervas.easychat.ui.navigation.UserRecoverPass"
@@ -65,4 +67,10 @@
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/userConfig"
+        android:name="com.saulhervas.easychat.ui.navigation.UserConfig"
+        android:label="UserConfig"
+        tools:layout="@layout/fragment_user_config" />
 </navigation>
