@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">easyChat</string>
+    <string name="app_name">EasyChat</string>
 
     //Login
     <string name="hint_user">Usuario</string>
