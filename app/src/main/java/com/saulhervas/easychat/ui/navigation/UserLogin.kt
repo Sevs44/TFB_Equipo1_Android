@@ -21,9 +21,6 @@ class UserLogin : Fragment() {
     ): View? {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.btnLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_userLogin_to_homeUser2)
-        }
         onClick(binding.root)
         onClickRecover(binding.root)
         return binding.root

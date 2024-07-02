@@ -24,9 +24,6 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_userLogin_to_homeUser2"
-            app:destination="@id/homeUser" />
     </fragment>
 
     <fragment
