@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlinKapt)
+    alias(libs.plugins.navigationSafeArgs)
+    alias(libs.plugins.kotlinParcelize)
+    alias(libs.plugins.pluginDaggerHilt)
 }
 
 android {
