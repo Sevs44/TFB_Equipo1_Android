@@ -6,4 +6,5 @@
     //Color App
     <color name="color_app">#11B0E2</color>
     <color name="color_red">#EB0000</color>
+    <color name="color_user_icon">#D87878</color>
 </resources>
