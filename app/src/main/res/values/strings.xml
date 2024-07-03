@@ -33,6 +33,8 @@
     <string name="take_photo">Tomar foto</string>
     <string name="select_photo">Seleccionar foto</string>
     <string name="delete_photo">Eliminar foto</string>
+    <string name="edit">Editar</string>
+    <string name="tv_profile">Ingresa tu nombre y añade una foto de perfil (opcional)</string>
 
     //Chat
     <string name="notifications">Notificaciones</string>

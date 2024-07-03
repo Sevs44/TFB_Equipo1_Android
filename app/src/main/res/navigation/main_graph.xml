@@ -71,9 +71,9 @@
 
     <fragment
         android:id="@+id/userConfig"
-        android:name="com.saulhervas.easychat.ui.navigation.UserConfig"
+        android:name="com.saulhervas.easychat.ui.navigation.UserProfile"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_config" />
+        tools:layout="@layout/fragment_user_profile" />
     <fragment
         android:id="@+id/homeUser"
         android:name="com.saulhervas.easychat.ui.navigation.HomeUser"
