@@ -61,22 +61,33 @@ class UserLogin : Fragment() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     if (loginResponse != null) {
+                        findNavController().navigate(R.id.action_userLogin_to_homeUser)
                         Toast.makeText(
                             requireContext(),
                             "Login exitoso: ${loginResponse.user.nick}",
                             Toast.LENGTH_LONG
                         ).show()
-
                     }
                 } else {
-                    // Manejar error de la API
-                    Toast.makeText(requireContext(), "Error en el login", Toast.LENGTH_LONG).show()
+                    val errorResponse = ApiClient.parseError(response)
+                    if (errorResponse != null) {
+                        Toast.makeText(
+                            requireContext(),
+                            "@string/error" + " ${errorResponse.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(requireContext(), "@string/error", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                // Manejar error de red u otros errores
-                Toast.makeText(requireContext(), "Error de red: ${t.message}", Toast.LENGTH_LONG)
+                Toast.makeText(
+                    requireContext(),
+                    "Error de red , intentelo mas tarde",
+                    Toast.LENGTH_LONG
+                )
                     .show()
             }
         })

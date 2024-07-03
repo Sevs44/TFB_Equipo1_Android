@@ -9,7 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("https://mock-movilidad.vass.es/chatvass/api/users/login")
+    @POST("users/login")
     fun loginUser(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
     @POST("users/register")

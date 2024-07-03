@@ -24,6 +24,21 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userLogin_to_homeUser"
+            app:destination="@id/homeUser" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="nick"
+            app:argType="string" />
+        <argument
+            android:name="avatar"
+            app:argType="string" />
+        <argument
+            android:name="online"
+            app:argType="boolean" />
 
     </fragment>
 
@@ -80,7 +95,7 @@
         android:label="fragment_home_user"
         tools:layout="@layout/fragment_home_user" />
     <fragment
-        android:id="@+id/chatLog2"
+        android:id="@+id/chatLog"
         android:name="com.saulhervas.easychat.ui.navigation.ChatLog"
         android:label="fragment_chat_log"
         tools:layout="@layout/fragment_chat_log" />
