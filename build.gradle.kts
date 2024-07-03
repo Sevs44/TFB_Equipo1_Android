@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-    id("androidx.navigation.safeargs.kotlin") version "2.7.1" apply false
-    id("com.google.dagger.hilt.android") version "2.44" apply false
+    alias(libs.plugins.kotlinKapt) apply false
+    alias(libs.plugins.kotlinParcelize) apply false
+    alias(libs.plugins.navigationSafeArgs) apply false
+    alias(libs.plugins.pluginDaggerHilt) apply false
 }

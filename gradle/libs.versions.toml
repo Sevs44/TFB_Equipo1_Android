@@ -51,4 +51,8 @@ lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationUiKtx" }
 

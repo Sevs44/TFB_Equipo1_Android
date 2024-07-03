@@ -24,6 +24,7 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+
     </fragment>
 
     <fragment
@@ -70,7 +71,17 @@
 
     <fragment
         android:id="@+id/userConfig"
-        android:name="com.saulhervas.easychat.ui.navigation.UserConfig"
+        android:name="com.saulhervas.easychat.ui.navigation.UserProfile"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_config" />
+        tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/homeUser"
+        android:name="com.saulhervas.easychat.ui.navigation.HomeUser"
+        android:label="fragment_home_user"
+        tools:layout="@layout/fragment_home_user" />
+    <fragment
+        android:id="@+id/chatLog2"
+        android:name="com.saulhervas.easychat.ui.navigation.ChatLog"
+        android:label="fragment_chat_log"
+        tools:layout="@layout/fragment_chat_log" />
 </navigation>
