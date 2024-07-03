@@ -57,6 +57,7 @@ class UserLogin : Fragment() {
         Log.d(TAG, "onResponse: $call")
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                Log.d(TAG, "onResponse: $response")
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     if (loginResponse != null) {
