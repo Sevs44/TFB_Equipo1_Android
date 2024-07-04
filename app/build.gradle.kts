@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kotlinKapt)
     alias(libs.plugins.navigationSafeArgs)
     alias(libs.plugins.kotlinParcelize)
     alias(libs.plugins.pluginDaggerHilt)
+    alias(libs.plugins.pluginDevKsp)
 }
 
 android {
@@ -49,10 +49,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     implementation (libs.androidx.recyclerview)
     implementation (libs.androidx.lifecycle.runtime.ktx)
 
@@ -62,7 +60,6 @@ dependencies {
 
     // ViewModel
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation (libs.androidx.lifecycle.livedata.ktx)
 
     // Coroutines
     implementation (libs.kotlinx.coroutines.core)
@@ -78,6 +75,6 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
 }
