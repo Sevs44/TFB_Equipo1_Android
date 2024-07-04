@@ -13,35 +13,56 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
-import com.saulhervas.easychat.data.model.modelsregister.RegisterRequest
-import com.saulhervas.easychat.data.model.modelsregister.RegisterResponse
-import com.saulhervas.easychat.data.repository.backend.retrofit.ApiClient
-import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
 import com.saulhervas.easychat.databinding.FragmentUserRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserRegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentUserRegisterBinding
-    private lateinit var apiService: ApiService
+    private val viewModel: UserRegisterViewModel by viewModels()
     private var isPasswordVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding = FragmentUserRegisterBinding.inflate(inflater, container, false)
-        apiService = ApiClient.create(ApiService::class.java)
-
         setupListeners()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModels()
+    }
+
+    private fun observeViewModels(){
+        lifecycleScope.launch {
+            viewModel.loadingState.collect { visibility ->
+                //binding.progressBar.visibility = if (visibility) View.VISIBLE else View.GONE
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.registerUserState.collect { isRegister ->
+                if (isRegister) {
+                    Toast.makeText(context, "Usuario creado con éxito", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_userRegister_to_userLogin)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.errorState.collect { errorMsg ->
+                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -87,7 +108,7 @@ class UserRegisterFragment : Fragment() {
             if (validatePasswords()) {
                 val username = binding.etUser.text.toString()
                 val password = binding.etPassword.text.toString()
-                registerUser(username, password)
+                viewModel.registerUser(username, password)
             } else {
                 Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
             }
@@ -113,28 +134,6 @@ class UserRegisterFragment : Fragment() {
             )
         }
         editText.setSelection(editText.text.length)  // Move the cursor to the end
-    }
-
-    private fun registerUser(username: String, password: String) {
-        val registerRequest = RegisterRequest(username, password)
-        val call = apiService.registerUser(registerRequest)
-        call.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
-                if (response.isSuccessful) {
-                    Toast.makeText(context, "Usuario creado con éxito", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_userRegister_to_userLogin)
-                } else {
-                    Toast.makeText(context, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Toast.makeText(context, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     private fun validatePasswords(): Boolean {
