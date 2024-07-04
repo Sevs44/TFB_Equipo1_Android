@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.navigation.UserRecoverPass">
+    tools:context=".ui.user_recoverpass.UserRecoverPassFragment">
 
     <ImageView
         android:id="@+id/iv_logo"

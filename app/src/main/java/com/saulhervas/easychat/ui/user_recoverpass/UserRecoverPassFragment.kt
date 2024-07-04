@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.navigation
+package com.saulhervas.easychat.ui.user_recoverpass
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.saulhervas.easychat.databinding.FragmentRecoverPassBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserRecoverPass : Fragment() {
+class UserRecoverPassFragment : Fragment() {
 
     private lateinit var binding: FragmentRecoverPassBinding
     override fun onCreateView(

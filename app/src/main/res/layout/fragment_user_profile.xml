@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        tools:context=".ui.navigation.UserProfile">
+        tools:context=".ui.user_profile.UserProfileFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

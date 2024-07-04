@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.navigation
+package com.saulhervas.easychat.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +9,14 @@ import com.saulhervas.easychat.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserProfile : Fragment() {
+class HomeUserFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false)
+        return inflater.inflate(R.layout.fragment_home_user, container, false)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.navigation
+package com.saulhervas.easychat.ui.user_register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -26,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @AndroidEntryPoint
-class UserRegister : Fragment() {
+class UserRegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentUserRegisterBinding
     private lateinit var apiService: ApiService

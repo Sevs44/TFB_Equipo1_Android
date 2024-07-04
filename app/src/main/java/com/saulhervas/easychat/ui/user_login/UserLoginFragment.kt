@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.navigation
+package com.saulhervas.easychat.ui.user_login
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @AndroidEntryPoint
-class UserLogin : Fragment() {
+class UserLoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var apiService: ApiService
