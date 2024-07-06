@@ -36,6 +36,7 @@ class UserRegisterFragment : Fragment() {
     ): View {
         binding = FragmentUserRegisterBinding.inflate(inflater, container, false)
         setupListeners()
+        setOnCLickListener()
         setupUI(binding.root)
         return binding.root
     }
@@ -125,7 +126,18 @@ class UserRegisterFragment : Fragment() {
                     .show()
             }
         }
+    }
+
+    private fun setOnCLickListener() {
         binding.imageButton.setOnClickListener {
+            findNavController().navigate(R.id.action_userRegister_to_userLogin)
+        }
+
+        binding.tvRecoverPass.setOnClickListener {
+            findNavController().navigate(R.id.action_userRegister_to_userRecoverPass)
+        }
+
+        binding.tvSession.setOnClickListener {
             findNavController().navigate(R.id.action_userRegister_to_userLogin)
         }
     }
