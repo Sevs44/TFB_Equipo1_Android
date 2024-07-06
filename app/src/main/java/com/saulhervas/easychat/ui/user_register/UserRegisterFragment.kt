@@ -1,6 +1,7 @@
 package com.saulhervas.easychat.ui.user_register
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -34,6 +36,7 @@ class UserRegisterFragment : Fragment() {
     ): View {
         binding = FragmentUserRegisterBinding.inflate(inflater, container, false)
         setupListeners()
+        setupUI(binding.root)
         return binding.root
     }
 
@@ -60,7 +63,10 @@ class UserRegisterFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.errorState.collect { errorMsg ->
-                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                errorMsg?.let {
+                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    viewModel.clearError() // Limpiar el error después de mostrarlo
+                }
             }
         }
     }
@@ -105,14 +111,29 @@ class UserRegisterFragment : Fragment() {
         }
 
         binding.btnRegister.setOnClickListener {
-            if (validatePasswords()) {
-                val username = binding.etUser.text.toString()
-                val password = binding.etPassword.text.toString()
-                viewModel.registerUser(username, password)
+            if (validateFields()) {
+                if (validatePasswords()) {
+                    val username = binding.etUser.text.toString()
+                    val password = binding.etPassword.text.toString()
+                    viewModel.registerUser(username, password)
+                } else {
+                    Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT)
+                        .show()
+                }
             } else {
-                Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
+        binding.imageButton.setOnClickListener {
+            findNavController().navigate(R.id.action_userRegister_to_userLogin)
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        return binding.etUser.text.isNotEmpty() &&
+                binding.etPassword.text.isNotEmpty() &&
+                binding.etPasswordRepeat.text.isNotEmpty()
     }
 
     private fun togglePasswordVisibility(editText: EditText) {
@@ -142,7 +163,35 @@ class UserRegisterFragment : Fragment() {
         return password == confirmPassword
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupUI(view: View) {
+        // Configurar listener para ocultar el teclado
+        if (view !is EditText) {
+            view.setOnTouchListener { _, _ ->
+                hideKeyboard()
+                false
+            }
+        }
+
+        // Si una vista es un contenedor, repetir para sus hijos
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                setupUI(innerView)
+            }
+        }
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
 }
+
+
+
+
 
 
 

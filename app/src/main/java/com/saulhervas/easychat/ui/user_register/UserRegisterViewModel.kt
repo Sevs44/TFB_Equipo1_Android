@@ -20,8 +20,8 @@ class UserRegisterViewModel @Inject constructor(
     private val loadingMutableState = MutableStateFlow(true)
     val loadingState: StateFlow<Boolean> = loadingMutableState
 
-    private val errorMutableState = MutableStateFlow("")
-    val errorState: StateFlow<String> = errorMutableState
+    private val errorMutableState = MutableStateFlow<String?>(null)
+    val errorState: StateFlow<String?> = errorMutableState
 
     private val registerUserMutableState = MutableStateFlow(false)
     val registerUserState: StateFlow<Boolean> = registerUserMutableState
@@ -50,6 +50,10 @@ class UserRegisterViewModel @Inject constructor(
                 errorMutableState.value = "Error al crear el usuario"
             }
         })
+    }
+
+    fun clearError() {
+        errorMutableState.value = null
     }
 
 }
