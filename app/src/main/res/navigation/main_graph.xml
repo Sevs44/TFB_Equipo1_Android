@@ -50,10 +50,10 @@
         <action
             android:id="@+id/action_userRegister_to_userLogin"
             app:destination="@id/userLogin"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_left"
-            app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_left" />
         <action
             android:id="@+id/action_userRegister_to_userRecoverPass"
             app:destination="@id/userRecoverPass"
