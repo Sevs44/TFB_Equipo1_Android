@@ -17,6 +17,9 @@ retrofit = "2.11.0"
 lottie = "6.1.0"
 hiltAndroid = "2.51.1"
 pluginKspTools = "2.0.0-1.0.21"
+googleServices = "4.4.2"
+firebaseBom = "33.1.1"
+firebaseCrashlytics = "2.9.9"
 
 
 [libraries]
@@ -52,6 +55,11 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 # Lottie
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
+# Firebase
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -60,4 +68,5 @@ kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = 
 pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 navigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationUiKtx" }
 pluginDevKsp = { id = "com.google.devtools.ksp", version.ref = "pluginKspTools" }
-
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebaseCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }

@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlinParcelize)
     alias(libs.plugins.pluginDaggerHilt)
     alias(libs.plugins.pluginDevKsp)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 android {
@@ -76,5 +78,10 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
 }
