@@ -6,4 +6,7 @@ plugins {
     alias(libs.plugins.navigationSafeArgs) apply false
     alias(libs.plugins.pluginDaggerHilt) apply false
     alias(libs.plugins.pluginDevKsp) apply false
+    alias(libs.plugins.googleServices) apply false
+    alias(libs.plugins.firebaseCrashlytics) apply false
+
 }

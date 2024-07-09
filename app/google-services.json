@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "799981956650",
+    "project_id": "tfb-equipo-1",
+    "storage_bucket": "tfb-equipo-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799981956650:android:c7a960c3a1d1fbf8e2dd53",
+        "android_client_info": {
+          "package_name": "com.saulhervas.easychat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArCSAkYWA1eM_uY3pRsiDm8OQgLaNLR8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
