@@ -56,28 +56,15 @@ class UserLoginFragment : Fragment() {
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            userLoginViewModel.loginResult.collect { result ->
-                result.fold(
-                    onSuccess = { loginResponse ->
-                        val token = loginResponse.token
-                        val id = loginResponse.userLogin.id
-                        val action =
-                            UserLoginFragmentDirections.actionUserLoginToHomeUser(token, id)
-                        findNavController().navigate(action)
-                        Toast.makeText(
-                            requireContext(),
-                            "Login exitoso: $token",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    },
-                    onFailure = { exception ->
-                        Toast.makeText(
-                            requireContext(),
-                            "@string/error ${exception.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                )
+            userLoginViewModel.loginResult.collect {
+                val action =
+                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
+                findNavController().navigate(action)
+                Toast.makeText(
+                    requireContext(),
+                    "$it.token",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

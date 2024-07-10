@@ -1,37 +1,45 @@
 package com.saulhervas.easychat.ui.user_login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
+import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class UserLoginViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
+class UserLoginViewModel @Inject constructor(
+    private val loginUserCase: LoginUseCase,
+) : ViewModel() {
 
-    private val _loginResult = MutableSharedFlow<Result<LoginResponse>>()
-    val loginResult: SharedFlow<Result<LoginResponse>> get() = _loginResult
+    private val _loginResultError = MutableSharedFlow<String>()
+    val loginResulterror: SharedFlow<String> get() = _loginResultError
+
+    private val _loginResult = MutableSharedFlow<LoginResponse>()
+    val loginResult: SharedFlow<LoginResponse> get() = _loginResult
 
     fun loginUser(username: String, password: String) {
         val loginRequest = LoginRequest(username, password)
         viewModelScope.launch {
-            try {
-                val loginResponse = apiService.loginUser(loginRequest)
-                _loginResult.emit(Result.success(loginResponse))
-            } catch (e: HttpException) {
-                _loginResult.emit(Result.failure(Exception("HTTP exception occurred", e)))
-            } catch (e: IOException) {
-                _loginResult.emit(Result.failure(Exception("Network error occurred", e)))
-            } catch (e: Exception) {
-                _loginResult.emit(Result.failure(Exception("Unknown error occurred", e)))
+            loginUserCase.invoke(loginRequest).collect { response ->
+                when (response) {
+                    is BaseResponse.Error -> {
+                        Log.d("TAG", "Error: ${response.error.message}")
+                        _loginResultError.emit(response.error.message)
+                    }
+
+                    is BaseResponse.Success -> {
+                        _loginResult.emit(response.data)
+                    }
+                }
             }
         }
     }
+
 }

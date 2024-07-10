@@ -8,6 +8,7 @@
     <string name="btn_login">Iniciar Sesión</string>
     <string name="tv_no_account">¿No tienes cuenta?</string>
     <string name="tv_register">Registrate</string>
+    <string name="error_no_data_found">Empty data</string>
 
     //Register
     <string name="hint_password">Contraseña</string>
