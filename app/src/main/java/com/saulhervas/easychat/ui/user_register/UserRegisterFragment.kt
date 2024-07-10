@@ -66,7 +66,7 @@ class UserRegisterFragment : Fragment() {
             viewModel.errorState.collect { errorMsg ->
                 errorMsg?.let {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                    viewModel.clearError() // Limpiar el error después de mostrarlo
+                    // Limpiar el error después de mostrarlo
                 }
             }
         }
