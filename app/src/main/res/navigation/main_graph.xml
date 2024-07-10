@@ -98,6 +98,9 @@
         <action
             android:id="@+id/action_homeUser_to_userLogin"
             app:destination="@id/userLogin" />
+        <action
+            android:id="@+id/action_homeUser_to_chatLog"
+            app:destination="@id/chatLog" />
     </fragment>
 
     <fragment

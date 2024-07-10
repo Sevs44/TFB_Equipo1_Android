@@ -86,17 +86,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_chats"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_scroll_view"
                 android:layout_width="0dp"
-                android:layout_height="550dp"
-                android:layout_margin="10dp"
+                android:layout_height="0dp"
+                android:fillViewport="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sw_chat"
-                app:layout_constraintVertical_bias="0.515" />
+                app:layout_constraintTop_toBottomOf="@id/sw_chat">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_chats"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="0dp" />
+            </androidx.core.widget.NestedScrollView>
+
 
             <ImageView
                 android:id="@+id/iv_chat"
