@@ -7,5 +7,5 @@ data class RegisterResponse(
     @SerializedName("success")
     val success: Boolean,
     @SerializedName("user")
-    val user: UserRegisterResponse
+    val user: UserRegister
 )
