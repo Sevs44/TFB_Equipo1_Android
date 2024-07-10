@@ -26,11 +26,19 @@
             app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_userLogin_to_homeUser"
-            app:destination="@id/homeUser">
+            app:destination="@id/homeUser" />
         <argument
-            android:name="token"
+            android:name="id"
             app:argType="string" />
-        </action>
+        <argument
+            android:name="nick"
+            app:argType="string" />
+        <argument
+            android:name="avatar"
+            app:argType="string" />
+        <argument
+            android:name="online"
+            app:argType="boolean" />
 
     </fragment>
 
@@ -80,17 +88,12 @@
         android:id="@+id/userConfig"
         android:name="com.saulhervas.easychat.ui.user_profile.UserProfileFragment"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_profile"></fragment>
+        tools:layout="@layout/fragment_user_profile" />
     <fragment
         android:id="@+id/homeUser"
         android:name="com.saulhervas.easychat.ui.home.HomeUserFragment"
         android:label="fragment_home_user"
-        tools:layout="@layout/fragment_home_user">
-        <argument
-            android:name="token"
-            app:argType="string" />
-    </fragment>
-
+        tools:layout="@layout/fragment_home_user" />
     <fragment
         android:id="@+id/chatLog"
         android:name="com.saulhervas.easychat.ui.chat.ChatLogFragment"
