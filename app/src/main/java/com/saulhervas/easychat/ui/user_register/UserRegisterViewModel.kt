@@ -1,55 +1,52 @@
 package com.saulhervas.easychat.ui.user_register
 
 import androidx.lifecycle.ViewModel
-import com.saulhervas.easychat.data.repository.backend.retrofit.ApiClient
-import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
+import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
-import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
+import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.usecases.RegisterUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserRegisterViewModel @Inject constructor(
-
-): ViewModel() {
+    private val registerUserCase: RegisterUserCase
+) : ViewModel() {
     private val loadingMutableState = MutableStateFlow(true)
     val loadingState: StateFlow<Boolean> = loadingMutableState
 
-    private val errorMutableState = MutableStateFlow<String?>(null)
-    val errorState: StateFlow<String?> = errorMutableState
+    private val errorMutableState = MutableSharedFlow<String?>()
+    val errorState: SharedFlow<String?> = errorMutableState
 
     private val registerUserMutableState = MutableStateFlow<Boolean>(false)
     val registerUserState: StateFlow<Boolean> = registerUserMutableState
 
-    private var apiService: ApiService = ApiClient.create(ApiService::class.java)
     fun registerUser(username: String, password: String) {
-        val registerRequest = RegisterRequest(username, password)
-        val call = apiService.registerUser(registerRequest)
-        call.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
-                if (response.isSuccessful) {
-                    registerUserMutableState.value = true
-                } else {
-                    errorMutableState.value = "Error al crear el usuario"
+        val registerRequest = RegisterRequest(
+            login = username,
+            password = password,
+            nick = username
+        )
+
+        viewModelScope.launch {
+            loadingMutableState.value = true
+            registerUserCase.invoke(registerRequest).collect { result ->
+                when (result) {
+                    is BaseResponse.Error -> {
+                        errorMutableState.emit(result.error.message)
+                        registerUserMutableState.value = false
+                    }
+
+                    is BaseResponse.Success -> {
+                        registerUserMutableState.value = true
+                    }
                 }
             }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                errorMutableState.value = "Error al crear el usuario"
-            }
-        })
+        }
     }
-
-    fun clearError() {
-        errorMutableState.value = null
-    }
-
 }
