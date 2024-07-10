@@ -19,6 +19,9 @@ class HomeViewModel @Inject constructor(
     private val openChatsMutableState = MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
     val openChatsState: StateFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
 
+    private val showImageBackgroundMutableState = MutableStateFlow(true)
+    val showImageBackgroundState: StateFlow<Boolean> = showImageBackgroundMutableState
+
     init {
         getOpenChats()
     }
@@ -37,7 +40,12 @@ class HomeViewModel @Inject constructor(
                          //loadingMutableSharedFlow.emit(false)
                          Log.d("TAG", "l> Success ${it.data.size}")
                          Log.d("TAG", "l> Success ${it.data}")
-                         openChatsMutableState.emit(it.data)
+                         if (it.data.isNotEmpty()) {
+                             openChatsMutableState.value = it.data
+                             showImageBackgroundMutableState.value = false
+                         } else {
+                             showImageBackgroundMutableState.value = true
+                         }
                      }
                  }
              }

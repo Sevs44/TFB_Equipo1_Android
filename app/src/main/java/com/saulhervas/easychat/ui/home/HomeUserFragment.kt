@@ -41,6 +41,21 @@ class HomeUserFragment : Fragment() {
                 setUpRecyclerView(it)
             }
         }
+        lifecycleScope.launch {
+            viewModel.showImageBackgroundState.collect {
+                showBackgroundImage(it)
+            }
+        }
+    }
+
+    private fun showBackgroundImage(show: Boolean) {
+        if (!show) {
+            binding.ivChat.visibility = View.GONE
+            binding.tvTextChat.visibility = View.GONE
+        } else {
+            binding.ivChat.visibility = View.VISIBLE
+            binding.tvTextChat.visibility = View.VISIBLE
+        }
     }
 
     private fun setUpRecyclerView(itemList: ArrayList<OpenChatItemModel>) {
