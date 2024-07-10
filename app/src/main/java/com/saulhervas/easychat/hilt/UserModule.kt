@@ -2,9 +2,9 @@ package com.saulhervas.easychat.hilt
 
 import com.saulhervas.easychat.data.repository.backend.retrofit.ApiClient
 import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
-import com.saulhervas.easychat.data.repository.backend.retrofit.BaseApiService
-import com.saulhervas.easychat.data.repository.backend.retrofit.ChatsDataSource
-import com.saulhervas.easychat.data.repository.backend.retrofit.OpenChatsDataProvider
+import com.saulhervas.easychat.data.repository.backend.retrofit.chats.ChatsCalls
+import com.saulhervas.easychat.data.repository.backend.retrofit.chats.ChatsDataSource
+import com.saulhervas.easychat.data.repository.backend.retrofit.chats.OpenChatsDataProvider
 import com.saulhervas.easychat.domain.usecases.OpenChatUseCases
 import com.saulhervas.easychat.ui.home.HomeViewModel
 import dagger.Module
@@ -37,14 +37,14 @@ object UserModule {
 
     @Singleton
     @Provides
-    fun provideChatsDataSource(baseApiService: BaseApiService): ChatsDataSource {
-        return ChatsDataSource(baseApiService)
+    fun provideChatsDataSource(chatsCalls: ChatsCalls): ChatsDataSource {
+        return ChatsDataSource(chatsCalls)
     }
 
     @Singleton
     @Provides
-    fun provideBaseApiService(apiService: ApiService): BaseApiService {
-        return BaseApiService(apiService)
+    fun provideBaseApiService(apiService: ApiService): ChatsCalls {
+        return ChatsCalls(apiService)
     }
 
     @Singleton

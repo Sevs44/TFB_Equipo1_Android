@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.data.repository.backend.retrofit
+package com.saulhervas.easychat.data.repository.backend.retrofit.chats
 
 import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel

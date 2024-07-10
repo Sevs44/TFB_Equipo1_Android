@@ -6,21 +6,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 
-class DayAdapter(
-    val itemList: MutableList<OpenChatItemModel>?
-//, private val onClickListener: (OpenChatItemModel?) -> Unit
-) : RecyclerView.Adapter<DayViewHolder>() {
+class OpenChatAdapter(
+    val itemList: MutableList<OpenChatItemModel>?,
+    private val onClickListener: () -> Unit
+) : RecyclerView.Adapter<OpenChatViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return DayViewHolder(layoutInflater.inflate(R.layout.user_row_message, parent, false))
+        return OpenChatViewHolder(layoutInflater.inflate(R.layout.user_row_message, parent, false))
     }
 
-    override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {
         val item = itemList?.get(position)
         holder.onBind(
-            item
-            //,onClickListener
+            item,
+            onClickListener
         )
     }
 

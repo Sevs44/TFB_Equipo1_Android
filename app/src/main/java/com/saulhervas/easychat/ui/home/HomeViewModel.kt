@@ -7,8 +7,8 @@ import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.domain.usecases.OpenChatUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +16,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val openChatUseCases: OpenChatUseCases
 ): ViewModel() {
-    private val openChatsMutableState = MutableSharedFlow<ArrayList<OpenChatItemModel>>()
-    val openChatsState: SharedFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
+    private val openChatsMutableState = MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
+    val openChatsState: StateFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
 
     init {
         getOpenChats()
@@ -38,7 +38,6 @@ class HomeViewModel @Inject constructor(
                          Log.d("TAG", "l> Success ${it.data.size}")
                          Log.d("TAG", "l> Success ${it.data}")
                          openChatsMutableState.emit(it.data)
-                         //openChatsMutableState.value = ArrayList(it.data.map { model -> model.id })
                      }
                  }
              }
