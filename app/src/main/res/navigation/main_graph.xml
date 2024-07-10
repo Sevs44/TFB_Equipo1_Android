@@ -27,9 +27,12 @@
         <action
             android:id="@+id/action_userLogin_to_homeUser"
             app:destination="@id/homeUser">
-        <argument
-            android:name="token"
-            app:argType="string" />
+            <argument
+                android:name="token"
+                app:argType="string" />
+            <argument
+                android:name="id"
+                app:argType="string" />
         </action>
 
     </fragment>
@@ -80,7 +83,7 @@
         android:id="@+id/userConfig"
         android:name="com.saulhervas.easychat.ui.user_profile.UserProfileFragment"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_profile"></fragment>
+        tools:layout="@layout/fragment_user_profile" />
     <fragment
         android:id="@+id/homeUser"
         android:name="com.saulhervas.easychat.ui.home.HomeUserFragment"
@@ -89,6 +92,12 @@
         <argument
             android:name="token"
             app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_homeUser_to_userLogin"
+            app:destination="@id/userLogin" />
     </fragment>
 
     <fragment

@@ -2,7 +2,7 @@ package com.saulhervas.easychat.data.model.modelslogin
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class UserLogin(
     @SerializedName("id")
     val id: String,
     @SerializedName("nick")

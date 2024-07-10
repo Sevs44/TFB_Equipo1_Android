@@ -40,10 +40,10 @@ class UserLoginFragment : Fragment() {
 
     private fun setOnClickListener() {
         binding.btnLogin.setOnClickListener {
+
             userLoginViewModel.loginUser(
                 binding.etUser.text.toString(),
-                binding.etPassword.text.toString(),
-
+                binding.etPassword.text.toString()
                 )
         }
         binding.tvRegister.setOnClickListener {
@@ -60,7 +60,9 @@ class UserLoginFragment : Fragment() {
                 result.fold(
                     onSuccess = { loginResponse ->
                         val token = loginResponse.token
-                        val action = UserLoginFragmentDirections.actionUserLoginToHomeUser(token)
+                        val id = loginResponse.userLogin.id
+                        val action =
+                            UserLoginFragmentDirections.actionUserLoginToHomeUser(token, id)
                         findNavController().navigate(action)
                         Toast.makeText(
                             requireContext(),
