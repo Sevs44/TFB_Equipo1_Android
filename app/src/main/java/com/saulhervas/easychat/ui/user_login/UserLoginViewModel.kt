@@ -2,9 +2,9 @@ package com.saulhervas.easychat.ui.user_login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.saulhervas.easychat.data.model.modelslogin.LoginRequest
-import com.saulhervas.easychat.data.model.modelslogin.LoginResponse
 import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
+import com.saulhervas.easychat.data.repository.response.login.LoginRequest
+import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

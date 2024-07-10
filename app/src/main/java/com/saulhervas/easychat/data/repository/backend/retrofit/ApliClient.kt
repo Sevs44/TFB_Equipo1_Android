@@ -1,7 +1,6 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit
 
 import com.google.gson.Gson
-import com.saulhervas.easychat.data.model.modelslogin.ErrorResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response

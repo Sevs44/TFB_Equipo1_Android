@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.data.model.modelslogin
+package com.saulhervas.easychat.data.repository.response.error
 
 data class ErrorResponse(
     val token: String?,

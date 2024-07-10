@@ -2,7 +2,6 @@ package com.saulhervas.easychat.data.repository.backend.retrofit
 
 import android.util.Log
 import com.google.gson.Gson
-import com.saulhervas.easychat.data.model.modelslogin.ErrorResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
 import retrofit2.Response
 

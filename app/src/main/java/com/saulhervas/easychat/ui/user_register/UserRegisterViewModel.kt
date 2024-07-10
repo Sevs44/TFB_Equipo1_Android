@@ -1,14 +1,12 @@
 package com.saulhervas.easychat.ui.user_register
 
 import androidx.lifecycle.ViewModel
-import com.saulhervas.easychat.data.model.modelsregister.RegisterRequest
-import com.saulhervas.easychat.data.model.modelsregister.RegisterResponse
 import com.saulhervas.easychat.data.repository.backend.retrofit.ApiClient
 import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
+import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
+import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,8 +23,8 @@ class UserRegisterViewModel @Inject constructor(
     private val errorMutableState = MutableStateFlow<String?>(null)
     val errorState: StateFlow<String?> = errorMutableState
 
-    private val registerUserMutableState = MutableSharedFlow<Boolean>()
-    val registerUserState: SharedFlow<Boolean> = registerUserMutableState
+    private val registerUserMutableState = MutableStateFlow<Boolean>(false)
+    val registerUserState: StateFlow<Boolean> = registerUserMutableState
 
     private var apiService: ApiService = ApiClient.create(ApiService::class.java)
     fun registerUser(username: String, password: String) {
@@ -38,7 +36,7 @@ class UserRegisterViewModel @Inject constructor(
                 response: Response<RegisterResponse>
             ) {
                 if (response.isSuccessful) {
-                    registerUserMutableState
+                    registerUserMutableState.value = true
                 } else {
                     errorMutableState.value = "Error al crear el usuario"
                 }
