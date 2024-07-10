@@ -10,7 +10,7 @@ import retrofit2.http.POST
 
 interface ApiService {
     @POST("users/login")
-    fun loginUser(@Body loginRequest: LoginRequest): Call<LoginResponse>
+    suspend fun loginUser(@Body loginRequest: LoginRequest): LoginResponse
 
     @POST("users/register")
     fun registerUser(@Body registerRequest: RegisterRequest): Call<RegisterResponse>
