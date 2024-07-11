@@ -91,25 +91,11 @@ class UserRegisterFragment : Fragment() {
         binding.etPassword.addTextChangedListener(textWatcher)
         binding.etPasswordRepeat.addTextChangedListener(textWatcher)
 
-        binding.etPassword.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (binding.etPassword.right - binding.etPassword.compoundDrawables[2].bounds.width())) {
-                    togglePasswordVisibility(binding.etPassword)
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
+        // Aplicar togglePasswordVisibility a etPassword
+        togglePasswordVisibility(binding.etPassword)
 
-        binding.etPasswordRepeat.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                if (event.rawX >= (binding.etPasswordRepeat.right - binding.etPasswordRepeat.compoundDrawables[2].bounds.width())) {
-                    togglePasswordVisibility(binding.etPasswordRepeat)
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
+        // Aplicar togglePasswordVisibility a etPasswordRepeat
+        togglePasswordVisibility(binding.etPasswordRepeat)
 
         binding.btnRegister.setOnClickListener {
             if (validateFields()) {
@@ -148,25 +134,41 @@ class UserRegisterFragment : Fragment() {
                 binding.etPasswordRepeat.text.isNotEmpty()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun togglePasswordVisibility(editText: EditText) {
-        if (editText.transformationMethod is PasswordTransformationMethod) {
-            editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            editText.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_password_visibility,
-                0
-            )
-        } else {
-            editText.transformationMethod = PasswordTransformationMethod.getInstance()
-            editText.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_password_visibility,
-                0
-            )
+        val padding = 40  // Ajusta este valor para aumentar el área de clic
+
+        editText.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val drawableEnd =
+                    if (editText.layoutDirection == View.LAYOUT_DIRECTION_RTL) editText.compoundDrawables[0] else editText.compoundDrawables[2]
+
+                if (drawableEnd != null) {
+                    val drawableWidth = drawableEnd.intrinsicWidth + padding
+                    val clickX =
+                        if (editText.layoutDirection == View.LAYOUT_DIRECTION_RTL) event.x else editText.width - event.x
+
+                    if (clickX <= drawableWidth) {
+                        if (editText.transformationMethod is PasswordTransformationMethod) {
+                            editText.transformationMethod =
+                                HideReturnsTransformationMethod.getInstance()
+                            editText.setCompoundDrawablesWithIntrinsicBounds(
+                                R.drawable.ic_lock, 0, R.drawable.ic_password_visibility, 0
+                            )
+                        } else {
+                            editText.transformationMethod =
+                                PasswordTransformationMethod.getInstance()
+                            editText.setCompoundDrawablesWithIntrinsicBounds(
+                                R.drawable.ic_lock, 0, R.drawable.ic_password_visibility, 0
+                            )
+                        }
+                        editText.setSelection(editText.text.length)  // Move the cursor to the end
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            false
         }
-        editText.setSelection(editText.text.length)  // Move the cursor to the end
     }
 
     private fun validatePasswords(): Boolean {
@@ -200,10 +202,3 @@ class UserRegisterFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
-
-
-
-
-
-
-
