@@ -28,7 +28,6 @@ class UserRegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentUserRegisterBinding
     private val viewModel: UserRegisterViewModel by viewModels()
-    private var isPasswordVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +45,7 @@ class UserRegisterFragment : Fragment() {
         observeViewModels()
     }
 
-    private fun observeViewModels(){
+    private fun observeViewModels() {
         lifecycleScope.launch {
             viewModel.loadingState.collect { visibility ->
                 //binding.progressBar.visibility = if (visibility) View.VISIBLE else View.GONE
@@ -70,6 +69,32 @@ class UserRegisterFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.passwordVisibilityState.collect { isVisible ->
+                if (isVisible) {
+                    binding.etPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                } else {
+                    binding.etPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                }
+                binding.etPassword.setSelection(binding.etPassword.text.length)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.passwordRepeatVisibilityState.collect { isVisible ->
+                if (isVisible) {
+                    binding.etPasswordRepeat.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                } else {
+                    binding.etPasswordRepeat.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                }
+                binding.etPasswordRepeat.setSelection(binding.etPasswordRepeat.text.length)
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -91,11 +116,25 @@ class UserRegisterFragment : Fragment() {
         binding.etPassword.addTextChangedListener(textWatcher)
         binding.etPasswordRepeat.addTextChangedListener(textWatcher)
 
-        // Aplicar togglePasswordVisibility a etPassword
-        togglePasswordVisibility(binding.etPassword)
+        binding.etPassword.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (binding.etPassword.right - binding.etPassword.compoundDrawables[2].bounds.width())) {
+                    viewModel.togglePasswordVisibility()
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
 
-        // Aplicar togglePasswordVisibility a etPasswordRepeat
-        togglePasswordVisibility(binding.etPasswordRepeat)
+        binding.etPasswordRepeat.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (binding.etPasswordRepeat.right - binding.etPasswordRepeat.compoundDrawables[2].bounds.width())) {
+                    viewModel.togglePasswordRepeatVisibility()
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
 
         binding.btnRegister.setOnClickListener {
             if (validateFields()) {
@@ -132,43 +171,6 @@ class UserRegisterFragment : Fragment() {
         return binding.etUser.text.isNotEmpty() &&
                 binding.etPassword.text.isNotEmpty() &&
                 binding.etPasswordRepeat.text.isNotEmpty()
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun togglePasswordVisibility(editText: EditText) {
-        val padding = 40  // Ajusta este valor para aumentar el área de clic
-
-        editText.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                val drawableEnd =
-                    if (editText.layoutDirection == View.LAYOUT_DIRECTION_RTL) editText.compoundDrawables[0] else editText.compoundDrawables[2]
-
-                if (drawableEnd != null) {
-                    val drawableWidth = drawableEnd.intrinsicWidth + padding
-                    val clickX =
-                        if (editText.layoutDirection == View.LAYOUT_DIRECTION_RTL) event.x else editText.width - event.x
-
-                    if (clickX <= drawableWidth) {
-                        if (editText.transformationMethod is PasswordTransformationMethod) {
-                            editText.transformationMethod =
-                                HideReturnsTransformationMethod.getInstance()
-                            editText.setCompoundDrawablesWithIntrinsicBounds(
-                                R.drawable.ic_lock, 0, R.drawable.ic_password_visibility, 0
-                            )
-                        } else {
-                            editText.transformationMethod =
-                                PasswordTransformationMethod.getInstance()
-                            editText.setCompoundDrawablesWithIntrinsicBounds(
-                                R.drawable.ic_lock, 0, R.drawable.ic_password_visibility, 0
-                            )
-                        }
-                        editText.setSelection(editText.text.length)  // Move the cursor to the end
-                        return@setOnTouchListener true
-                    }
-                }
-            }
-            false
-        }
     }
 
     private fun validatePasswords(): Boolean {
