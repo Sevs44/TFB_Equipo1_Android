@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OpenChatUseCases @Inject constructor(
-    val dataProvider: OpenChatsDataProvider
+    private val dataProvider: OpenChatsDataProvider
 ) {
-    operator fun invoke(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
-        return dataProvider.getOpenChatList()
+    operator fun invoke(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
+        return dataProvider.getOpenChatList(token)
     }
 }

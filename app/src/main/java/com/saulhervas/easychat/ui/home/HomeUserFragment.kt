@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qualentum.sprint3.main.ui.list.OpenChatAdapter
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
@@ -20,6 +21,13 @@ import kotlinx.coroutines.launch
 class HomeUserFragment : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
+    private val args: HomeUserFragmentArgs by navArgs()
+    private lateinit var token: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getUserArgs()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +39,18 @@ class HomeUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpViewModel()
         observeViewModel()
+    }
+
+    private fun setUpViewModel() {
+        lifecycleScope.launch {
+            viewModel.getOpenChats(token)
+        }
+    }
+
+    private fun getUserArgs() {
+        token = args.token
     }
 
     private fun observeViewModel() {

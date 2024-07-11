@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OpenChatsDataProvider @Inject constructor(
-    val remoteDataSource: ChatsDataSource
+    private val remoteDataSource: ChatsDataSource
 ) {
-    fun getOpenChatList(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
-        return remoteDataSource.getOpenChats()
+    fun getOpenChatList(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
+        return remoteDataSource.getOpenChats(token)
     }
 }

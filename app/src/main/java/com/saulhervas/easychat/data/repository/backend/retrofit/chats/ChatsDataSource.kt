@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ChatsDataSource @Inject constructor(
-    val chatsCalls: ChatsCalls
+    private val chatsCalls: ChatsCalls
 ) : BaseService() {
-    fun getOpenChats(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> =
+    fun getOpenChats(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> =
         flow {
-            val apiResult = chatsCalls.callOpenChats()
+            val apiResult = chatsCalls.callOpenChats(token)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(OpenChatsResponseToOpenChatsModel(apiResult.data)))
             } else if (apiResult is BaseResponse.Error) {

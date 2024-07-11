@@ -7,9 +7,9 @@ import com.saulhervas.easychat.domain.model.BaseResponse
 import javax.inject.Inject
 
 class ChatsCalls @Inject constructor(
-    val apiService: ApiService
+    private val apiService: ApiService
 ) : BaseService() {
-    suspend fun callOpenChats(): BaseResponse<OpenChatsResponse> {
-        return apiCall { apiService.getOpenChats() }
+    suspend fun callOpenChats(token: String): BaseResponse<OpenChatsResponse> {
+        return apiCall { apiService.getOpenChats(token) }
     }
 }

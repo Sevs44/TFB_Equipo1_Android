@@ -22,13 +22,9 @@ class HomeViewModel @Inject constructor(
     private val showImageBackgroundMutableState = MutableStateFlow(true)
     val showImageBackgroundState: StateFlow<Boolean> = showImageBackgroundMutableState
 
-    init {
-        getOpenChats()
-    }
-
-    fun getOpenChats() {
+    fun getOpenChats(token: String) {
         viewModelScope.launch {
-             openChatUseCases.invoke().collect {
+             openChatUseCases.invoke(token).collect {
                  when (it) {
                      is BaseResponse.Error -> {
                          Log.d("TAG", "l> Error: ${it.error.message}")

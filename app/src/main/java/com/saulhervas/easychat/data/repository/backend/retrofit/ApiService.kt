@@ -8,7 +8,7 @@ import com.saulhervas.easychat.data.repository.response.register.RegisterRespons
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
@@ -18,7 +18,6 @@ interface ApiService {
     @POST("users/register")
     suspend fun registerUser(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
 
-    @Headers("Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OCIsImlhdCI6MTcyMDUyNjkwOSwiZXhwIjoxNzIzMTE4OTA5fQ.fy4ZoOJFLPIwH7Y7Gti4qgSTSoXw2Wqi_9FtNA5f8qM")
     @GET("chats/view")
-    suspend fun getOpenChats(): Response<OpenChatsResponse>
+    suspend fun getOpenChats(@Header("Authorization") token: String): Response<OpenChatsResponse>
 }
