@@ -28,7 +28,6 @@ class UserRegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentUserRegisterBinding
     private val viewModel: UserRegisterViewModel by viewModels()
-    private var isPasswordVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +45,7 @@ class UserRegisterFragment : Fragment() {
         observeViewModels()
     }
 
-    private fun observeViewModels(){
+    private fun observeViewModels() {
         lifecycleScope.launch {
             viewModel.loadingState.collect { visibility ->
                 //binding.progressBar.visibility = if (visibility) View.VISIBLE else View.GONE
@@ -68,6 +67,32 @@ class UserRegisterFragment : Fragment() {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                     // Limpiar el error después de mostrarlo
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.passwordVisibilityState.collect { isVisible ->
+                if (isVisible) {
+                    binding.etPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                } else {
+                    binding.etPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                }
+                binding.etPassword.setSelection(binding.etPassword.text.length)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.passwordRepeatVisibilityState.collect { isVisible ->
+                if (isVisible) {
+                    binding.etPasswordRepeat.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                } else {
+                    binding.etPasswordRepeat.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                }
+                binding.etPasswordRepeat.setSelection(binding.etPasswordRepeat.text.length)
             }
         }
     }
@@ -94,7 +119,7 @@ class UserRegisterFragment : Fragment() {
         binding.etPassword.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (binding.etPassword.right - binding.etPassword.compoundDrawables[2].bounds.width())) {
-                    togglePasswordVisibility(binding.etPassword)
+                    viewModel.togglePasswordVisibility()
                     return@setOnTouchListener true
                 }
             }
@@ -104,7 +129,7 @@ class UserRegisterFragment : Fragment() {
         binding.etPasswordRepeat.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (binding.etPasswordRepeat.right - binding.etPasswordRepeat.compoundDrawables[2].bounds.width())) {
-                    togglePasswordVisibility(binding.etPasswordRepeat)
+                    viewModel.togglePasswordRepeatVisibility()
                     return@setOnTouchListener true
                 }
             }
@@ -148,27 +173,6 @@ class UserRegisterFragment : Fragment() {
                 binding.etPasswordRepeat.text.isNotEmpty()
     }
 
-    private fun togglePasswordVisibility(editText: EditText) {
-        if (editText.transformationMethod is PasswordTransformationMethod) {
-            editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            editText.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_password_visibility,
-                0
-            )
-        } else {
-            editText.transformationMethod = PasswordTransformationMethod.getInstance()
-            editText.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_password_visibility,
-                0
-            )
-        }
-        editText.setSelection(editText.text.length)  // Move the cursor to the end
-    }
-
     private fun validatePasswords(): Boolean {
         val password = binding.etPassword.text.toString()
         val confirmPassword = binding.etPasswordRepeat.text.toString()
@@ -200,10 +204,3 @@ class UserRegisterFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
-
-
-
-
-
-
-

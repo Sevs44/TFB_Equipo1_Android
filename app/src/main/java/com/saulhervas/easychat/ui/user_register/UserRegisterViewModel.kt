@@ -23,8 +23,14 @@ class UserRegisterViewModel @Inject constructor(
     private val errorMutableState = MutableSharedFlow<String?>()
     val errorState: SharedFlow<String?> = errorMutableState
 
-    private val registerUserMutableState = MutableStateFlow<Boolean>(false)
+    private val registerUserMutableState = MutableStateFlow(false)
     val registerUserState: StateFlow<Boolean> = registerUserMutableState
+
+    private val passwordVisibilityMutableState = MutableStateFlow(false)
+    val passwordVisibilityState: StateFlow<Boolean> = passwordVisibilityMutableState
+
+    private val passwordRepeatVisibilityMutableState = MutableStateFlow(false)
+    val passwordRepeatVisibilityState: StateFlow<Boolean> = passwordRepeatVisibilityMutableState
 
     fun registerUser(username: String, password: String) {
         val registerRequest = RegisterRequest(
@@ -48,5 +54,13 @@ class UserRegisterViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun togglePasswordVisibility() {
+        passwordVisibilityMutableState.value = !passwordVisibilityMutableState.value
+    }
+
+    fun togglePasswordRepeatVisibility() {
+        passwordRepeatVisibilityMutableState.value = !passwordRepeatVisibilityMutableState.value
     }
 }
