@@ -128,4 +128,9 @@
         android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
         android:label="fragment_profile_settings"
         tools:layout="@layout/fragment_profile_settings" />
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.saulhervas.easychat.ui.chat_detail.ChatDetailFragment"
+        android:label="fragment_chat_detail"
+        tools:layout="@layout/fragment_chat_detail" />
 </navigation>
