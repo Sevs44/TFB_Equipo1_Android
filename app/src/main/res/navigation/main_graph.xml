@@ -83,7 +83,11 @@
         android:id="@+id/userConfig"
         android:name="com.saulhervas.easychat.ui.user_profile.UserProfileFragment"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_user_profile">
+        <action
+            android:id="@+id/action_userConfig_to_homeUser"
+            app:destination="@id/homeUser" />
+    </fragment>
     <fragment
         android:id="@+id/homeUser"
         android:name="com.saulhervas.easychat.ui.home.HomeUserFragment"
@@ -101,6 +105,12 @@
         <action
             android:id="@+id/action_homeUser_to_chatLog"
             app:destination="@id/chatLog" />
+        <action
+            android:id="@+id/action_homeUser_to_newChatFragment"
+            app:destination="@id/newChatFragment" />
+        <action
+            android:id="@+id/action_homeUser_to_userConfig"
+            app:destination="@id/userConfig" />
     </fragment>
 
     <fragment
@@ -108,4 +118,14 @@
         android:name="com.saulhervas.easychat.ui.chat.ChatLogFragment"
         android:label="fragment_chat_log"
         tools:layout="@layout/fragment_chat_log" />
+    <fragment
+        android:id="@+id/newChatFragment"
+        android:name="com.saulhervas.easychat.ui.new_chat.NewChatFragment"
+        android:label="fragment_new_chat"
+        tools:layout="@layout/fragment_new_chat" />
+    <fragment
+        android:id="@+id/profileSettingsFragment"
+        android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
+        android:label="fragment_profile_settings"
+        tools:layout="@layout/fragment_profile_settings" />
 </navigation>

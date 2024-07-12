@@ -34,7 +34,19 @@ class HomeUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
+        setOnclickListener()
         return binding.root
+    }
+
+    fun setOnclickListener() {
+        binding.btnAdd.setOnClickListener {
+            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+            findNavController().navigate(action)
+        }
+        binding.imBtnSettings.setOnClickListener {
+            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -13,7 +13,13 @@ class OpenChatAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return OpenChatViewHolder(layoutInflater.inflate(R.layout.user_row_message, parent, false))
+        return OpenChatViewHolder(
+            layoutInflater.inflate(
+                R.layout.item_user_row_message,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {

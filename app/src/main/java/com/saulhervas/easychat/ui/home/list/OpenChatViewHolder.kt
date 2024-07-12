@@ -2,12 +2,12 @@ package com.qualentum.sprint3.main.ui.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.saulhervas.easychat.databinding.UserRowMessageBinding
+import com.saulhervas.easychat.databinding.ItemUserRowMessageBinding
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 
 class OpenChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val binding = UserRowMessageBinding.bind(view)
+    val binding = ItemUserRowMessageBinding.bind(view)
 
     fun onBind(
         itemChat: OpenChatItemModel?,
