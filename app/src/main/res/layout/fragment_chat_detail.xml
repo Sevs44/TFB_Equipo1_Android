@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.chat_detail.ChatDetailFragment">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/color_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/im_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/color_app"
+            android:padding="20dp"
+            android:src="@drawable/ic_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_shape"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pepe" />
+
+            <TextView
+                android:id="@+id/tv_name_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                tools:text="Maria" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/iv_recent_photo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_recent_photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_recent_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/recent_photos"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.203"
+        app:layout_constraintStart_toEndOf="@+id/iv_recent_photo"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <View
+        android:id="@+id/view_profile"
+        android:layout_width="300dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="22dp"
+        android:background="#8B8888"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recent_photo" />
+
+    <GridLayout
+        android:id="@+id/grid_photos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_profile"
+        app:layout_constraintVertical_bias="0.128">
+
+        <ImageView
+            android:id="@+id/iv_photo_1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_5"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_6"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_7"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_8"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+        <ImageView
+            android:id="@+id/iv_photo_9"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@color/color_photo"
+            android:src="@drawable/ic_photos" />
+
+    </GridLayout>
+
+    <View
+        android:id="@+id/view_profile2"
+        android:layout_width="300dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="22dp"
+        android:background="#8B8888"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grid_photos" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_profile"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/rounded_background"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_user_block"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingStart="18dp"
+        android:text="@string/block"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="@color/color_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_profile2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
