@@ -24,6 +24,7 @@ class HomeUserFragment : Fragment() {
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getUserArgs()
@@ -54,6 +55,7 @@ class HomeUserFragment : Fragment() {
         setUpViewModel()
         observeViewModel()
     }
+
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
@@ -99,4 +101,5 @@ class HomeUserFragment : Fragment() {
         val action = HomeUserFragmentDirections.actionHomeUserToChatLog()
         findNavController().navigate(action)
     }
+
 }

@@ -1,8 +1,10 @@
 package com.saulhervas.easychat.ui.user_login
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,8 @@ class UserLoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val userLoginViewModel: UserLoginViewModel by viewModels()
+    var token: String = ""
+    var id: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,20 +35,22 @@ class UserLoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         setOnClickListener()
+        logoutUser()
         setupUI(binding.root)
 
-        observeViewModel()
 
         return binding.root
     }
 
     private fun setOnClickListener() {
         binding.btnLogin.setOnClickListener {
-
             userLoginViewModel.loginUser(
                 binding.etUser.text.toString(),
                 binding.etPassword.text.toString()
                 )
+            observeViewModel()
+            val action = UserLoginFragmentDirections.actionUserLoginToHomeUser(token, id)
+            findNavController().navigate(action)
         }
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_userLogin_to_userRegister)
@@ -54,15 +60,28 @@ class UserLoginFragment : Fragment() {
         }
     }
 
+    private fun logoutUser() {
+        userLoginViewModel.logoutUser(token)
+    }
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             userLoginViewModel.loginResult.collect {
-                val action =
-                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
-                findNavController().navigate(action)
+                token = it.token
+                id = it.userLogin.id
+                Log.d(TAG, "observeViewModel: $it")
                 Toast.makeText(
                     requireContext(),
                     "$it.token",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+        lifecycleScope.launch {
+            userLoginViewModel.loginResulterror.collect {
+                Toast.makeText(
+                    requireContext(),
+                    it,
                     Toast.LENGTH_LONG
                 ).show()
             }
