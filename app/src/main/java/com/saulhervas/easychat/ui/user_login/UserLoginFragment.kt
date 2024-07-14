@@ -28,6 +28,11 @@ class UserLoginFragment : Fragment() {
     var token: String = ""
     var id: String = ""
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeViewModel()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,9 +42,11 @@ class UserLoginFragment : Fragment() {
         setOnClickListener()
         logoutUser()
         setupUI(binding.root)
-
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setOnClickListener() {
@@ -48,9 +55,6 @@ class UserLoginFragment : Fragment() {
                 binding.etUser.text.toString(),
                 binding.etPassword.text.toString()
                 )
-            observeViewModel()
-            val action = UserLoginFragmentDirections.actionUserLoginToHomeUser(token, id)
-            findNavController().navigate(action)
         }
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_userLogin_to_userRegister)
@@ -67,14 +71,14 @@ class UserLoginFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             userLoginViewModel.loginResult.collect {
-                token = it.token
-                id = it.userLogin.id
-                Log.d(TAG, "observeViewModel: $it")
                 Toast.makeText(
                     requireContext(),
                     "$it.token",
                     Toast.LENGTH_LONG
                 ).show()
+                Log.i(TAG, "observeViewModel: ${it.token} ${it.userLogin.id}")
+                val action = UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
+                findNavController().navigate(action)
             }
         }
         lifecycleScope.launch {
