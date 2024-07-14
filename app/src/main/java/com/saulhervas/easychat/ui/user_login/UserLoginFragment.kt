@@ -40,13 +40,8 @@ class UserLoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         setOnClickListener()
-        logoutUser()
         setupUI(binding.root)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setOnClickListener() {
@@ -63,11 +58,6 @@ class UserLoginFragment : Fragment() {
             findNavController().navigate(R.id.action_userLogin_to_userRecoverPass)
         }
     }
-
-    private fun logoutUser() {
-        userLoginViewModel.logoutUser(token)
-    }
-
     private fun observeViewModel() {
         lifecycleScope.launch {
             userLoginViewModel.loginResult.collect {
