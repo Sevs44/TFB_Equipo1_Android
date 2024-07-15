@@ -1,5 +1,3 @@
-package com.qualentum.sprint3.main.ui.list
-
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.ItemUserRowMessageBinding
