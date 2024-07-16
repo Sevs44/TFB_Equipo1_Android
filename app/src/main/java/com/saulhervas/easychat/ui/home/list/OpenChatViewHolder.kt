@@ -1,4 +1,4 @@
-package com.qualentum.sprint3.main.ui.list
+package com.saulhervas.easychat.ui.home.list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

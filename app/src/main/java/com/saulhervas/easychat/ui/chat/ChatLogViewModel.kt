@@ -15,8 +15,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatLogViewModel @Inject constructor(
     private val messageUseCases: MessageUseCases
-): ViewModel() {
-    private val messagesMutableState = MutableStateFlow<MessagesModel>(MessagesModel( 0,  ArrayList(emptyList())))
+) : ViewModel() {
+    private val messagesMutableState =
+        MutableStateFlow<MessagesModel>(MessagesModel(0, ArrayList(emptyList())))
     val messagesState: StateFlow<MessagesModel> = messagesMutableState
 
     fun getOpenChats(token: String) {
@@ -28,18 +29,12 @@ class ChatLogViewModel @Inject constructor(
                         //loadingMutableSharedFlow.emit(false)
                         //errorMutableSharedFlow.emit(it.error)
                     }
+
                     is BaseResponse.Success -> {
                         //loadingMutableSharedFlow.emit(false)
                         Log.d("TAG", "l> Success ${it.data}")
-                        /*
-                                                if (it.data.isNotEmpty()) {
-                                                    openChatsMutableState.value = it.data
-                                                    showImageBackgroundMutableState.value = false
-                                                } else {
-                                                    showImageBackgroundMutableState.value = true
-                                                }
-                                            */
-                                            }
+                        messagesMutableState.value = it.data
+                    }
                 }
             }
         }

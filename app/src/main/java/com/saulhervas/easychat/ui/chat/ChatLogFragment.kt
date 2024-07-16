@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
+import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
+import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -44,8 +47,16 @@ class ChatLogFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.messagesState.collect {
                 Log.i("TAG", "observeViewModel: it $it")
+                setupRecyclerView(it.messageList)
             }
         }
+    }
+
+    private fun setupRecyclerView(messages: ArrayList<MessageItemModel>?) {
+        binding.rvMessage.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvMessage.adapter =
+            MessagesAdapter(messages)
+        Log.i("TAG", "setupRecyclerView: $messages")
     }
 
     private fun setUpViewModel() {
@@ -58,7 +69,6 @@ class ChatLogFragment : Fragment() {
         token = args.token
         id = args.id
     }
-
 }
 
 

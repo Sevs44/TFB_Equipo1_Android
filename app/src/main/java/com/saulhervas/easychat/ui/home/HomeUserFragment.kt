@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.qualentum.sprint3.main.ui.list.OpenChatAdapter
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
