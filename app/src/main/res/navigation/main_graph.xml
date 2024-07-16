@@ -27,6 +27,8 @@
         <action
             android:id="@+id/action_userLogin_to_homeUser"
             app:destination="@id/homeUser"
+            app:popUpTo="@id/homeUser"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
@@ -160,6 +162,10 @@
     <fragment
         android:id="@+id/userLogoutFragment"
         android:name="com.saulhervas.easychat.ui.user_logout.UserLogoutFragment"
-        android:label="fragment_photo_edit"
-        tools:layout="@layout/fragment_photo_edit" />
+        android:label="fragment_user_logout"
+        tools:layout="@layout/fragment_user_logout">
+        <action
+            android:id="@+id/action_userLogoutFragment_to_userLogin"
+            app:destination="@id/userLogin" />
+    </fragment>
 </navigation>
