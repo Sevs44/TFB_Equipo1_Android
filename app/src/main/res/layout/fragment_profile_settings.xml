@@ -60,7 +60,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="28dp"
                 android:background="@color/white"
-                android:src="@drawable/pepe"
+                android:src="@mipmap/ic_pepe"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Button" />
@@ -119,6 +119,29 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_privacity"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/btn_shadow_biometric"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawableTint="@color/color_red"
+        android:drawableEnd="@drawable/ic_foreward"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingStart="18dp"
+        android:text="@string/user_block"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="@color/color_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,10 +31,12 @@
     <string name="delete_account">Borrar cuenta</string>
     <string name="close_session">Cerrar Sesión</string>
     <string name="edit_photo">Edita la foto de perfil</string>
+    <string name="photo_profile">Foto de perfil</string>
     <string name="take_photo">Tomar foto</string>
     <string name="select_photo">Seleccionar foto</string>
     <string name="delete_photo">Eliminar foto</string>
     <string name="edit">Editar</string>
+    <string name="user_block">Bloqueados</string>
     <string name="tv_profile">Ingresa tu nombre y añade una foto de perfil (opcional)</string>
     <string name="tv_logout">¿Deseas cerrar sesión en este dispositivo?</string>
 

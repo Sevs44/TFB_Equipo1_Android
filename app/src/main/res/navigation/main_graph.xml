@@ -26,7 +26,11 @@
             app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_userLogin_to_homeUser"
-            app:destination="@id/homeUser">
+            app:destination="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right">
             <argument
                 android:name="token"
                 app:argType="string" />
@@ -86,7 +90,11 @@
         tools:layout="@layout/fragment_user_profile">
         <action
             android:id="@+id/action_userConfig_to_homeUser"
-            app:destination="@id/homeUser" />
+            app:destination="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/homeUser"
@@ -101,16 +109,32 @@
             app:argType="string" />
         <action
             android:id="@+id/action_homeUser_to_userLogin"
-            app:destination="@id/userLogin" />
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_homeUser_to_chatLog"
-            app:destination="@id/chatLog" />
+            app:destination="@id/chatLog"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_homeUser_to_newChatFragment"
-            app:destination="@id/newChatFragment" />
+            app:destination="@id/newChatFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_homeUser_to_userConfig"
-            app:destination="@id/userConfig" />
+            app:destination="@id/userConfig"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 
     <fragment
@@ -133,4 +157,9 @@
         android:name="com.saulhervas.easychat.ui.chat_detail.ChatDetailFragment"
         android:label="fragment_chat_detail"
         tools:layout="@layout/fragment_chat_detail" />
+    <fragment
+        android:id="@+id/userLogoutFragment"
+        android:name="com.saulhervas.easychat.ui.user_logout.UserLogoutFragment"
+        android:label="fragment_photo_edit"
+        tools:layout="@layout/fragment_photo_edit" />
 </navigation>
