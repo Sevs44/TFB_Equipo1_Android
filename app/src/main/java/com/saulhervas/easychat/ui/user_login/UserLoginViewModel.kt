@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
+
 class UserLoginViewModel @Inject constructor(
     private val loginUserCase: UserUseCases,
 ) : ViewModel() {
@@ -44,7 +45,18 @@ class UserLoginViewModel @Inject constructor(
 
     fun loginWithBiometrics(biometricToken: String) {
         viewModelScope.launch {
+            loginUserCase.biometricUser(biometricToken).collect { response ->
+                when (response) {
+                    is BaseResponse.Error -> {
+                        Log.d("TAG", "Error: ${response.error.message}")
+                        _loginResultError.emit(response.error.message)
+                    }
 
+                    is BaseResponse.Success -> {
+                        _loginResult.emit(response.data)
+                    }
+                }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.saulhervas.easychat.data.repository.backend.retrofit.users
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
+import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.mappers.UsersMappers
@@ -29,6 +30,26 @@ class UsersDataSource @Inject constructor(
             val apiResult = userCalls.callRegisterUser(registerRequest)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(UsersMappers.userRegisterToUserModel(apiResult.data)))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getLogoutUser(token: String): Flow<BaseResponse<LogoutResponse>> =
+        flow {
+            val apiResult = userCalls.callLogout(token)
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getBiometricUser(token: String): Flow<BaseResponse<LoginResponse>> =
+        flow {
+            val apiResult = userCalls.callBiometric(token)
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 @AndroidEntryPoint
+
 class UserLoginFragment : Fragment() {
 
     private val userLoginViewModel: UserLoginViewModel by viewModels()
@@ -30,6 +31,11 @@ class UserLoginFragment : Fragment() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var executor: Executor
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +45,6 @@ class UserLoginFragment : Fragment() {
         setupBiometricAuthentication()
         setOnClickListener()
         setupUI(binding.root)
-        observeViewModel()
 
         return binding.root
     }
@@ -112,7 +117,6 @@ class UserLoginFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             userLoginViewModel.loginResult.collect {
-                // Aquí guardamos el token biométrico en EncryptedSharedPreferences después de un login exitoso
                 SecurePreferences.saveBiometricToken(requireContext(), it.token)
                 val action =
                     UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)

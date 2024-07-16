@@ -3,6 +3,7 @@ package com.saulhervas.easychat.domain.usecases
 import com.saulhervas.easychat.data.repository.backend.retrofit.users.UsersDataProvider
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
+import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
@@ -17,5 +18,12 @@ class UserUseCases @Inject constructor(
     }
     fun loginUser(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> {
         return userDataProvider.getLogin(loginRequest)
+    }
+    fun logoutUser(token: String): Flow<BaseResponse<LogoutResponse>> {
+        return userDataProvider.getLogoutUser(token)
+    }
+
+    fun biometricUser(token: String): Flow<BaseResponse<LoginResponse>> {
+        return userDataProvider.getBiometricUser(token)
     }
 }

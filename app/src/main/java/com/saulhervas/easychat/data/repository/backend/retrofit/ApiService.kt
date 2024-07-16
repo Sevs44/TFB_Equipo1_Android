@@ -24,4 +24,7 @@ interface ApiService {
 
     @POST("users/logout")
     suspend fun postLogoutUser(@Header("Authorization") token: String): Response<LogoutResponse>
+
+    @POST("users/biometric")
+    suspend fun postBiometric(@Header("Authorization") token: String): Response<LoginResponse>
 }
