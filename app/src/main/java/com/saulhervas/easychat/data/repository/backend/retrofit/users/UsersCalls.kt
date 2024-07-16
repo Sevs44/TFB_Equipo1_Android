@@ -9,7 +9,7 @@ import com.saulhervas.easychat.data.repository.response.register.RegisterRespons
 import com.saulhervas.easychat.domain.model.BaseResponse
 import javax.inject.Inject
 
-class UserCalls @Inject constructor(
+class UsersCalls @Inject constructor(
     val apiService: ApiService
 ) : BaseService() {
     suspend fun callLogin(loginRequest: LoginRequest): BaseResponse<LoginResponse> {
