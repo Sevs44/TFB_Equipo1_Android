@@ -1,25 +1,41 @@
 [versions]
+# Android
 agp = "8.4.2"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 appcompat = "1.7.0"
-kotlinxCoroutinesCore = "1.8.1"
-lifecycleRuntimeKtx = "2.8.3"
-loggingInterceptor = "4.12.0"
 material = "1.12.0"
 activity = "1.9.0"
 fragment = "1.8.1"
 constraintlayout = "2.1.4"
+# Coroutines
+kotlinxCoroutinesCore = "1.8.1"
+lifecycleRuntimeKtx = "2.8.3"
+loggingInterceptor = "4.12.0"
+# Navigation
 navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
+# RecyclerView
 recyclerview = "1.3.2"
+# Retrofit
 retrofit = "2.11.0"
+# Lottie
 lottie = "6.1.0"
+# Dagger-Hilt
 hiltAndroid = "2.51.1"
+#KSP
 pluginKspTools = "2.0.0-1.0.21"
+#GoogleService
 googleServices = "4.4.2"
+#FireBase
 firebaseBom = "33.1.1"
 firebaseCrashlytics = "2.9.9"
+
+#Biometric
+biometric = "1.1.0"
+
+#Crypto SharedPreferences
+cryptoSharedPreferences = "1.0.0"
 
 
 [libraries]
@@ -42,6 +58,12 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 # Dagger-Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+
+#Biometric
+androidxBiometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
+
+#Crypto SharedPreferences
+androidxCryptoSharedPreferences = { group = "androidx.security", name = "security-crypto", version.ref = "cryptoSharedPreferences" }
 
 # Retrofit
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

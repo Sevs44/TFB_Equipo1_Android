@@ -78,6 +78,10 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    //Biometric
+    implementation(libs.androidxBiometric)
+    //Encrypted Shared Preferences
+    implementation(libs.androidxCryptoSharedPreferences)
 
     //Firebase
     implementation(platform(libs.firebase.bom))
