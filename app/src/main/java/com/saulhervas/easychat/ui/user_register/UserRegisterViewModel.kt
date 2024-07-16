@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.usecases.RegisterUserCase
+import com.saulhervas.easychat.domain.usecases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserRegisterViewModel @Inject constructor(
-    private val registerUserCase: RegisterUserCase
+    private val registerUserCase: UserUseCases
 ) : ViewModel() {
     private val loadingMutableState = MutableStateFlow(true)
     val loadingState: StateFlow<Boolean> = loadingMutableState
@@ -41,7 +41,7 @@ class UserRegisterViewModel @Inject constructor(
 
         viewModelScope.launch {
             loadingMutableState.value = true
-            registerUserCase.invoke(registerRequest).collect { result ->
+            registerUserCase.registerUser(registerRequest).collect { result ->
                 when (result) {
                     is BaseResponse.Error -> {
                         errorMutableState.emit(result.error.message)

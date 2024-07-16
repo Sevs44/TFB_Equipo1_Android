@@ -5,7 +5,7 @@ import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class OpenChatsDataProvider @Inject constructor(
+class ChatsDataProvider @Inject constructor(
     private val remoteDataSource: ChatsDataSource
 ) {
     fun getOpenChatList(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
