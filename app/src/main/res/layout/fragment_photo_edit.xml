@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.user_logout.UserLogoutFragment">
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="148dp"
+        android:text="@string/photo_profile"
+        android:textColor="@color/black"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/im_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintEnd_toStartOf="@+id/tv_logout"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="277dp"
+        android:layout_height="312dp"
+        android:layout_marginTop="44dp"
+        android:background="@color/white"
+        android:elevation="25dp"
+        android:src="@mipmap/ic_pepe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_logout"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Button" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_take_photo"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/btn_shadow_biometric"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_camera"
+        android:focusable="true"
+        android:gravity="start"
+        android:paddingHorizontal="18dp"
+        android:text="@string/take_photo"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_select_photo"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_shadow_biometric"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_photos"
+        android:focusable="true"
+        android:gravity="start"
+        android:paddingHorizontal="18dp"
+        android:text="@string/select_photo"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_take_photo" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_delete_photo"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_shadow_biometric"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_paper_bin"
+        android:focusable="true"
+        android:gravity="start"
+        android:paddingHorizontal="18dp"
+        android:text="@string/delete_photo"
+        android:textAllCaps="false"
+        android:textColor="@color/color_red"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_select_photo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
