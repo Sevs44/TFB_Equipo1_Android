@@ -23,6 +23,7 @@ class HomeUserFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
+    private lateinit var id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,7 @@ class HomeUserFragment : Fragment() {
 
     private fun getUserArgs() {
         token = args.token
+        id = args.id
     }
 
     private fun observeViewModel() {
@@ -96,7 +98,7 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun changeScreen() {
-        val action = HomeUserFragmentDirections.actionHomeUserToChatLog()
+        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(token, id)
         findNavController().navigate(action)
     }
 }
