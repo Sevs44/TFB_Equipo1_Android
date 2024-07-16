@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.usecases.LoginUseCase
+import com.saulhervas.easychat.domain.usecases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserLoginViewModel @Inject constructor(
-    private val loginUserCase: LoginUseCase,
+    private val loginUserCase: UserUseCases,
 ) : ViewModel() {
 
     private val _loginResultError = MutableSharedFlow<String>()
@@ -27,7 +27,7 @@ class UserLoginViewModel @Inject constructor(
     fun loginUser(username: String, password: String) {
         val loginRequest = LoginRequest(username, password)
         viewModelScope.launch {
-            loginUserCase.invoke(loginRequest).collect { response ->
+            loginUserCase.loginUser(loginRequest).collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${response.error.message}")

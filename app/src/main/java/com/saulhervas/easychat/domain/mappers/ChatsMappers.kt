@@ -1,13 +1,11 @@
 package com.saulhervas.easychat.domain.mappers
 
 import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
-import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
-import com.saulhervas.easychat.domain.model.modelsregister.UserRegister
 
-class Mapper {
+class ChatsMappers {
     companion object {
-        fun OpenChatsResponseToOpenChatsModel(openChatsResponse: OpenChatsResponse?): ArrayList<OpenChatItemModel> {
+        fun openChatsResponseToOpenChatsModel(openChatsResponse: OpenChatsResponse?): ArrayList<OpenChatItemModel> {
             val list: ArrayList<OpenChatItemModel> = arrayListOf()
             openChatsResponse?.forEach {
                 list.add(
@@ -19,25 +17,11 @@ class Mapper {
                         idUser2 = it.idUser2,
                         nickUser2 = it.user2Nick,
                         isOnlineUser2 = it.user2IsOnline,
-
                         )
                 )
             }
             return list
         }
 
-        fun UserRegisterToUserModel(userRegister: RegisterResponse): RegisterResponse {
-            val list = RegisterResponse(
-                success = userRegister.success,
-                user = UserRegister(
-                    id = userRegister.user.id,
-                    login = userRegister.user.login,
-                    password = userRegister.user.password,
-                    token = userRegister.user.token
-                )
-            )
-            return list
-        }
     }
-
 }

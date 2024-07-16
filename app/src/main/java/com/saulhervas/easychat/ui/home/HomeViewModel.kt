@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
-import com.saulhervas.easychat.domain.usecases.OpenChatUseCases
+import com.saulhervas.easychat.domain.usecases.ChatUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val openChatUseCases: OpenChatUseCases
+    private val chatUseCases: ChatUseCases
 ): ViewModel() {
     private val openChatsMutableState = MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
     val openChatsState: StateFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
 
     fun getOpenChats(token: String) {
         viewModelScope.launch {
-             openChatUseCases.invoke(token).collect {
+             chatUseCases.getOpenChats(token).collect {
                  when (it) {
                      is BaseResponse.Error -> {
                          Log.d("TAG", "l> Error: ${it.error.message}")
