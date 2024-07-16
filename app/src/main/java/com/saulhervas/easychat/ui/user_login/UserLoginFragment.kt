@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentLoginBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
@@ -29,8 +30,6 @@ class UserLoginFragment : Fragment() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var executor: Executor
-    private var token = ""
-    private var userId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +64,16 @@ class UserLoginFragment : Fragment() {
                         "Authentication succeeded!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    navigateToHome()
+                    val biometricToken = SecurePreferences.getBiometricToken(requireContext())
+                    if (biometricToken != null) {
+                        userLoginViewModel.loginWithBiometrics(biometricToken)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "No biometric token found",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
                 override fun onAuthenticationFailed() {
@@ -104,15 +112,25 @@ class UserLoginFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             userLoginViewModel.loginResult.collect {
-                token = it.token
-                userId = it.userLogin.id
+                // Aquí guardamos el token biométrico en EncryptedSharedPreferences después de un login exitoso
+                SecurePreferences.saveBiometricToken(requireContext(), it.token)
                 val action =
                     UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
                 findNavController().navigate(action)
+                Toast.makeText(
+                    requireContext(),
+                    "$it.token",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
         lifecycleScope.launch {
             userLoginViewModel.loginResulterror.collect {
+                Toast.makeText(
+                    requireContext(),
+                    it,
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -126,6 +144,7 @@ class UserLoginFragment : Fragment() {
                 false
             }
         }
+
         // Si una vista es un contenedor, repetir para sus hijos
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
@@ -139,11 +158,5 @@ class UserLoginFragment : Fragment() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
-    }
-
-    private fun navigateToHome() {
-        val action =
-            UserLoginFragmentDirections.actionUserLoginToHomeUser(token, userId)
-        findNavController().navigate(action)
     }
 }

@@ -41,4 +41,10 @@ class UserLoginViewModel @Inject constructor(
             }
         }
     }
+
+    fun loginWithBiometrics(biometricToken: String) {
+        viewModelScope.launch {
+
+        }
+    }
 }
