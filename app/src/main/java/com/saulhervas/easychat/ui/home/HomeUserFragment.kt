@@ -13,9 +13,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import com.saulhervas.easychat.domain.model.UserSingleton
 import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeUserFragment : Fragment() {
@@ -24,6 +26,9 @@ class HomeUserFragment : Fragment() {
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
     private lateinit var id: String
+
+    @Inject
+    lateinit var user: UserSingleton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,14 +62,15 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun setUpViewModel() {
-        lifecycleScope.launch {
             viewModel.getOpenChats(token)
-        }
     }
 
     private fun getUserArgs() {
         token = args.token
         id = args.id
+        user.id  = "1"
+        user.token = "Prueba"
+        Log.i("TAG", "getUserArgs: $user")
     }
 
     private fun observeViewModel() {
@@ -100,5 +106,12 @@ class HomeUserFragment : Fragment() {
     private fun changeScreen() {
         val action = HomeUserFragmentDirections.actionHomeUserToChatLog(token, id)
         findNavController().navigate(action)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        user.id = "3"
+        user.token = "Funciona"
+        Log.i("TAG", "getUserArgs: $user")
     }
 }

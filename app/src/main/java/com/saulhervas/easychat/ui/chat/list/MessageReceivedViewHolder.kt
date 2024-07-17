@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.ItemChatFromRowBinding
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 
-class MessagesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class MessageReceivedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val binding = ItemChatFromRowBinding.bind(view)
 
@@ -14,6 +14,7 @@ class MessagesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     ) {
         binding.apply {
             tvMessageFrom.text = messages?.messageContent
+            tvDateMessage.text = messages?.messageSentAt
         }
     }
 }

@@ -3,6 +3,7 @@ package com.saulhervas.easychat.domain.mappers
 import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
+import com.saulhervas.easychat.utils.DateFormatter
 
 class MessagesMappers {
     companion object {
@@ -11,7 +12,7 @@ class MessagesMappers {
             messagesResponse.messages?.forEach {
                 list.add(
                     MessageItemModel(
-                        messageSentAt = it.date,
+                        messageSentAt = DateFormatter.formatHour(it.date),
                         messageContent = it.messageContent,
                         sentBy = it.sentBy,
                     )
