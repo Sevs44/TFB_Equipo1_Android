@@ -48,26 +48,18 @@ class PhotoEditFragment : Fragment() {
     ): View {
         binding = FragmentPhotoEditBinding.inflate(inflater, container, false)
         setupUI(binding.root)
+        loadSavedImage()
         setupCamera()
         setupGallery()
         setOnClickListener()
         return binding.root
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupUI(view: View) {
-        if (view !is EditText) {
-            view.setOnTouchListener { _, _ ->
-                hideKeyboard()
-                false
-            }
-        }
-
-        if (view is ViewGroup) {
-            for (i in 0 until view.childCount) {
-                val innerView = view.getChildAt(i)
-                setupUI(innerView)
-            }
+    private fun loadSavedImage() {
+        val savedUri = SecurePreferences.getProfileImage(requireContext())
+        savedUri?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
         }
     }
 
@@ -76,6 +68,8 @@ class PhotoEditFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
                 if (success) {
                     Log.d("PhotoEditFragment", "Picture taken successfully")
+                    // Guarda la imagen en SharedPreferences al tomarla con la cámara
+                    SecurePreferences.saveProfileImage(requireContext(), imageUri)
                     binding.ivProfile.setImageURI(imageUri)
                 } else {
                     Log.d("PhotoEditFragment", "Failed to take picture")
@@ -143,6 +137,7 @@ class PhotoEditFragment : Fragment() {
                     R.drawable.pepe
                 )
             )
+            SecurePreferences.saveProfileImage(requireContext(), Uri.EMPTY)
         }
         binding.imBtnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -169,7 +164,7 @@ class PhotoEditFragment : Fragment() {
 
     private fun openCamera() {
         imageUri = createImageUri()
-        SecurePreferences.saveProfileImage(requireContext(), imageUri.toString())
+        SecurePreferences.saveProfileImage(requireContext(), imageUri)
         takePictureLauncher.launch(imageUri)
     }
 
@@ -216,6 +211,7 @@ class PhotoEditFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 data?.data?.let { uri ->
+                    SecurePreferences.saveProfileImage(requireContext(), uri)
                     imageUri = uri
                     binding.ivProfile.setImageURI(uri)
                 }
@@ -226,13 +222,26 @@ class PhotoEditFragment : Fragment() {
         // Aquí puedes observar cambios en el ViewModel si es necesario
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupUI(view: View) {
+        if (view !is EditText) {
+            view.setOnTouchListener { _, _ ->
+                hideKeyboard()
+                false
+            }
+        }
+
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                setupUI(innerView)
+            }
+        }
+    }
+
     private fun hideKeyboard() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
-    }
-
-    companion object {
-        private const val REQUEST_READ_EXTERNAL_STORAGE = 100
     }
 }
