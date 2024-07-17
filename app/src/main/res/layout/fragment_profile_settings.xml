@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:id="@+id/im_btn_profile"
+        android:id="@+id/im_btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -32,8 +32,9 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toEndOf="@+id/im_btn_profile"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/im_btn_back"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UnknownId" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_profile"
@@ -61,6 +62,8 @@
                 android:layout_marginTop="28dp"
                 android:background="@color/white"
                 android:src="@mipmap/ic_pepe"
+                android:clickable="true"
+                android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Button" />
@@ -77,7 +80,9 @@
                 android:textColor="@color/color_app"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile"
+                android:clickable="true"
+                android:focusable="true" />
 
             <View
                 android:id="@+id/view_profile"
@@ -198,7 +203,7 @@
         app:trackTint="@drawable/sw_track" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_privacity"
+        android:id="@+id/btn_block"
         android:layout_width="304dp"
         android:layout_height="40dp"
         android:layout_marginHorizontal="50dp"

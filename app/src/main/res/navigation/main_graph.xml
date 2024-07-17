@@ -87,9 +87,9 @@
 
     <fragment
         android:id="@+id/userConfig"
-        android:name="com.saulhervas.easychat.ui.user_profile.UserProfileFragment"
+        android:name="com.saulhervas.easychat.ui.userConfig.UserConfigFragment"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_profile">
+        tools:layout="@layout/fragment_user_config">
         <action
             android:id="@+id/action_userConfig_to_homeUser"
             app:destination="@id/homeUser"
