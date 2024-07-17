@@ -25,6 +25,11 @@ interface ApiService {
     suspend fun getOpenChats(@Header("Authorization") token: String): Response<OpenChatsResponse>
 
     //query = {idchat}?offset={offset}&limit={limit}
-    @GET("messages/list/1425?offset=0&limit=5")
-    suspend fun getMessagesList(@Header("Authorization") token: String): Response<MessagesListResponse>
+    @GET("messages/list/{id}")
+    suspend fun getMessagesList(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): Response<MessagesListResponse>
 }

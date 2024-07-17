@@ -6,30 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
-import com.saulhervas.easychat.domain.model.UserSingleton
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Collections
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatLogFragment : Fragment() {
     private lateinit var binding: FragmentChatLogBinding
-    private val viewModel: ChatLogViewModel by viewModels()
+    private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
     private val args: ChatLogFragmentArgs by navArgs()
     private lateinit var token: String
-    private lateinit var id: String
-
-    @Inject
-    lateinit var user: UserSingleton
+    private lateinit var idUser: String
+    private lateinit var idChat: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +41,8 @@ class ChatLogFragment : Fragment() {
             imBtnBack.setOnClickListener {
                 findNavController().popBackStack()
             }
-            ivProfile.setOnClickListener {
-
-            }
+            //ivProfile.setOnClickListener {
+            //}
         }
         return binding.root
     }
@@ -68,25 +63,25 @@ class ChatLogFragment : Fragment() {
     }
 
     private fun setupRecyclerView(messages: ArrayList<MessageItemModel>?) {
+        Log.i("TAG", "setupRecyclerView: messages => $messages")
         binding.rvMessage.layoutManager = LinearLayoutManager(requireContext()).apply {
             reverseLayout = true
         }
         binding.rvMessage.adapter =
-            MessagesAdapter(messages, user.id)
-        Log.i("TAG", "setupRecyclerView: $messages")
+            MessagesAdapter(messages, idUser)
     }
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
-            viewModel.getOpenChats(token)
+            Log.i("TAG", "setUpViewModel: id => $idChat")
+            viewModel.getOpenChats(token, idChat, offset = 0, limit = 5)
         }
     }
 
     private fun getUserArgs() {
         token = args.token
-        id = args.id
-        user.id  = "688"
-        Log.i("TAG", "getUserArgs: $user")
+        idUser = args.idUser
+        idChat = args.idChat
     }
 }
 

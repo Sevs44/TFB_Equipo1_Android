@@ -146,8 +146,12 @@
             android:name="token"
             app:argType="string" />
         <argument
-            android:name="id"
+            android:name="idUser"
             app:argType="string" />
+        <argument
+            android:name="idChat"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/newChatFragment"

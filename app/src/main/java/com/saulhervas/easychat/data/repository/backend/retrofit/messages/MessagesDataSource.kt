@@ -14,9 +14,9 @@ import javax.inject.Inject
 class MessagesDataSource @Inject constructor(
     private val messagesCalls: MessagesCalls
 ) : BaseService() {
-    fun getMessagesLists(token: String): Flow<BaseResponse<MessagesModel>> =
+    fun getMessagesLists(token: String, id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> =
         flow {
-            val apiResult = messagesCalls.callMessageList(token)
+            val apiResult = messagesCalls.callMessageList(token, id, offset, limit)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(MessagesMappers.messagesListResponseToMessagesListModel(apiResult.data)))
                 Log.i("TAG", "callMessageList: n message ==> ${apiResult.data.count}")

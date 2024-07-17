@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MessageUseCases @Inject constructor(
     private val dataProvider: MessagesDataProvider
 ) {
-    fun getMessagesList(token: String): Flow<BaseResponse<MessagesModel>> {
-        return dataProvider.getMessagesList(token)
+    fun getMessagesList(token: String, id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> {
+        return dataProvider.getMessagesList(token, id, offset, limit)
     }
 }

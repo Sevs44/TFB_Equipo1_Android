@@ -53,9 +53,9 @@ class MessagesAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if(messages?.get(position)!!.sentBy == id) {
-            VIEW_MESSAGE_RECEIVED
-        } else {
             VIEW_MESSAGE_SENT
+        } else {
+            VIEW_MESSAGE_RECEIVED
         }
     }
 

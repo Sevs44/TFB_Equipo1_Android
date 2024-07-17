@@ -11,11 +11,11 @@ class OpenChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun onBind(
         itemChat: OpenChatItemModel?,
-        onClickListener: () -> Unit
+        onClickListener: (OpenChatItemModel?) -> Unit
     ) {
         binding.apply {
             tvUserName.text = itemChat?.nickUser2
-            itemView.setOnClickListener { onClickListener() }
+            itemView.setOnClickListener { onClickListener(itemChat) }
         }
     }
 }
