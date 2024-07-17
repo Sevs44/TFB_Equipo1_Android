@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.R
-import com.saulhervas.easychat.domain.model.UserSingleton
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
-import javax.inject.Inject
 
 private const val VIEW_MESSAGE_RECEIVED = 1
 private const val VIEW_MESSAGE_SENT = 2

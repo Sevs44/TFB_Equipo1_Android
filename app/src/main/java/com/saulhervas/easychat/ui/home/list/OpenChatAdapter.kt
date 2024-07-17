@@ -1,6 +1,5 @@
 package com.saulhervas.easychat.ui.home.list
 
-import OpenChatViewHolder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
