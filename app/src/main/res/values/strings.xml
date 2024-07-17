@@ -39,7 +39,9 @@
     <string name="user_block">Bloqueados</string>
     <string name="tv_profile">Ingresa tu nombre y añade una foto de perfil (opcional)</string>
     <string name="tv_logout">¿Deseas cerrar sesión en este dispositivo?</string>
-
+    <string name="name">Nombre</string>
+    <string name="et_profile">Ingresa tu nombre</string>
+    <string name="tv_online">Mostrar estado en línea</string>
     //Chat
     <string name="notifications">Notificaciones</string>
     <string name="block">Bloquear</string>

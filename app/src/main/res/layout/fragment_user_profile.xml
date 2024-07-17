@@ -58,7 +58,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="448dp"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
@@ -79,23 +79,6 @@
                 android:textAllCaps="false"
                 android:textSize="16sp" />
 
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_chat_settings"
-                android:layout_width="304dp"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/btn_shadow_biometric"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_chat_setting"
-                android:drawableEnd="@drawable/ic_foreward"
-                android:focusable="true"
-                android:gravity="center"
-                android:paddingStart="18dp"
-                android:text="@string/chat_setings"
-                android:textAllCaps="false"
-                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_storage"
@@ -136,15 +119,15 @@
                 android:layout_width="304dp"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="130dp"
                 android:background="@drawable/btn_shadow_biometric"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:paddingStart="18dp"
                 android:text="@string/close_session"
-                android:textColor="@color/color_red"
                 android:textAllCaps="false"
+                android:textColor="@color/color_red"
                 android:textSize="16sp" />
 
         </LinearLayout>
