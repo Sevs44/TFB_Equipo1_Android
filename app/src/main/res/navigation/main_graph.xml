@@ -87,12 +87,19 @@
 
     <fragment
         android:id="@+id/userConfig"
-        android:name="com.saulhervas.easychat.ui.user_profile.UserProfileFragment"
+        android:name="com.saulhervas.easychat.ui.userConfig.UserConfigFragment"
         android:label="UserConfig"
-        tools:layout="@layout/fragment_user_profile">
+        tools:layout="@layout/fragment_user_config">
         <action
             android:id="@+id/action_userConfig_to_homeUser"
             app:destination="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userConfig_to_profileSettingsFragment"
+            app:destination="@id/profileSettingsFragment"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
