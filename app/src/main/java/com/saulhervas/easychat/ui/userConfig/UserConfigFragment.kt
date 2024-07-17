@@ -2,6 +2,7 @@ package com.saulhervas.easychat.ui.userConfig
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,12 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentUserConfigBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
-
+    private lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,7 @@ class UserConfigFragment : Fragment() {
     ): View {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
         setOnClickListener()
+        loadImageUri()
 
         setupUI(binding.root)
         return binding.root
@@ -46,8 +49,16 @@ class UserConfigFragment : Fragment() {
         }
     }
 
-
     private fun observeViewModel() {
+        // Aquí puedes observar cambios en el ViewModel si es necesario
+    }
+
+
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -59,8 +70,6 @@ class UserConfigFragment : Fragment() {
                 false
             }
         }
-
-        // Si una vista es un contenedor, repetir para sus hijos
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)
