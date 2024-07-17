@@ -27,12 +27,12 @@
         <action
             android:id="@+id/action_userLogin_to_homeUser"
             app:destination="@id/homeUser"
-            app:popUpTo="@id/homeUser"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right">
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/homeUser"
+            app:popUpToInclusive="true">
             <argument
                 android:name="token"
                 app:argType="string" />
@@ -160,7 +160,15 @@
         android:id="@+id/profileSettingsFragment"
         android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
         android:label="fragment_profile_settings"
-        tools:layout="@layout/fragment_profile_settings" />
+        tools:layout="@layout/fragment_profile_settings">
+        <action
+            android:id="@+id/action_profileSettingsFragment_to_photoEditFragment"
+            app:destination="@id/photoEditFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
     <fragment
         android:id="@+id/chatDetailFragment"
         android:name="com.saulhervas.easychat.ui.chat_detail.ChatDetailFragment"
@@ -175,4 +183,9 @@
             android:id="@+id/action_userLogoutFragment_to_userLogin"
             app:destination="@id/userLogin" />
     </fragment>
+    <fragment
+        android:id="@+id/photoEditFragment"
+        android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
+        android:label="PhotoEditFragment"
+        tools:layout="@layout/fragment_photo_edit" />
 </navigation>
