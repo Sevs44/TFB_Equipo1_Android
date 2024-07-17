@@ -100,11 +100,18 @@ class UserLoginFragment : Fragment() {
     }
 
     private fun setOnClickListener() {
+        val username = binding.etUser.text.toString()
+        val password = binding.etPassword.text.toString()
         binding.btnLogin.setOnClickListener {
-            userLoginViewModel.loginUser(
-                binding.etUser.text.toString(),
-                binding.etPassword.text.toString()
-            )
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Enter username and password",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                userLoginViewModel.loginUser(username, password)
+            }
         }
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_userLogin_to_userRegister)

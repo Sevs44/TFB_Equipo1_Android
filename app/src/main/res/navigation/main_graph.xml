@@ -150,26 +150,17 @@
         android:id="@+id/chatLog"
         android:name="com.saulhervas.easychat.ui.chat.ChatLogFragment"
         android:label="fragment_chat_log"
-        tools:layout="@layout/fragment_chat_log">
-
-    </fragment>
-
+        tools:layout="@layout/fragment_chat_log" />
     <fragment
         android:id="@+id/newChatFragment"
         android:name="com.saulhervas.easychat.ui.new_chat.NewChatFragment"
         android:label="fragment_new_chat"
-        tools:layout="@layout/fragment_new_chat">
-
-    </fragment>
-
+        tools:layout="@layout/fragment_new_chat" />
     <fragment
         android:id="@+id/profileSettingsFragment"
-        android:name="com.saulhervas.easychat.ui.user_profile_settings.ProfileSettingsFragment"
+        android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
         android:label="fragment_profile_settings"
-        tools:layout="@layout/fragment_profile_settings">
-
-    </fragment>
-
+        tools:layout="@layout/fragment_profile_settings" />
     <fragment
         android:id="@+id/chatDetailFragment"
         android:name="com.saulhervas.easychat.ui.chat_detail.ChatDetailFragment"
