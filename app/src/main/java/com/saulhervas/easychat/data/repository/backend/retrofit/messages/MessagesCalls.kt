@@ -12,8 +12,6 @@ class MessagesCalls @Inject constructor(
     private val apiService: ApiService
 ) : BaseService() {
     suspend fun callMessageList(token: String, id: String, offset: Int, limit: Int): BaseResponse<MessagesListResponse> {
-        Log.i("TAG", "callMessageList: ${apiService.getMessagesList(token, id, offset, limit).body()}")
-        Log.i("TAG", "callMessageList: ${apiService.getMessagesList(token, id, offset, limit).raw()}")
         return apiCall { apiService.getMessagesList(token, id, offset, limit) }
     }
 }

@@ -19,8 +19,6 @@ class MessagesDataSource @Inject constructor(
             val apiResult = messagesCalls.callMessageList(token, id, offset, limit)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(MessagesMappers.messagesListResponseToMessagesListModel(apiResult.data)))
-                Log.i("TAG", "callMessageList: n message ==> ${apiResult.data.count}")
-                Log.i("TAG", "callMessageList: messageList ==> ${apiResult.data.messages}")
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }
