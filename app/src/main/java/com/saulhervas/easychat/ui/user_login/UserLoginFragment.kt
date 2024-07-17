@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 @AndroidEntryPoint
-
 class UserLoginFragment : Fragment() {
 
     private val userLoginViewModel: UserLoginViewModel by viewModels()

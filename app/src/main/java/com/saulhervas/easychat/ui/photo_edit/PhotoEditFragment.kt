@@ -21,12 +21,15 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentPhotoEditBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class PhotoEditFragment : Fragment() {
@@ -48,9 +51,10 @@ class PhotoEditFragment : Fragment() {
     ): View {
         binding = FragmentPhotoEditBinding.inflate(inflater, container, false)
         setupUI(binding.root)
-        loadSavedImage()
+
         setupCamera()
         setupGallery()
+        loadSavedImage()
         setOnClickListener()
         return binding.root
     }
@@ -62,6 +66,44 @@ class PhotoEditFragment : Fragment() {
             imageUri = it
         }
     }
+
+    private fun copyUriToInternalStorage(uri: Uri): Uri? {
+        val fileName = "profile_image.jpg"
+        val file = File(requireContext().filesDir, fileName)
+        try {
+            requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+                FileOutputStream(file).use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.provider",
+            file
+        )
+    }
+
+
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                data?.data?.let { uri ->
+                    val copiedUri = copyUriToInternalStorage(uri)
+                    copiedUri?.let {
+                        SecurePreferences.saveProfileImage(requireContext(), it)
+                        imageUri = it
+                        binding.ivProfile.setImageURI(it)
+                    }
+                }
+            }
+        }
+
 
     private fun setupCamera() {
         takePictureLauncher =
@@ -200,23 +242,10 @@ class PhotoEditFragment : Fragment() {
         }
     }
 
-
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         resultLauncher.launch(intent)
     }
-
-    private val resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                data?.data?.let { uri ->
-                    SecurePreferences.saveProfileImage(requireContext(), uri)
-                    imageUri = uri
-                    binding.ivProfile.setImageURI(uri)
-                }
-            }
-        }
 
     private fun observeViewModel() {
         // Aquí puedes observar cambios en el ViewModel si es necesario

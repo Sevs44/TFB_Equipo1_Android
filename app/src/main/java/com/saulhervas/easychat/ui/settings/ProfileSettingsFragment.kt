@@ -2,6 +2,7 @@ package com.saulhervas.easychat.ui.settings
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +14,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentProfileSettingsBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileSettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileSettingsBinding
-
+    private var imageUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeViewModel()
@@ -31,7 +33,7 @@ class ProfileSettingsFragment : Fragment() {
     ): View {
         binding = FragmentProfileSettingsBinding.inflate(inflater, container, false)
         setOnClickListener()
-
+        loadImageUri()
         setupUI(binding.root)
         return binding.root
     }
@@ -46,6 +48,12 @@ class ProfileSettingsFragment : Fragment() {
         }
         binding.imBtnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+    }
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
         }
     }
 

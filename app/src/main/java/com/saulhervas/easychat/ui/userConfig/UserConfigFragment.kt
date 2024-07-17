@@ -1,9 +1,7 @@
 package com.saulhervas.easychat.ui.userConfig
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
@@ -27,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
     private lateinit var imageUri: Uri
-    private lateinit var requestGalleryPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +33,7 @@ class UserConfigFragment : Fragment() {
     ): View {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
         setOnClickListener()
-        setupGalleryPermissionLauncher()
-        if (isStoragePermissionGranted()) {
-            //loadImageUri()
-        } else {
-            requestGalleryPermission()
-        }
+        loadImageUri()
 
         setupUI(binding.root)
         return binding.root
@@ -65,6 +53,14 @@ class UserConfigFragment : Fragment() {
         // Aquí puedes observar cambios en el ViewModel si es necesario
     }
 
+
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun setupUI(view: View) {
         // Configurar listener para ocultar el teclado
@@ -79,47 +75,6 @@ class UserConfigFragment : Fragment() {
                 val innerView = view.getChildAt(i)
                 setupUI(innerView)
             }
-        }
-    }
-
-    private fun loadImageUri() {
-        SecurePreferences.getProfileImage(requireContext())?.let {
-            binding.ivProfile.setImageURI(it)
-            imageUri = it
-        }
-    }
-
-    private fun isStoragePermissionGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun setupGalleryPermissionLauncher() {
-        requestGalleryPermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                if (isGranted) {
-                    Log.d("UserConfigFragment", "Gallery permission granted")
-                    loadImageUri()
-                } else {
-                    Log.d("UserConfigFragment", "Gallery permission denied")
-                    // Aquí podrías manejar la denegación del permiso de manera adecuada
-                }
-            }
-    }
-
-    private fun requestGalleryPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            // Muestra un mensaje explicativo si el usuario ya ha negado el permiso anteriormente
-            Log.d("UserConfigFragment", "Show rationale")
-        } else {
-            // Solicita el permiso directamente si es la primera vez o el usuario ha marcado "No volver a preguntar"
-            requestGalleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 

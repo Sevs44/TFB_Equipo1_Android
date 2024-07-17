@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.ui.home
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +25,7 @@ class HomeUserFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
-
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class HomeUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
+        loadImageUri()
         setOnclickListener()
         return binding.root
     }
@@ -54,6 +57,13 @@ class HomeUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+    }
+
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
     }
 
 
@@ -90,6 +100,7 @@ class HomeUserFragment : Fragment() {
             binding.tvTextChat.visibility = View.VISIBLE
         }
     }
+
 
     private fun setUpRecyclerView(itemList: ArrayList<OpenChatItemModel>) {
         binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
