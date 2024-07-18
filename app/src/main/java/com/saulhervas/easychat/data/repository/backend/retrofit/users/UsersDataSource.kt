@@ -6,8 +6,10 @@ import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
+import com.saulhervas.easychat.domain.mappers.UserListMapper
 import com.saulhervas.easychat.domain.mappers.UsersMappers
 import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.model.UserItemModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -50,6 +52,16 @@ class UsersDataSource @Inject constructor(
             val apiResult = userCalls.callBiometric(token)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getUserList(token: String): Flow<BaseResponse<ArrayList<UserItemModel>>> =
+        flow {
+            val apiResult = userCalls.callUserList(token)
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(UserListMapper.userListResponseToUserListModel(apiResult.data)))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }

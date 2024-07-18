@@ -3,10 +3,11 @@ package com.saulhervas.easychat.data.repository.backend.retrofit
 import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
-import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
+import com.saulhervas.easychat.data.repository.response.user_list.UserListResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -38,4 +39,7 @@ interface ApiService {
 
     @POST("users/biometric")
     suspend fun postBiometric(@Header("Authorization") token: String): Response<LoginResponse>
+
+    @POST("users")
+    suspend fun postUserList(@Header("Authorization") token: String): Response<UserListResponse>
 }
