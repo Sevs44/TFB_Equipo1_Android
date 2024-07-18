@@ -32,6 +32,7 @@ object SecurePreferences {
         return sharedPreferences.getString(TOKEN_KEY, null)
     }
 
+
     fun saveProfileImage(context: Context, imageUri: Uri) {
         val sharedPreferences = getEncryptedSharedPreferences(context)
         with(sharedPreferences.edit()) {

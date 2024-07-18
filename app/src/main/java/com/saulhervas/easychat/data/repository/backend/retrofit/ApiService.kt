@@ -3,8 +3,8 @@ package com.saulhervas.easychat.data.repository.backend.retrofit
 import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
-import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import retrofit2.Response

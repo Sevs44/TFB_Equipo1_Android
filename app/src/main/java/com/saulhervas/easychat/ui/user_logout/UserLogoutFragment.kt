@@ -1,6 +1,8 @@
 package com.saulhervas.easychat.ui.user_logout
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.databinding.FragmentUserLogoutBinding
-import com.saulhervas.easychat.ui.home.HomeUserFragmentArgs
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -20,7 +21,6 @@ class UserLogoutFragment : Fragment() {
 
     private lateinit var binding: FragmentUserLogoutBinding
     private val userLoginViewModel: UserLogoutViewModel by viewModels()
-    private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
 
 
@@ -30,20 +30,18 @@ class UserLogoutFragment : Fragment() {
     ): View? {
 
         binding = FragmentUserLogoutBinding.inflate(inflater, container, false)
-        getUserArgs()
+        token = SecurePreferences.getBiometricToken(requireContext()).toString()
+
         setOnClickListener()
         return binding.root
     }
 
     private fun setOnClickListener() {
-        binding.btnCloseSession.setOnClickListener {
+        binding.btnCloseSessionDefinitive.setOnClickListener {
+            Log.d(TAG, "boton logout ${token}")
             userLoginViewModel.logoutUser(token)
             observeViewModel()
         }
-    }
-
-    private fun getUserArgs() {
-        token = args.token
     }
 
     private fun observeViewModel() {

@@ -47,6 +47,9 @@ class UserConfigFragment : Fragment() {
         binding.imBtnBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.btnCloseSession.setOnClickListener {
+            findNavController().navigate(R.id.action_userConfig_to_userLogoutFragment)
+        }
     }
 
     private fun observeViewModel() {

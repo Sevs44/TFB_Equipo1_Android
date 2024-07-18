@@ -176,7 +176,7 @@ class PhotoEditFragment : Fragment() {
             binding.ivProfile.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
-                    R.drawable.pepe
+                    R.mipmap.ic_pepe_round
                 )
             )
             SecurePreferences.saveProfileImage(requireContext(), Uri.EMPTY)
