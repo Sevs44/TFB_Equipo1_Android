@@ -45,7 +45,7 @@ class HomeUserFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
+            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, id.toString())
             findNavController().navigate(action)
         }
     }

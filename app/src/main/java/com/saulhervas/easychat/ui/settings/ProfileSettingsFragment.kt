@@ -10,19 +10,26 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentProfileSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProfileSettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileSettingsBinding
+    private val viewModel: ProfileSettingViewModel by viewModels()
+    private val args: ProfileSettingsFragmentArgs by navArgs()
+    private lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        observeViewModel()
+        getUserArgs()
     }
 
     override fun onCreateView(
@@ -35,6 +42,7 @@ class ProfileSettingsFragment : Fragment() {
         setupUI(binding.root)
         return binding.root
     }
+
 
     private fun setOnClickListener() {
         binding.tvEditPhoto.setOnClickListener {
@@ -49,8 +57,35 @@ class ProfileSettingsFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViewModel()
+        observeViewModel()
+    }
+
+
+
     private fun observeViewModel() {
-        // Observa los cambios en el ViewModel si es necesario
+        lifecycleScope.launch {
+            viewModel.getUserProfile(token)
+            viewModel.userProfile.collect {
+                if (it != null) {
+                    Log.d("ProfileSettingsFragment", "observeViewModel: it ${it.nick}")
+                    binding.etNameProfile.setText(it.nick)
+                }
+            }
+
+        }
+    }
+
+    private fun setUpViewModel() {
+        lifecycleScope.launch {
+            viewModel.getUserProfile(token)
+        }
+    }
+
+    private fun getUserArgs() {
+        token = args.token
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -75,4 +110,5 @@ class ProfileSettingsFragment : Fragment() {
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
+
 }

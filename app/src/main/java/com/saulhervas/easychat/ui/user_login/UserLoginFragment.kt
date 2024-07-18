@@ -100,9 +100,9 @@ class UserLoginFragment : Fragment() {
     }
 
     private fun setOnClickListener() {
-        val username = binding.etUser.text.toString()
-        val password = binding.etPassword.text.toString()
         binding.btnLogin.setOnClickListener {
+            val username = binding.etUser.text.toString()
+            val password = binding.etPassword.text.toString()
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
