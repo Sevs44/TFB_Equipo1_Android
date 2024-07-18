@@ -22,6 +22,7 @@ class ChatDetailFragment : Fragment() {
     ): View? {
         binding = FragmentChatDetailBinding.inflate(inflater, container, false)
         loadImageUri()
+        requireContext()
         return binding.root
     }
 
