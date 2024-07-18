@@ -11,7 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
@@ -61,6 +63,7 @@ class ProfileSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+        savePreferences()
     }
 
 
@@ -74,7 +77,20 @@ class ProfileSettingsFragment : Fragment() {
                     binding.etNameProfile.setText(it.nick)
                 }
             }
-
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.keepSession.collect { isChecked ->
+                        binding.swSession.isChecked = isChecked
+                    }
+                }
+                launch {
+                    viewModel.onlineStatus.collect { isChecked ->
+                        binding.swOnline.isChecked = isChecked
+                    }
+                }
+            }
         }
     }
 
@@ -86,6 +102,17 @@ class ProfileSettingsFragment : Fragment() {
 
     private fun getUserArgs() {
         token = args.token
+    }
+
+    fun savePreferences() {
+        binding.swSession.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveKeepSessionPreference(isChecked)
+            Log.d("ProfileSettingsFragment", "savePreferences: $isChecked")
+        }
+        binding.swOnline.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveShowOnlineStatusPreference(isChecked)
+            Log.d("ProfileSettingsFragment", "savePreferences: $isChecked")
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
