@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.ui.user_logout
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -38,9 +39,16 @@ class UserLogoutFragment : Fragment() {
 
     private fun setOnClickListener() {
         binding.btnCloseSessionDefinitive.setOnClickListener {
-            Log.d(TAG, "boton logout ${token}")
-            userLoginViewModel.logoutUser(token)
-            observeViewModel()
+            AlertDialog.Builder(context)
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setPositiveButton("Sí") { dialog, which ->
+                    Log.d(TAG, "boton logout $token")
+                    userLoginViewModel.logoutUser(token)
+                    observeViewModel()
+                }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 
