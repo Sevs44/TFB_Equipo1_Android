@@ -46,7 +46,8 @@ class HomeUserFragment : Fragment() {
 
     fun setOnclickListener() {
         binding.btnAdd.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+            val action =
+                HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser.toInt())
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {

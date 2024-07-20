@@ -166,7 +166,14 @@
         android:id="@+id/newChatFragment"
         android:name="com.saulhervas.easychat.ui.new_chat.NewChatFragment"
         android:label="fragment_new_chat"
-        tools:layout="@layout/fragment_new_chat" />
+        tools:layout="@layout/fragment_new_chat">
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="idUser"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/profileSettingsFragment"
         android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
