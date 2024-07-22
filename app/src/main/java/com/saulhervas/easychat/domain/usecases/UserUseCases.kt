@@ -19,11 +19,11 @@ class UserUseCases @Inject constructor(
     fun loginUser(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> {
         return userDataProvider.getLogin(loginRequest)
     }
-    fun logoutUser(token: String): Flow<BaseResponse<LogoutResponse>> {
-        return userDataProvider.getLogoutUser(token)
+    fun logoutUser(): Flow<BaseResponse<LogoutResponse>> {
+        return userDataProvider.getLogoutUser()
     }
 
-    fun biometricUser(token: String): Flow<BaseResponse<LoginResponse>> {
-        return userDataProvider.getBiometricUser(token)
+    fun biometricUser(): Flow<BaseResponse<LoginResponse>> {
+        return userDataProvider.getBiometricUser()
     }
 }

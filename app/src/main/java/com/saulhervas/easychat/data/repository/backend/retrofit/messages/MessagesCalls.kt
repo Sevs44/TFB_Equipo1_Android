@@ -11,10 +11,10 @@ import javax.inject.Inject
 class MessagesCalls @Inject constructor(
     private val apiService: ApiService
 ) : BaseService() {
-    suspend fun callMessageList(token: String, id: String, offset: Int, limit: Int): BaseResponse<MessagesListResponse> {
-        return apiCall { apiService.getMessagesList(token, id, offset, limit) }
+    suspend fun callMessageList(id: String, offset: Int, limit: Int): BaseResponse<MessagesListResponse> {
+        return apiCall { apiService.getMessagesList(id, offset, limit) }
     }
-    suspend fun newMessage(token: String, newMessageRequest: NewMessageRequest): BaseResponse<NewMessageResponse> {
-        return apiCall { apiService.newMessage(token, newMessageRequest) }
+    suspend fun newMessage(newMessageRequest: NewMessageRequest): BaseResponse<NewMessageResponse> {
+        return apiCall { apiService.newMessage(newMessageRequest) }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.usecases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 
 class UserLoginViewModel @Inject constructor(
+    //private val userSession: UserSession,
     private val loginUserCase: UserUseCases,
 ) : ViewModel() {
 
@@ -36,6 +38,7 @@ class UserLoginViewModel @Inject constructor(
                     }
 
                     is BaseResponse.Success -> {
+                        //userSession.token = response.data.token
                         _loginResult.emit(response.data)
                     }
                 }
@@ -43,9 +46,9 @@ class UserLoginViewModel @Inject constructor(
         }
     }
 
-    fun loginWithBiometrics(biometricToken: String) {
+    fun loginWithBiometrics() {
         viewModelScope.launch {
-            loginUserCase.biometricUser(biometricToken).collect { response ->
+            loginUserCase.biometricUser().collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${response.error.message}")
@@ -53,6 +56,7 @@ class UserLoginViewModel @Inject constructor(
                     }
 
                     is BaseResponse.Success -> {
+                        //userSession.token = response.data.token
                         _loginResult.emit(response.data)
                     }
                 }

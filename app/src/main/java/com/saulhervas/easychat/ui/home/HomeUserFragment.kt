@@ -23,8 +23,7 @@ import kotlinx.coroutines.launch
 class HomeUserFragment : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
-    //private val args: HomeUserFragmentArgs by navArgs()
-    private lateinit var token: String
+    private val args: HomeUserFragmentArgs by navArgs()
     private var imageUri: Uri? = null
     private lateinit var idUser: String
 
@@ -74,12 +73,12 @@ class HomeUserFragment : Fragment() {
             viewModel.getOpenChats()
         }
     }
-/*
+
     private fun getUserArgs() {
-        token = args.token
+        //token = args.token
         idUser = args.id
     }
-*/
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.openChatsState.collect {

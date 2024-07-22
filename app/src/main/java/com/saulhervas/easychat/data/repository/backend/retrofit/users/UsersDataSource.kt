@@ -35,9 +35,9 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getLogoutUser(token: String): Flow<BaseResponse<LogoutResponse>> =
+    fun getLogoutUser(): Flow<BaseResponse<LogoutResponse>> =
         flow {
-            val apiResult = userCalls.callLogout(token)
+            val apiResult = userCalls.callLogout()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
@@ -45,9 +45,9 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getBiometricUser(token: String): Flow<BaseResponse<LoginResponse>> =
+    fun getBiometricUser(): Flow<BaseResponse<LoginResponse>> =
         flow {
-            val apiResult = userCalls.callBiometric(token)
+            val apiResult = userCalls.callBiometric()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {

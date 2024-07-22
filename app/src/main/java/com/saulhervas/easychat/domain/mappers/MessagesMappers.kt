@@ -12,7 +12,6 @@ class MessagesMappers {
             messagesResponse.messages?.forEach {
                 list.add(
                     MessageItemModel(
-                        idMessage = it.idMessage,
                         messageSentAt = DateFormatter.formatHour(it.date),
                         messageContent = it.messageContent,
                         sentBy = it.sentBy,

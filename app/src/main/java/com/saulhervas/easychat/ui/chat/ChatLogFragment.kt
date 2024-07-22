@@ -57,9 +57,9 @@ class ChatLogFragment : Fragment() {
                     idUser,
                     etSendMessage.text.toString()
                 )
-                viewModel.sendMessage(token, newMessage)
+                viewModel.sendMessage(newMessage)
                 cleanText(etSendMessage)
-                viewModel.getOpenChats(token, idChat, offset, LIMIT_MESSAGES)
+                viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
             }
             //ivProfile.setOnClickListener {
             //}
@@ -97,12 +97,12 @@ class ChatLogFragment : Fragment() {
     private fun setUpViewModel() {
         lifecycleScope.launch {
             Log.i("TAG", "setUpViewModel: id => $idChat")
-            viewModel.getOpenChats(token, idChat, offset, LIMIT_MESSAGES)
+            viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
         }
     }
 
     private fun getUserArgs() {
-        token = args.token
+        //token = args.token
         idUser = args.idUser
         idChat = args.idChat
     }

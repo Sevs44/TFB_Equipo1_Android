@@ -19,11 +19,11 @@ class UsersCalls @Inject constructor(
     suspend fun callRegisterUser(registerRequest: RegisterRequest): BaseResponse<RegisterResponse> {
         return apiCall { apiService.registerUser(registerRequest) }
     }
-    suspend fun callLogout(token: String): BaseResponse<LogoutResponse> {
-        return apiCall { apiService.postLogoutUser(token) }
+    suspend fun callLogout(): BaseResponse<LogoutResponse> {
+        return apiCall { apiService.postLogoutUser() }
     }
 
-    suspend fun callBiometric(token: String): BaseResponse<LoginResponse> {
-        return apiCall { apiService.postBiometric(token) }
+    suspend fun callBiometric(): BaseResponse<LoginResponse> {
+        return apiCall { apiService.postBiometric() }
     }
 }

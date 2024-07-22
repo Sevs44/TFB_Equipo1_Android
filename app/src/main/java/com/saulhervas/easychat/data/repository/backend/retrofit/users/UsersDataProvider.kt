@@ -18,11 +18,11 @@ class UsersDataProvider @Inject constructor(
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> {
         return remoteDataSource.getLogin(loginRequest)
     }
-    fun getLogoutUser(token: String): Flow<BaseResponse<LogoutResponse>> {
-        return remoteDataSource.getLogoutUser(token)
+    fun getLogoutUser(): Flow<BaseResponse<LogoutResponse>> {
+        return remoteDataSource.getLogoutUser()
     }
 
-    fun getBiometricUser(token: String): Flow<BaseResponse<LoginResponse>> {
-        return remoteDataSource.getBiometricUser(token)
+    fun getBiometricUser(): Flow<BaseResponse<LoginResponse>> {
+        return remoteDataSource.getBiometricUser()
     }
 }

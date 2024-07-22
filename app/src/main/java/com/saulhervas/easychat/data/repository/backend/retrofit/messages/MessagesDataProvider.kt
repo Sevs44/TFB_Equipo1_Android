@@ -10,11 +10,11 @@ import javax.inject.Inject
 class MessagesDataProvider @Inject constructor(
     private val remoteDataSource: MessagesDataSource
 ) {
-    fun getMessagesList(token: String, id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> {
-        return remoteDataSource.getMessagesLists(token, id, offset, limit)
+    fun getMessagesList(id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> {
+        return remoteDataSource.getMessagesLists(id, offset, limit)
     }
 
-    fun newMessage(token: String, newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> {
-        return remoteDataSource.newMessage(token, newMessageRequest)
+    fun newMessage(newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> {
+        return remoteDataSource.newMessage(newMessageRequest)
     }
 }
