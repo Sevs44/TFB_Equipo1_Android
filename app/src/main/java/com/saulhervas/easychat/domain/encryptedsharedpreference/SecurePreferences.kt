@@ -54,7 +54,8 @@ object SecurePreferences {
         val sharedPreferences = getEncryptedSharedPreferences(context)
         with(sharedPreferences.edit()) {
             putBoolean(KEY_ONLINE_STATUS, value)
-
+        }
+    }
 
     fun saveProfileImage(context: Context, imageUri: Uri) {
         val sharedPreferences = getEncryptedSharedPreferences(context)
@@ -69,6 +70,7 @@ object SecurePreferences {
     fun getOnlineStatus(context: Context): Boolean {
         val sharedPreferences = getEncryptedSharedPreferences(context)
         return sharedPreferences.getBoolean(KEY_ONLINE_STATUS, false)
+    }
 
     fun getProfileImage(context: Context): Uri? {
         val sharedPreferences = getEncryptedSharedPreferences(context)
@@ -77,3 +79,9 @@ object SecurePreferences {
 
     }
 }
+
+
+
+
+
+

@@ -120,7 +120,6 @@
                 app:argType="string" />
         </action>
 
-            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_userConfig_to_userLogoutFragment"
             app:destination="@id/userLogoutFragment"
@@ -211,9 +210,6 @@
         <argument
             android:name="id"
             app:argType="string" />
-        <action
-            android:id="@+id/action_profileSettingsFragment_to_photoEditFragment"
-            app:destination="@id/photoEditFragment" />
 
         <action
             android:id="@+id/action_profileSettingsFragment_to_photoEditFragment"
@@ -238,13 +234,14 @@
             android:id="@+id/action_userLogoutFragment_to_userLogin"
             app:destination="@id/userLogin" />
     </fragment>
+
     <fragment
         android:id="@+id/photoEditFragment"
         android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
 
-        android:label="PhotoEditFragment" />
+        android:label="PhotoEditFragment">
 
-        android:label="PhotoEditFragment"
-        tools:layout="@layout/fragment_photo_edit" />
+    </fragment>
+
 
 </navigation>
