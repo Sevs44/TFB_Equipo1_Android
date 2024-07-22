@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 @AndroidEntryPoint
-
 class UserLoginFragment : Fragment() {
 
     private val userLoginViewModel: UserLoginViewModel by viewModels()
@@ -98,7 +97,6 @@ class UserLoginFragment : Fragment() {
             biometricPrompt.authenticate(promptInfo)
         }
     }
-
     private fun setOnClickListener() {
         binding.btnLogin.setOnClickListener {
             val username = binding.etUser.text.toString()

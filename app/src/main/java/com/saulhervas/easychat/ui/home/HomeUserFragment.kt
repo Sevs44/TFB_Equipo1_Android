@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.ui.home
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,8 @@ class HomeUserFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
+    private var imageUri: Uri? = null
+    private lateinit var idUser: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +39,7 @@ class HomeUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
+        loadImageUri()
         setOnclickListener()
         return binding.root
     }
@@ -56,6 +61,13 @@ class HomeUserFragment : Fragment() {
         observeViewModel()
     }
 
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
+    }
+
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
@@ -65,6 +77,7 @@ class HomeUserFragment : Fragment() {
 
     private fun getUserArgs() {
         token = args.token
+        idUser = args.id
     }
 
     private fun observeViewModel() {
@@ -91,14 +104,14 @@ class HomeUserFragment : Fragment() {
         }
     }
 
-    private fun setUpRecyclerView(itemList: ArrayList<OpenChatItemModel>) {
+    private fun setUpRecyclerView(itemList: MutableList<OpenChatItemModel>) {
         binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChats.adapter =
-            OpenChatAdapter(itemList) { changeScreen() }
+            OpenChatAdapter(itemList) { chat -> changeScreen(chat) }
     }
 
-    private fun changeScreen() {
-        val action = HomeUserFragmentDirections.actionHomeUserToChatLog()
+    private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
+        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(token, idUser, openChatItemModel?.id!!)
         findNavController().navigate(action)
     }
 

@@ -2,6 +2,7 @@ package com.saulhervas.easychat.ui.userConfig
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +14,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.databinding.FragmentUserConfigBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
+
     private val args: UserConfigFragmentArgs by navArgs()
     private lateinit var token: String
+
+
+    private lateinit var imageUri: Uri
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +39,7 @@ class UserConfigFragment : Fragment() {
     ): View {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
         setOnClickListener()
+        loadImageUri()
 
         setupUI(binding.root)
         return binding.root
@@ -50,10 +57,21 @@ class UserConfigFragment : Fragment() {
         binding.imBtnBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.btnCloseSession.setOnClickListener {
+            findNavController().navigate(R.id.action_userConfig_to_userLogoutFragment)
+        }
+    }
+
+    private fun observeViewModel() {
+        // Aquí puedes observar cambios en el ViewModel si es necesario
     }
 
 
-    private fun observeViewModel() {
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -65,8 +83,6 @@ class UserConfigFragment : Fragment() {
                 false
             }
         }
-
-        // Si una vista es un contenedor, repetir para sus hijos
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)
