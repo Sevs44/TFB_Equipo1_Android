@@ -65,7 +65,7 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="28dp"
                 android:background="@color/white"
-                android:src="@drawable/pepe"
+                android:src="@mipmap/ic_pepe_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
