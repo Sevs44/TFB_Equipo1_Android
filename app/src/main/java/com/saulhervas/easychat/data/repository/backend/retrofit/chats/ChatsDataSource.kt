@@ -11,9 +11,9 @@ import javax.inject.Inject
 class ChatsDataSource @Inject constructor(
     private val chatsCalls: ChatsCalls
 ) : BaseService() {
-    fun getOpenChats(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> =
+    fun getOpenChats(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> =
         flow {
-            val apiResult = chatsCalls.callOpenChats(token)
+            val apiResult = chatsCalls.callOpenChats()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(ChatsMappers.openChatsResponseToOpenChatsModel(apiResult.data)))
             } else if (apiResult is BaseResponse.Error) {

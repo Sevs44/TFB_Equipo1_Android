@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ChatsDataProvider @Inject constructor(
     private val remoteDataSource: ChatsDataSource
 ) {
-    fun getOpenChatList(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
-        return remoteDataSource.getOpenChats(token)
+    fun getOpenChatList(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
+        return remoteDataSource.getOpenChats()
     }
 }

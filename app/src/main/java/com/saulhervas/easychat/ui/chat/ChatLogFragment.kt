@@ -19,12 +19,13 @@ import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-const val LIMIT_MESSAGES = 20
+private const val LIMIT_MESSAGES = 20
 
 @AndroidEntryPoint
 class ChatLogFragment : Fragment() {
     private lateinit var binding: FragmentChatLogBinding
     private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
+
     private val args: ChatLogFragmentArgs by navArgs()
     private lateinit var token: String
     private lateinit var idUser: String

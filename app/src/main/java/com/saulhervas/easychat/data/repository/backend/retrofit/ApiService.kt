@@ -25,7 +25,7 @@ interface ApiService {
     suspend fun registerUser(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
 
     @GET("chats/view")
-    suspend fun getOpenChats(@Header("Authorization") token: String): Response<OpenChatsResponse>
+    suspend fun getOpenChats(): Response<OpenChatsResponse>
 
     @GET("messages/list/{id}")
     suspend fun getMessagesList(

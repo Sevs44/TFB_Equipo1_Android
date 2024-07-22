@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ChatUseCases @Inject constructor(
     private val dataProvider: ChatsDataProvider
 ) {
-    fun getOpenChats(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
-        return dataProvider.getOpenChatList(token)
+    fun getOpenChats(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
+        return dataProvider.getOpenChatList()
     }
 }

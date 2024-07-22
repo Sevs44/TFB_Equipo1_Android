@@ -33,12 +33,6 @@
             app:popExitAnim="@anim/exit_to_right"
             app:popUpTo="@id/homeUser"
             app:popUpToInclusive="true">
-            <argument
-                android:name="token"
-                app:argType="string" />
-            <argument
-                android:name="id"
-                app:argType="string" />
         </action>
 
     </fragment>
@@ -118,9 +112,6 @@
         android:label="fragment_home_user"
         tools:layout="@layout/fragment_home_user">
         <argument
-            android:name="token"
-            app:argType="string" />
-        <argument
             android:name="id"
             app:argType="string" />
         <action
@@ -166,6 +157,10 @@
             app:argType="string" />
         <argument
             android:name="idChat"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument
+            android:name="nickTarget"
             app:argType="string"
             android:defaultValue=""/>
     </fragment>

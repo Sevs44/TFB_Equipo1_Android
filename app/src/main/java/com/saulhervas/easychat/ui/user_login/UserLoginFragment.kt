@@ -124,7 +124,7 @@ class UserLoginFragment : Fragment() {
             userLoginViewModel.loginResult.collect {
                 SecurePreferences.saveBiometricToken(requireContext(), it.token)
                 val action =
-                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
+                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.userLogin.id)
                 findNavController().navigate(action)
                 Toast.makeText(
                     requireContext(),

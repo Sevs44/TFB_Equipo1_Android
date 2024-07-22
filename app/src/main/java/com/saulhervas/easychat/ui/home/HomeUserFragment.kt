@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class HomeUserFragment : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
-    private val args: HomeUserFragmentArgs by navArgs()
+    //private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
     private var imageUri: Uri? = null
     private lateinit var idUser: String
@@ -31,7 +31,7 @@ class HomeUserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUserArgs()
+        //getUserArgs()
     }
 
     override fun onCreateView(
@@ -71,15 +71,15 @@ class HomeUserFragment : Fragment() {
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
-            viewModel.getOpenChats(token)
+            viewModel.getOpenChats()
         }
     }
-
+/*
     private fun getUserArgs() {
         token = args.token
         idUser = args.id
     }
-
+*/
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.openChatsState.collect {
@@ -111,7 +111,7 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
-        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(token, idUser, openChatItemModel?.id!!)
+        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(idUser, openChatItemModel?.id!!)
         findNavController().navigate(action)
     }
 

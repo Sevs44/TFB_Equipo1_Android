@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ChatsCalls @Inject constructor(
     private val apiService: ApiService
 ) : BaseService() {
-    suspend fun callOpenChats(token: String): BaseResponse<OpenChatsResponse> {
-        return apiCall { apiService.getOpenChats(token) }
+    suspend fun callOpenChats(): BaseResponse<OpenChatsResponse> {
+        return apiCall { apiService.getOpenChats() }
     }
 }
