@@ -5,6 +5,7 @@ import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
@@ -18,6 +19,10 @@ class UsersCalls @Inject constructor(
     }
     suspend fun callRegisterUser(registerRequest: RegisterRequest): BaseResponse<RegisterResponse> {
         return apiCall { apiService.registerUser(registerRequest) }
+    }
+
+    suspend fun callUserProfile(token: String): BaseResponse<UserProfileResponse> {
+        return apiCall { apiService.getProfile(token) }
     }
     suspend fun callLogout(token: String): BaseResponse<LogoutResponse> {
         return apiCall { apiService.postLogoutUser(token) }

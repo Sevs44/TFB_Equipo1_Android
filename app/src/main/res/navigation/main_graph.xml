@@ -90,6 +90,13 @@
         android:name="com.saulhervas.easychat.ui.userConfig.UserConfigFragment"
         android:label="UserConfig"
         tools:layout="@layout/fragment_user_config">
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+
         <action
             android:id="@+id/action_userConfig_to_homeUser"
             app:destination="@id/homeUser"
@@ -103,6 +110,16 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
+
+            app:popExitAnim="@anim/exit_to_right">
+            <argument
+                android:name="token"
+                app:argType="string" />
+            <argument
+                android:name="id"
+                app:argType="string" />
+        </action>
+
             app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_userConfig_to_userLogoutFragment"
@@ -111,6 +128,7 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+
     </fragment>
     <fragment
         android:id="@+id/homeUser"
@@ -150,7 +168,14 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:popExitAnim="@anim/exit_to_right">
+            <argument
+                android:name="token"
+                app:argType="string" />
+            <argument
+                android:name="id"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
@@ -179,6 +204,17 @@
         android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
         android:label="fragment_profile_settings"
         tools:layout="@layout/fragment_profile_settings">
+
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_profileSettingsFragment_to_photoEditFragment"
+            app:destination="@id/photoEditFragment" />
+
         <action
             android:id="@+id/action_profileSettingsFragment_to_photoEditFragment"
             app:destination="@id/photoEditFragment"
@@ -186,6 +222,7 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+
     </fragment>
     <fragment
         android:id="@+id/chatDetailFragment"
@@ -204,6 +241,10 @@
     <fragment
         android:id="@+id/photoEditFragment"
         android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
+
+        android:label="PhotoEditFragment" />
+
         android:label="PhotoEditFragment"
         tools:layout="@layout/fragment_photo_edit" />
+
 </navigation>
