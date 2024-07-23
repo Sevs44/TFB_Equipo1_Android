@@ -63,14 +63,9 @@ class UserLoginFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    Toast.makeText(
-                        requireContext(),
-                        "Authentication succeeded!",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     val biometricToken = SecurePreferences.getBiometricToken(requireContext())
                     if (biometricToken != null) {
-                        userLoginViewModel.loginWithBiometrics(biometricToken)
+                        userLoginViewModel.loginWithBiometrics()
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -124,7 +119,7 @@ class UserLoginFragment : Fragment() {
             userLoginViewModel.loginResult.collect {
                 SecurePreferences.saveBiometricToken(requireContext(), it.token)
                 val action =
-                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
+                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.userLogin.id)
                 findNavController().navigate(action)
                 Toast.makeText(
                     requireContext(),

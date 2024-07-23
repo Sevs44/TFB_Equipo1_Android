@@ -13,9 +13,9 @@ import javax.inject.Inject
 class MessagesDataSource @Inject constructor(
     private val messagesCalls: MessagesCalls
 ) : BaseService() {
-    fun getMessagesLists(token: String, id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> =
+    fun getMessagesLists(id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> =
         flow {
-            val apiResult = messagesCalls.callMessageList(token, id, offset, limit)
+            val apiResult = messagesCalls.callMessageList(id, offset, limit)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(MessagesMappers.messagesListResponseToMessagesListModel(apiResult.data)))
             } else if (apiResult is BaseResponse.Error) {
@@ -23,9 +23,9 @@ class MessagesDataSource @Inject constructor(
             }
         }
 
-    fun newMessage(token: String, newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> =
+    fun newMessage(newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> =
         flow {
-            val apiResult = messagesCalls.newMessage(token, newMessageRequest)
+            val apiResult = messagesCalls.newMessage(newMessageRequest)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {

@@ -2,16 +2,20 @@ package com.saulhervas.easychat.data.repository.backend.retrofit
 
 import com.google.gson.Gson
 import com.saulhervas.easychat.data.repository.response.error.ErrorResponse
+import com.saulhervas.easychat.domain.model.UserSession
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import javax.inject.Inject
 
-object ApiClient {
+class ApiClient @Inject constructor(private val userSession: UserSession) {
 
-    private const val BASE_URL = "https://mock-movilidad.vass.es/chatvass/api/"
+    companion object {
+        private const val BASE_URL = "https://mock-movilidad.vass.es/chatvass/api/"
+    }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -19,6 +23,7 @@ object ApiClient {
 
     private val httpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
+        .addInterceptor(AuthInterceptor(userSession))
         .build()
 
     private val retrofit = Retrofit.Builder()

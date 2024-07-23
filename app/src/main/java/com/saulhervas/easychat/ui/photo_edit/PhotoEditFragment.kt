@@ -40,9 +40,15 @@ class PhotoEditFragment : Fragment() {
     private lateinit var requestGalleryPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var imageUri: Uri
 
+    companion object {
+        private const val TAG = "PhotoEditFragment"
+        private const val FILE_NAME = "profile_image.jpg"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         observeViewModel()
+        setupLaunchers()
     }
 
     override fun onCreateView(
@@ -51,9 +57,6 @@ class PhotoEditFragment : Fragment() {
     ): View {
         binding = FragmentPhotoEditBinding.inflate(inflater, container, false)
         setupUI(binding.root)
-
-        setupCamera()
-        setupGallery()
         loadSavedImage()
         setOnClickListener()
         return binding.root
@@ -68,34 +71,29 @@ class PhotoEditFragment : Fragment() {
     }
 
     private fun copyUriToInternalStorage(uri: Uri): Uri? {
-        val fileName = "profile_image.jpg"
-        val file = File(requireContext().filesDir, fileName)
-        try {
+        val file = File(requireContext().filesDir, FILE_NAME)
+        return try {
             requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
                 FileOutputStream(file).use { outputStream ->
                     inputStream.copyTo(outputStream)
                 }
             }
+            FileProvider.getUriForFile(
+                requireContext(),
+                "${requireContext().packageName}.provider",
+                file
+            )
         } catch (e: Exception) {
-            e.printStackTrace()
-            return null
+            Log.e(TAG, "Error copying URI to internal storage", e)
+            null
         }
-
-        return FileProvider.getUriForFile(
-            requireContext(),
-            "${requireContext().packageName}.provider",
-            file
-        )
     }
-
 
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                data?.data?.let { uri ->
-                    val copiedUri = copyUriToInternalStorage(uri)
-                    copiedUri?.let {
+                result.data?.data?.let { uri ->
+                    copyUriToInternalStorage(uri)?.let {
                         SecurePreferences.saveProfileImage(requireContext(), it)
                         imageUri = it
                         binding.ivProfile.setImageURI(it)
@@ -104,50 +102,57 @@ class PhotoEditFragment : Fragment() {
             }
         }
 
-
-    private fun setupCamera() {
+    private fun setupLaunchers() {
         takePictureLauncher =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
                 if (success) {
-                    Log.d("PhotoEditFragment", "Picture taken successfully")
-                    // Guarda la imagen en SharedPreferences al tomarla con la cámara
+                    Log.d(TAG, "Picture taken successfully")
                     SecurePreferences.saveProfileImage(requireContext(), imageUri)
                     binding.ivProfile.setImageURI(imageUri)
                 } else {
-                    Log.d("PhotoEditFragment", "Failed to take picture")
-                    Toast.makeText(requireContext(), "Failed to take picture", Toast.LENGTH_SHORT)
-                        .show()
+                    Log.d(TAG, "Failed to take picture")
+                    showToast(R.string.failTakePicture)
                 }
             }
 
         requestCameraPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                 if (isGranted) {
-                    Log.d("PhotoEditFragment", "Camera permission granted")
+                    Log.d(TAG, "Camera permission granted")
                     openCamera()
                 } else {
-                    Log.d("PhotoEditFragment", "Camera permission denied")
-                    Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Camera permission denied")
+                    showToast(R.string.permisionDenied)
+                }
+            }
+
+        requestGalleryPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                if (isGranted) {
+                    Log.d(TAG, "Gallery permission granted")
+                    openGallery()
+                } else {
+                    Log.d(TAG, "Gallery permission denied")
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        showPermissionDeniedDialog()
+                    } else {
+                        showToast(R.string.permisionDenied)
+                    }
                 }
             }
     }
 
-    private fun setupGallery() {
-        requestGalleryPermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                if (isGranted) {
-                    Log.d("PhotoEditFragment", "Gallery permission granted")
-                    openGallery()
-                } else {
-                    Log.d("PhotoEditFragment", "Gallery permission denied")
-                    if (!shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        showPermissionDeniedDialog()
-                    } else {
-                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            }
+    private fun showToast(messageResId: Int) {
+        Toast.makeText(requireContext(), getString(messageResId), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showPermissionDeniedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.permisionDenied))
+            .setMessage(getString(R.string.permissionIsNeeded))
+            .setPositiveButton(getString(R.string.goToSettings)) { _, _ -> openAppSettings() }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
     }
 
     private fun openAppSettings() {
@@ -157,36 +162,18 @@ class PhotoEditFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun showPermissionDeniedDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Permission Denied")
-            .setMessage("Gallery permission is needed to select a photo. Please allow it in the app settings.")
-            .setPositiveButton("Go to Settings") { _, _ ->
-                openAppSettings()
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
+    private fun setOnClickListener() {
+        binding.btnTakePhoto.setOnClickListener { checkPermissionsAndOpenCamera() }
+        binding.btnDeletePhoto.setOnClickListener { deletePhoto() }
+        binding.imBtnBack.setOnClickListener { findNavController().popBackStack() }
+        binding.btnSelectPhoto.setOnClickListener { checkPermissionsAndOpenGallery() }
     }
 
-    private fun setOnClickListener() {
-        binding.btnTakePhoto.setOnClickListener {
-            checkPermissionsAndOpenCamera()
-        }
-        binding.btnDeletePhoto.setOnClickListener {
-            binding.ivProfile.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.mipmap.ic_pepe_round
-                )
-            )
-            SecurePreferences.saveProfileImage(requireContext(), Uri.EMPTY)
-        }
-        binding.imBtnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-        binding.btnSelectPhoto.setOnClickListener {
-            checkPermissionsAndOpenGallery()
-        }
+    private fun deletePhoto() {
+        binding.ivProfile.setImageDrawable(
+            ContextCompat.getDrawable(requireContext(), R.mipmap.ic_pepe_round)
+        )
+        SecurePreferences.saveProfileImage(requireContext(), Uri.EMPTY)
     }
 
     private fun checkPermissionsAndOpenCamera() {
@@ -194,13 +181,9 @@ class PhotoEditFragment : Fragment() {
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                openCamera()
-            }
-            else -> {
-                Log.d("PhotoEditFragment", "Requesting camera permission")
-                requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-            }
+            ) == PackageManager.PERMISSION_GRANTED -> openCamera()
+
+            else -> requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 
@@ -215,11 +198,10 @@ class PhotoEditFragment : Fragment() {
             put(MediaStore.Images.Media.DISPLAY_NAME, "new_image.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
         }
-        val imageUri = requireContext().contentResolver.insert(
+        return requireContext().contentResolver.insert(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             contentValues
-        )
-        return imageUri ?: throw IllegalStateException("Failed to create image URI")
+        ) ?: throw IllegalStateException("Failed to create image URI")
     }
 
     private fun checkPermissionsAndOpenGallery() {
@@ -227,18 +209,13 @@ class PhotoEditFragment : Fragment() {
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                openGallery()
-            }
+            ) == PackageManager.PERMISSION_GRANTED -> openGallery()
 
-            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                requestGalleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> requestGalleryPermissionLauncher.launch(
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
 
-            else -> {
-                Log.d("PhotoEditFragment", "Requesting gallery permission")
-                requestGalleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
+            else -> requestGalleryPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 

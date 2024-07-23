@@ -20,10 +20,10 @@ class MainSplashScreen : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        showWelocomeScreen()
+        showWelcomeScreen()
     }
 
-    fun showWelocomeScreen() {
+    private fun showWelcomeScreen() {
         object : CountDownTimer(4500, 1000) {
             override fun onTick(millisUntilFinished: Long) = Unit
 

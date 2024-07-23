@@ -23,9 +23,9 @@ class UserLogoutViewModel @Inject constructor(
     private val _logoutResult = MutableSharedFlow<LogoutResponse>()
     val logoutResult: SharedFlow<LogoutResponse> get() = _logoutResult
 
-    fun logoutUser(token: String) {
+    fun logoutUser() {
         viewModelScope.launch {
-            logoutUserCase.logoutUser(token).collect { response ->
+            logoutUserCase.logoutUser().collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${response.error.message}")

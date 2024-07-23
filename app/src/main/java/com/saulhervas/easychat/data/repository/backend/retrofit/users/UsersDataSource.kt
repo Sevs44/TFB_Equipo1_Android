@@ -4,7 +4,6 @@ import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
-import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.mappers.UserListMapper
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UsersDataSource @Inject constructor(
-    val userCalls: UsersCalls
+    private val userCalls: UsersCalls
 ) : BaseService() {
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> =
         flow {
@@ -38,9 +37,9 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getUserProfile(token: String): Flow<BaseResponse<UserProfileResponse>> =
+    fun getLogoutUser(): Flow<BaseResponse<LogoutResponse>> =
         flow {
-            val apiResult = userCalls.callUserProfile(token)
+            val apiResult = userCalls.callLogout()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
@@ -48,19 +47,9 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getLogoutUser(token: String): Flow<BaseResponse<LogoutResponse>> =
+    fun getBiometricUser(): Flow<BaseResponse<LoginResponse>> =
         flow {
-            val apiResult = userCalls.callLogout(token)
-            if (apiResult is BaseResponse.Success) {
-                emit(BaseResponse.Success(apiResult.data))
-            } else if (apiResult is BaseResponse.Error) {
-                emit(BaseResponse.Error(apiResult.error))
-            }
-        }
-
-    fun getBiometricUser(token: String): Flow<BaseResponse<LoginResponse>> =
-        flow {
-            val apiResult = userCalls.callBiometric(token)
+            val apiResult = userCalls.callBiometric()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
