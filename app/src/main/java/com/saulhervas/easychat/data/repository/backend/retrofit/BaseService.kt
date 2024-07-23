@@ -8,7 +8,9 @@ import com.saulhervas.easychat.data.repository.response.error.ErrorResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
 import retrofit2.Response
 
-abstract class BaseService(private val context: Context) {
+abstract class BaseService(
+//    private val context: Context
+) {
 
     suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): BaseResponse<T> {
         val response: Response<T>
@@ -52,8 +54,9 @@ abstract class BaseService(private val context: Context) {
     private fun mapErrorResponse(throwable: Throwable): ErrorResponse {
         Log.i("TAG", "mapErrorResponse: throwable ==> $throwable")
         return ErrorResponse(
-            context.getString(R.string.string_errorresponsetoken),
-            context.getString(R.string.errorResponseTryBefore)
+            "", ""
+            //context.getString(R.string.string_errorresponsetoken),
+            //context.getString(R.string.errorResponseTryBefore)
         )
     }
 }

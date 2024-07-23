@@ -131,6 +131,9 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <argument
+            android:name="token"
+            app:argType="string" />
         <action
             android:id="@+id/action_homeUser_to_userLogin"
             app:destination="@id/userLogin"
@@ -151,7 +154,14 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:popExitAnim="@anim/exit_to_right" >
+            <argument
+                android:name="token"
+                app:argType="string" />
+            <argument
+                android:name="idUser"
+                app:argType="string" />
+        </action>
         <action
             android:id="@+id/action_homeUser_to_userConfig"
             app:destination="@id/userConfig"
@@ -192,7 +202,7 @@
             app:argType="string" />
         <argument
             android:name="idUser"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profileSettingsFragment"

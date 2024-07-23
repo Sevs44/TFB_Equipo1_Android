@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.messages
 
+import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MessagesDataSource @Inject constructor(
-    private val messagesCalls: MessagesCalls
+    private val messagesCalls: MessagesCalls,
+    //val context: Context
 ) : BaseService() {
     fun getMessagesLists(id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> =
         flow {

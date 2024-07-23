@@ -18,6 +18,6 @@ class ChatsDataProvider @Inject constructor(
         token: String,
         newChatRequest: NewChatRequest
     ): Flow<BaseResponse<NewChatResponse>> {
-        return remoteDataSource.newChat(token, newChatRequest)
+        return remoteDataSource.newChat(newChatRequest)
     }
 }

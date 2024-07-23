@@ -1,9 +1,11 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.users
 
+import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.mappers.UserListMapper
@@ -15,7 +17,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UsersDataSource @Inject constructor(
-    private val userCalls: UsersCalls
+    private val userCalls: UsersCalls,
+    //val context: Context
 ) : BaseService() {
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> =
         flow {
@@ -57,11 +60,21 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getUserList(token: String): Flow<BaseResponse<ArrayList<UserItemModel>>> =
+    fun getUserList(): Flow<BaseResponse<ArrayList<UserItemModel>>> =
         flow {
-            val apiResult = userCalls.callUserList(token)
+            val apiResult = userCalls.callUserList()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(UserListMapper.userListResponseToUserListModel(apiResult.data)))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getUserProfile(): Flow<BaseResponse<UserProfileResponse>> =
+        flow {
+            val apiResult = userCalls.callUserProfile()
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }

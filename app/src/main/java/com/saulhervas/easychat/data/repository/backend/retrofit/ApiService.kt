@@ -5,12 +5,15 @@ import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
 import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
 
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
+import com.saulhervas.easychat.data.repository.response.user_list.UserListResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,7 +30,7 @@ interface ApiService {
     suspend fun registerUser(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
 
     @GET("users/profile")
-    suspend fun getProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
+    suspend fun getProfile(): Response<UserProfileResponse>
 
     @GET("chats/view")
     suspend fun getOpenChats(): Response<OpenChatsResponse>
@@ -47,14 +50,12 @@ interface ApiService {
 
     @POST("users/biometric")
     suspend fun postBiometric(): Response<LoginResponse>
-    suspend fun postBiometric(@Header("Authorization") token: String): Response<LoginResponse>
 
     @GET("users")
-    suspend fun getUserList(@Header("Authorization") token: String): Response<UserListResponse>
+    suspend fun getUserList(): Response<UserListResponse>
 
     @POST("chats")
     suspend fun postNewChat(
-        @Header("Authorization") token: String,
         @Body newChatRequest: NewChatRequest
     ): Response<NewChatResponse>
 

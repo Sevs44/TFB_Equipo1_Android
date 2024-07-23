@@ -44,9 +44,9 @@ class ProfileSettingViewModel @Inject constructor(
     }
 
 
-    fun getUserProfile(token: String) {
+    fun getUserProfile() {
         viewModelScope.launch {
-            profileUseCase.userProfile(token).collect {
+            profileUseCase.userProfile().collect {
                 _userProfile.value
                 Log.d("Profile", it.toString())
                 when (it) {

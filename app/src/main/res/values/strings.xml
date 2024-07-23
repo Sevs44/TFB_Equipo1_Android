@@ -54,8 +54,11 @@
     //BaseService
     <string name="string_errorresponsetoken">Lo sentimos, estamos presentando problemas de conexión.</string>
     <string name="errorResponseTryBefore">Vuelve a intentarlo más tarde.</string>
-    <string name="failTakePicture">Failed to take picture</string>
-    <string name="permisionDenied">Permission denied</string>
+    <string name="failTakePicture">Error al hacer una foto</string>
+    <string name="permisionDenied">Permiso denegado</string>
+    <string name="permissionIsNeeded">Necesitas permisos de galeria</string>
+    <string name="goToSettings">Ir a la configuracion</string>
+    <string name="cancel">Cancelar</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

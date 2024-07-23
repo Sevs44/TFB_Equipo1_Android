@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProfileSettingsFragment(val context: Context) : Fragment() {
+class ProfileSettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileSettingsBinding
     private val viewModel: ProfileSettingViewModel by viewModels()
@@ -82,7 +82,7 @@ class ProfileSettingsFragment(val context: Context) : Fragment() {
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.getUserProfile(token)
+            viewModel.getUserProfile()
             viewModel.userProfile.collect { userProfile ->
                 userProfile?.let {
                     Log.d(TAG, "observeViewModel: ${it.nick}")
@@ -113,12 +113,12 @@ class ProfileSettingsFragment(val context: Context) : Fragment() {
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
-            viewModel.getUserProfile(token)
+            viewModel.getUserProfile()
         }
     }
 
     private fun getToken() {
-        token = SecurePreferences.getBiometricToken(context).toString()
+        token = SecurePreferences.getBiometricToken(requireContext()).toString()
     }
 
     private fun savePreferences() {
