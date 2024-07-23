@@ -24,10 +24,7 @@ class UserConfigFragment : Fragment() {
 
     private val args: UserConfigFragmentArgs by navArgs()
     private lateinit var token: String
-
-
     private lateinit var imageUri: Uri
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +38,6 @@ class UserConfigFragment : Fragment() {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
         setOnClickListener()
         loadImageUri()
-
         setupUI(binding.root)
         return binding.root
     }
@@ -61,12 +57,15 @@ class UserConfigFragment : Fragment() {
         binding.btnCloseSession.setOnClickListener {
             findNavController().navigate(R.id.action_userConfig_to_userLogoutFragment)
         }
+        binding.btnLanguage.setOnClickListener {
+            val bottomSheet = LanguageBottomSheetDialogFragment()
+            bottomSheet.show(parentFragmentManager, "languageBottomSheet")
+        }
     }
 
     private fun observeViewModel() {
         // Aquí puedes observar cambios en el ViewModel si es necesario
     }
-
 
     private fun loadImageUri() {
         SecurePreferences.getProfileImage(requireContext())?.let {
