@@ -13,7 +13,7 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun provideApiService(): ApiService {
-        return ApiClient.create(ApiService::class.java)
+    fun provideApiService(apiClient: ApiClient): ApiService {
+        return apiClient.create(ApiService::class.java)
     }
 }

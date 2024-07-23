@@ -1,21 +1,23 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit
 
+import android.util.Log
+import com.saulhervas.easychat.domain.model.UserSession
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import javax.inject.Inject
 
-class AuthInterceptor : Interceptor {
+class AuthInterceptor @Inject constructor(private val userSession: UserSession): Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val currentRequest = chain.request()
-
-        needInterceptor(currentRequest)
+        Log.i("TAG", "intercept: user ==> $userSession")
 
         val newRequest = if (needInterceptor(currentRequest)){
             currentRequest.newBuilder()
                 .addHeader(
                     "Authorization",
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4OCIsImlhdCI6MTcyMTU4MjcwMSwiZXhwIjoxNzI0MTc0NzAxfQ.sjQYajFwdKtcCDI7eQHlg5Kp54VCPpK4kicl-mAj_Jk"
-                )
+                    userSession.token)
                 .build()
         } else {
             currentRequest

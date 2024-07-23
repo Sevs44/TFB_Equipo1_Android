@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,8 +28,8 @@ class ChatLogFragment : Fragment() {
     private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
 
     private val args: ChatLogFragmentArgs by navArgs()
-    private lateinit var token: String
-    private lateinit var idUser: String
+    private val userSession = UserSession()
+    private lateinit var nickUser: String
     private lateinit var idChat: String
     private var offset: Int = 0
 
@@ -54,7 +55,7 @@ class ChatLogFragment : Fragment() {
             btnSend.setOnClickListener {
                 val newMessage = NewMessageRequest(
                     idChat,
-                    idUser,
+                    userSession.id,
                     etSendMessage.text.toString()
                 )
                 viewModel.sendMessage(newMessage)
@@ -91,7 +92,7 @@ class ChatLogFragment : Fragment() {
             LinearLayoutManager(requireContext()).apply {
             reverseLayout = true
         }
-        binding.rvMessage.adapter = MessagesAdapter(messages, idUser)
+        binding.rvMessage.adapter = MessagesAdapter(messages, userSession.id)
     }
 
     private fun setUpViewModel() {
@@ -102,9 +103,8 @@ class ChatLogFragment : Fragment() {
     }
 
     private fun getUserArgs() {
-        //token = args.token
-        idUser = args.idUser
         idChat = args.idChat
+        nickUser = args.nickTarget
     }
 }
 

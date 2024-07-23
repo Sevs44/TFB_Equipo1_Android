@@ -150,12 +150,6 @@
         android:label="fragment_chat_log"
         tools:layout="@layout/fragment_chat_log" >
         <argument
-            android:name="token"
-            app:argType="string" />
-        <argument
-            android:name="idUser"
-            app:argType="string" />
-        <argument
             android:name="idChat"
             app:argType="string"
             android:defaultValue=""/>
