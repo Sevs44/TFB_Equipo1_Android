@@ -8,7 +8,7 @@
     <string name="btn_login">Iniciar Sesión</string>
     <string name="tv_no_account">¿No tienes cuenta?</string>
     <string name="tv_register">Registrate</string>
-    <string name="error_no_data_found">Empty data</string>
+    <string name="error_no_data_found">Datos vacios</string>
 
     //Register
     <string name="hint_password">Contraseña</string>
@@ -54,7 +54,6 @@
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
