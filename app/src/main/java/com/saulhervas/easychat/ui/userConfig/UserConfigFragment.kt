@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentUserConfigBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
@@ -20,11 +21,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
+
+    private val args: UserConfigFragmentArgs by navArgs()
+    private lateinit var token: String
     private lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        observeViewModel()
+        getUserArgs()
     }
 
     override fun onCreateView(
@@ -34,7 +38,6 @@ class UserConfigFragment : Fragment() {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
         setOnClickListener()
         loadImageUri()
-
         setupUI(binding.root)
         return binding.root
     }
@@ -42,17 +45,27 @@ class UserConfigFragment : Fragment() {
     private fun setOnClickListener() {
         binding.btnProfile.setOnClickListener {
             Log.d("ProfileSettingsFragment", "boton perfil")
-            findNavController().navigate(R.id.action_userConfig_to_profileSettingsFragment)
+            val action = UserConfigFragmentDirections.actionUserConfigToProfileSettingsFragment(
+                token,
+                id.toString()
+            )
+            findNavController().navigate(action)
         }
         binding.imBtnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+        binding.btnCloseSession.setOnClickListener {
+            findNavController().navigate(R.id.action_userConfig_to_userLogoutFragment)
+        }
+        binding.btnLanguage.setOnClickListener {
+            val bottomSheet = LanguageBottomSheetDialogFragment()
+            bottomSheet.show(parentFragmentManager, "languageBottomSheet")
         }
     }
 
     private fun observeViewModel() {
         // Aquí puedes observar cambios en el ViewModel si es necesario
     }
-
 
     private fun loadImageUri() {
         SecurePreferences.getProfileImage(requireContext())?.let {
@@ -82,5 +95,9 @@ class UserConfigFragment : Fragment() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    private fun getUserArgs() {
+        token = args.token
     }
 }

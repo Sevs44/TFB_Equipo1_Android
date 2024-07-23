@@ -30,6 +30,7 @@ object ApiClient {
     fun <T> create(service: Class<T>): T {
         return retrofit.create(service)
     }
+
     fun parseError(response: Response<*>): ErrorResponse? {
         val gson = Gson()
         return try {

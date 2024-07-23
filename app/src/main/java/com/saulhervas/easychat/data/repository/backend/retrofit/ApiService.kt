@@ -4,6 +4,10 @@ import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
+import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
+import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
+
 import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
@@ -23,6 +27,9 @@ interface ApiService {
     @POST("users/register")
     suspend fun registerUser(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
 
+    @GET("users/profile")
+    suspend fun getProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
+
     @GET("chats/view")
     suspend fun getOpenChats(@Header("Authorization") token: String): Response<OpenChatsResponse>
 
@@ -33,6 +40,9 @@ interface ApiService {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): Response<MessagesListResponse>
+
+    @POST("messages/new")
+    suspend fun newMessage(@Header("Authorization") token: String, @Body newMessageRequest: NewMessageRequest): Response<NewMessageResponse>
 
     @POST("users/logout")
     suspend fun postLogoutUser(@Header("Authorization") token: String): Response<LogoutResponse>

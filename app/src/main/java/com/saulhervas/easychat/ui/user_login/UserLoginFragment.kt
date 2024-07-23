@@ -97,7 +97,6 @@ class UserLoginFragment : Fragment() {
             biometricPrompt.authenticate(promptInfo)
         }
     }
-
     private fun setOnClickListener() {
         binding.btnLogin.setOnClickListener {
             val username = binding.etUser.text.toString()

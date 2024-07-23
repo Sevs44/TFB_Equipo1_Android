@@ -1,11 +1,10 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.messages
 
-import android.util.Log
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
-import com.saulhervas.easychat.domain.mappers.ChatsMappers
+import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
+import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
 import com.saulhervas.easychat.domain.mappers.MessagesMappers
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,6 +18,16 @@ class MessagesDataSource @Inject constructor(
             val apiResult = messagesCalls.callMessageList(token, id, offset, limit)
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(MessagesMappers.messagesListResponseToMessagesListModel(apiResult.data)))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun newMessage(token: String, newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> =
+        flow {
+            val apiResult = messagesCalls.newMessage(token, newMessageRequest)
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }

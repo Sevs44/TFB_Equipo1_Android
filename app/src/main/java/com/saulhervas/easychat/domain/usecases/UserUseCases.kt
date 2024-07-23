@@ -4,6 +4,7 @@ import com.saulhervas.easychat.data.repository.backend.retrofit.users.UsersDataP
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
@@ -20,6 +21,10 @@ class UserUseCases @Inject constructor(
 
     fun loginUser(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> {
         return userDataProvider.getLogin(loginRequest)
+    }
+
+    fun userProfile(token: String): Flow<BaseResponse<UserProfileResponse>> {
+        return userDataProvider.getUserName(token)
     }
 
     fun logoutUser(token: String): Flow<BaseResponse<LogoutResponse>> {

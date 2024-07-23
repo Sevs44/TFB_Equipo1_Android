@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+    <string name="hint_user">User</string>
+    <string name="biometric">Login with Biometric</string>
+    <string name="keep_session">Keep session</string>
+    <string name="btn_login">Login</string>
+    <string name="tv_no_account">"You do not have an account? "</string>
+    <string name="tv_register">"Sign up "</string>
+    <string name="error_no_data_found">Empty data</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_repeat_password">Repeat password</string>
+    <string name="btn_register">Check in</string>
+    <string name="tv_have_account">"Do you already have an account? "</string>
+    <string name="tv_login">Login</string>
+    <string name="tv_recover_password">" Recover password"</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_recover">Send</string>
+    <string name="profile_settings">"Profile settings "</string>
+    <string name="privacity">Privacy</string>
+    <string name="chat_setings">"Chat settings "</string>
+    <string name="storage">Storage</string>
+    <string name="language_settings">Language settings</string>
+    <string name="delete_account">Delete account</string>
+    <string name="close_session">Sign off</string>
+    <string name="edit_photo">Edit the profile photo</string>
+    <string name="photo_profile">Profile picture</string>
+    <string name="take_photo">Take photo</string>
+    <string name="select_photo">Select photo</string>
+    <string name="delete_photo">Delete picture</string>
+    <string name="edit">Edit</string>
+    <string name="user_block">Blocked</string>
+    <string name="tv_profile">Enter your name and add a profile photo (optional)</string>
+    <string name="tv_logout">Do you want to sign out of this device?</string>
+    <string name="name">Name</string>
+    <string name="et_profile">Enter your name</string>
+    <string name="tv_online">Show online status</string>
+    <string name="notifications">Notifications</string>
+    <string name="block">Block</string>
+    <string name="messages">Messages</string>
+    <string name="mute_notifications">Mute notifications</string>
+    <string name="alert_tune">Alert tone</string>
+    <string name="send_messages">Send a message</string>
+    <string name="recent_photos">Recent photos</string>
+    <string name="new_chat">Start a new chat</string>
+</resources>
