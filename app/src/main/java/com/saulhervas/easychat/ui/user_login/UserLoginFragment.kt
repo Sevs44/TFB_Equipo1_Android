@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentLoginBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
-import com.saulhervas.easychat.domain.model.UserSession
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executor

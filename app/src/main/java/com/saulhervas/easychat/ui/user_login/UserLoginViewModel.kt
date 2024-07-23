@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 
 class UserLoginViewModel @Inject constructor(
-    //private val userSession: UserSession,
     private val loginUserCase: UserUseCases,
+    private val userSession: UserSession
 ) : ViewModel() {
 
     private val _loginResultError = MutableSharedFlow<String>()
@@ -38,7 +38,8 @@ class UserLoginViewModel @Inject constructor(
                     }
 
                     is BaseResponse.Success -> {
-                        //userSession.token = response.data.token
+                        userSession.token = response.data.token
+                        userSession.id = response.data.userLogin.id
                         _loginResult.emit(response.data)
                     }
                 }
@@ -56,7 +57,6 @@ class UserLoginViewModel @Inject constructor(
                     }
 
                     is BaseResponse.Success -> {
-                        //userSession.token = response.data.token
                         _loginResult.emit(response.data)
                     }
                 }
