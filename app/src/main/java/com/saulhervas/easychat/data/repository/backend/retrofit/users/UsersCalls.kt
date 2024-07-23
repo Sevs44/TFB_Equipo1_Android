@@ -37,6 +37,6 @@ class UsersCalls @Inject constructor(
     }
 
     suspend fun callUserList(token: String): BaseResponse<UserListResponse> {
-        return apiCall { apiService.postUserList(token) }
+        return apiCall { apiService.getUserList(token) }
     }
 }

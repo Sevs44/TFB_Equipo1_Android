@@ -4,11 +4,12 @@ import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
-import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
+import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
-
-import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
+import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.data.repository.response.user_list.UserListResponse
@@ -50,6 +51,13 @@ interface ApiService {
     @POST("users/biometric")
     suspend fun postBiometric(@Header("Authorization") token: String): Response<LoginResponse>
 
-    @POST("users")
-    suspend fun postUserList(@Header("Authorization") token: String): Response<UserListResponse>
+    @GET("users")
+    suspend fun getUserList(@Header("Authorization") token: String): Response<UserListResponse>
+
+    @POST("chats")
+    suspend fun postNewChat(
+        @Header("Authorization") token: String,
+        @Body newChatRequest: NewChatRequest
+    ): Response<NewChatResponse>
+
 }

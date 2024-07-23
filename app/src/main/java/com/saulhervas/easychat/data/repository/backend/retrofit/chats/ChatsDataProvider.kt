@@ -1,5 +1,7 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.chats
 
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import kotlinx.coroutines.flow.Flow
@@ -10,5 +12,12 @@ class ChatsDataProvider @Inject constructor(
 ) {
     fun getOpenChatList(token: String): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> {
         return remoteDataSource.getOpenChats(token)
+    }
+
+    fun newChat(
+        token: String,
+        newChatRequest: NewChatRequest
+    ): Flow<BaseResponse<NewChatResponse>> {
+        return remoteDataSource.newChat(token, newChatRequest)
     }
 }
