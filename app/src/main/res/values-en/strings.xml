@@ -43,4 +43,9 @@
     <string name="send_messages">Send a message</string>
     <string name="recent_photos">Recent photos</string>
     <string name="new_chat">Start a new chat</string>
+    <string name="string_errorresponsetoken">Sorry, we are having connection problems.</string>
+    <string name="errorResponseTryBefore">Try again later.</string>
+    <string name="permissionIsNeeded">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
+    <string name="goToSettings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UsersDataSource @Inject constructor(
-    val userCalls: UsersCalls
+    private val userCalls: UsersCalls
 ) : BaseService() {
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> =
         flow {

@@ -16,7 +16,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://mock-movilidad.vass.es/chatvass/api/") // Reemplaza con tu URL base
+            .baseUrl("https://mock-movilidad.vass.es/chatvass/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

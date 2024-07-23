@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.ui.chat
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -65,6 +66,7 @@ class ChatLogFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun cleanText(editText: EditText) {
         editText.setText("")
     }

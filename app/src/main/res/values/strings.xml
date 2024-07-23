@@ -51,6 +51,11 @@
     <string name="send_messages">Enviar un mensaje</string>
     <string name="recent_photos">Fotos Recientes</string>
     <string name="new_chat">Empieza un nuevo chat</string>
+    //BaseService
+    <string name="string_errorresponsetoken">Lo sentimos, estamos presentando problemas de conexión.</string>
+    <string name="errorResponseTryBefore">Vuelve a intentarlo más tarde.</string>
+    <string name="failTakePicture">Failed to take picture</string>
+    <string name="permisionDenied">Permission denied</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

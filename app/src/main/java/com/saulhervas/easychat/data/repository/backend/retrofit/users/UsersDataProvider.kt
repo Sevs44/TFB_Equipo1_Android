@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UsersDataProvider @Inject constructor(
-    val remoteDataSource: UsersDataSource
+    private val remoteDataSource: UsersDataSource
 ) {
     fun getRegisterData(registerRequest: RegisterRequest): Flow<BaseResponse<RegisterResponse>> {
         return remoteDataSource.getRegisterUser(registerRequest)

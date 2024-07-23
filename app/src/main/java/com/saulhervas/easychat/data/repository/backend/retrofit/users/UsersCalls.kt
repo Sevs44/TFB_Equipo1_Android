@@ -12,7 +12,7 @@ import com.saulhervas.easychat.domain.model.BaseResponse
 import javax.inject.Inject
 
 class UsersCalls @Inject constructor(
-    val apiService: ApiService
+    private val apiService: ApiService
 ) : BaseService() {
     suspend fun callLogin(loginRequest: LoginRequest): BaseResponse<LoginResponse> {
         return apiCall { apiService.loginUser(loginRequest) }

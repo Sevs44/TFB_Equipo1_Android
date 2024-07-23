@@ -63,11 +63,6 @@ class UserLoginFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    Toast.makeText(
-                        requireContext(),
-                        "Authentication succeeded!",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     val biometricToken = SecurePreferences.getBiometricToken(requireContext())
                     if (biometricToken != null) {
                         userLoginViewModel.loginWithBiometrics(biometricToken)

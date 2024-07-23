@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserUseCases @Inject constructor(
-    val userDataProvider: UsersDataProvider
+    private val userDataProvider: UsersDataProvider
 ) {
     fun registerUser(registerRequest: RegisterRequest): Flow<BaseResponse<RegisterResponse>> {
         return userDataProvider.getRegisterData(registerRequest)

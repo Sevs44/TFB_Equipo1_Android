@@ -16,7 +16,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentProfileSettingsBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
@@ -24,20 +23,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ProfileSettingsFragment : Fragment() {
+class ProfileSettingsFragment(val context: Context) : Fragment() {
 
     private lateinit var binding: FragmentProfileSettingsBinding
-
     private val viewModel: ProfileSettingViewModel by viewModels()
-    private val args: ProfileSettingsFragmentArgs by navArgs()
     private lateinit var token: String
-
-
     private var imageUri: Uri? = null
+
+    companion object {
+        private const val TAG = "ProfileSettingsFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUserArgs()
+        getToken()
     }
 
     override fun onCreateView(
@@ -45,29 +44,32 @@ class ProfileSettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileSettingsBinding.inflate(inflater, container, false)
+        setupUI(binding.root)
         setOnClickListener()
         loadImageUri()
-        setupUI(binding.root)
         return binding.root
     }
 
-
-    private fun setOnClickListener() {
-        binding.tvEditPhoto.setOnClickListener {
-            findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
+    private fun setOnClickListener() = with(binding) {
+        tvEditPhoto.setOnClickListener {
+            navigateToPhotoEdit()
         }
-        binding.ivProfile.setOnClickListener {
-            Log.d("ProfileSettingsFragment", "ivProfile clicked")
-            findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
+        ivProfile.setOnClickListener {
+            navigateToPhotoEdit()
         }
-        binding.imBtnBack.setOnClickListener {
+        imBtnBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }
+
+    private fun navigateToPhotoEdit() {
+        findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
+    }
+
     private fun loadImageUri() {
-        SecurePreferences.getProfileImage(requireContext())?.let {
+        imageUri = SecurePreferences.getProfileImage(requireContext())
+        imageUri?.let {
             binding.ivProfile.setImageURI(it)
-            imageUri = it
         }
     }
 
@@ -78,31 +80,34 @@ class ProfileSettingsFragment : Fragment() {
         savePreferences()
     }
 
-
-
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.getUserProfile(token)
-            viewModel.userProfile.collect {
-                if (it != null) {
-                    Log.d("ProfileSettingsFragment", "observeViewModel: it ${it.nick}")
+            viewModel.userProfile.collect { userProfile ->
+                userProfile?.let {
+                    Log.d(TAG, "observeViewModel: ${it.nick}")
                     binding.etNameProfile.setText(it.nick)
                 }
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.keepSession.collect { isChecked ->
-                        binding.swSession.isChecked = isChecked
-                    }
-                }
-                launch {
-                    viewModel.onlineStatus.collect { isChecked ->
-                        binding.swOnline.isChecked = isChecked
-                    }
-                }
+                launch { observeSessionStatus() }
+                launch { observeOnlineStatus() }
             }
+        }
+    }
+
+    private suspend fun observeSessionStatus() {
+        viewModel.keepSession.collect { isChecked ->
+            binding.swSession.isChecked = isChecked
+        }
+    }
+
+    private suspend fun observeOnlineStatus() {
+        viewModel.onlineStatus.collect { isChecked ->
+            binding.swOnline.isChecked = isChecked
         }
     }
 
@@ -112,18 +117,18 @@ class ProfileSettingsFragment : Fragment() {
         }
     }
 
-    private fun getUserArgs() {
-        token = args.token
+    private fun getToken() {
+        token = SecurePreferences.getBiometricToken(context).toString()
     }
 
-    fun savePreferences() {
+    private fun savePreferences() {
         binding.swSession.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveKeepSessionPreference(isChecked)
-            Log.d("ProfileSettingsFragment", "savePreferences: $isChecked")
+            Log.d(TAG, "savePreferences: $isChecked")
         }
         binding.swOnline.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveShowOnlineStatusPreference(isChecked)
-            Log.d("ProfileSettingsFragment", "savePreferences: $isChecked")
+            Log.d(TAG, "savePreferences: $isChecked")
         }
     }
 
@@ -138,8 +143,7 @@ class ProfileSettingsFragment : Fragment() {
 
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
-                val innerView = view.getChildAt(i)
-                setupUI(innerView)
+                setupUI(view.getChildAt(i))
             }
         }
     }
@@ -149,5 +153,4 @@ class ProfileSettingsFragment : Fragment() {
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
-
 }
