@@ -30,22 +30,21 @@ interface ApiService {
     suspend fun getProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
 
     @GET("chats/view")
-    suspend fun getOpenChats(@Header("Authorization") token: String): Response<OpenChatsResponse>
+    suspend fun getOpenChats(): Response<OpenChatsResponse>
 
     @GET("messages/list/{id}")
     suspend fun getMessagesList(
-        @Header("Authorization") token: String,
         @Path("id") id: String,
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): Response<MessagesListResponse>
 
     @POST("messages/new")
-    suspend fun newMessage(@Header("Authorization") token: String, @Body newMessageRequest: NewMessageRequest): Response<NewMessageResponse>
+    suspend fun newMessage(@Body newMessageRequest: NewMessageRequest): Response<NewMessageResponse>
 
     @POST("users/logout")
-    suspend fun postLogoutUser(@Header("Authorization") token: String): Response<LogoutResponse>
+    suspend fun postLogoutUser(): Response<LogoutResponse>
 
     @POST("users/biometric")
-    suspend fun postBiometric(@Header("Authorization") token: String): Response<LoginResponse>
+    suspend fun postBiometric(): Response<LoginResponse>
 }

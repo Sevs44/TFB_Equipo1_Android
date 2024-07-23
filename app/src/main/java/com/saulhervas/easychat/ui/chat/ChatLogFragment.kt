@@ -15,20 +15,22 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-const val LIMIT_MESSAGES = 20
+private const val LIMIT_MESSAGES = 20
 
 @AndroidEntryPoint
 class ChatLogFragment : Fragment() {
     private lateinit var binding: FragmentChatLogBinding
     private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
+
     private val args: ChatLogFragmentArgs by navArgs()
-    private lateinit var token: String
-    private lateinit var idUser: String
+    private val userSession = UserSession()
+    private lateinit var nickUser: String
     private lateinit var idChat: String
     private var offset: Int = 0
 
@@ -54,12 +56,12 @@ class ChatLogFragment : Fragment() {
             btnSend.setOnClickListener {
                 val newMessage = NewMessageRequest(
                     idChat,
-                    idUser,
+                    userSession.id,
                     etSendMessage.text.toString()
                 )
-                viewModel.sendMessage(token, newMessage)
+                viewModel.sendMessage(newMessage)
                 cleanText(etSendMessage)
-                viewModel.getOpenChats(token, idChat, offset, LIMIT_MESSAGES)
+                viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
             }
             //ivProfile.setOnClickListener {
             //}
@@ -92,20 +94,19 @@ class ChatLogFragment : Fragment() {
             LinearLayoutManager(requireContext()).apply {
             reverseLayout = true
         }
-        binding.rvMessage.adapter = MessagesAdapter(messages, idUser)
+        binding.rvMessage.adapter = MessagesAdapter(messages, userSession.id)
     }
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
             Log.i("TAG", "setUpViewModel: id => $idChat")
-            viewModel.getOpenChats(token, idChat, offset, LIMIT_MESSAGES)
+            viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
         }
     }
 
     private fun getUserArgs() {
-        token = args.token
-        idUser = args.idUser
         idChat = args.idChat
+        nickUser = args.nickTarget
     }
 }
 

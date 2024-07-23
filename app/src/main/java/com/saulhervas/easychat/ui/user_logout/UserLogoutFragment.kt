@@ -44,7 +44,7 @@ class UserLogoutFragment : Fragment() {
                 .setMessage("¿Estás seguro de que deseas cerrar sesión?")
                 .setPositiveButton("Sí") { dialog, which ->
                     Log.d(TAG, "boton logout $token")
-                    userLoginViewModel.logoutUser(token)
+                    userLoginViewModel.logoutUser()
                     observeViewModel()
                 }
                 .setNegativeButton("No", null)

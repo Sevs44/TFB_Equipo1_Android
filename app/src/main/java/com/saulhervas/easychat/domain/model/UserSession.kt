@@ -1,9 +1,8 @@
 package com.saulhervas.easychat.domain.model
 
-import javax.inject.Singleton
+import javax.inject.Inject
 
-@Singleton
-data class UserSingleton (
+data class UserSession @Inject constructor(
     var id: String = "",
     var token: String = ""
 )

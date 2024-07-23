@@ -23,9 +23,9 @@ class ChatLogViewModel @Inject constructor(
     private val messageSentMutableState = MutableStateFlow("")
     val messagesSentState: StateFlow<String> = messageSentMutableState
 
-    fun getOpenChats(token: String, id: String, offset: Int, limit: Int) {
+    fun getOpenChats(id: String, offset: Int, limit: Int) {
         viewModelScope.launch {
-            messageUseCases.getMessagesList(token, id, offset, limit).collect {
+            messageUseCases.getMessagesList(id, offset, limit).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "l> Error: ${it.error.message}")
@@ -43,9 +43,9 @@ class ChatLogViewModel @Inject constructor(
         }
     }
 
-    fun sendMessage(token: String, newMessageRequest: NewMessageRequest) {
+    fun sendMessage(newMessageRequest: NewMessageRequest) {
         viewModelScope.launch {
-            messageUseCases.newMessage(token, newMessageRequest).collect {
+            messageUseCases.newMessage(newMessageRequest).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "l> Error: ${it.error.message}")
