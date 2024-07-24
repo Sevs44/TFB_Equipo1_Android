@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.home.list
+package com.saulhervas.easychat.ui.home.open_chats_list
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

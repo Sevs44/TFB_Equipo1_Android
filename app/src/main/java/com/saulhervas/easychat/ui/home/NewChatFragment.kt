@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.new_chat
+package com.saulhervas.easychat.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

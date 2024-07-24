@@ -7,7 +7,7 @@ import com.saulhervas.easychat.data.repository.response.profile.UserProfileRespo
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.model.UserItemModel
+import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class UsersDataProvider @Inject constructor(
         return remoteDataSource.getBiometricUser(token)
     }
 
-    fun getUserList(token: String): Flow<BaseResponse<ArrayList<UserItemModel>>> {
+    fun getUserList(token: String): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> {
         return remoteDataSource.getUserList(token)
     }
 }
