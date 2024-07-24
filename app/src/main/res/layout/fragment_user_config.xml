@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="26sp"
                     tools:text="Pepe" />
 
             </LinearLayout>
