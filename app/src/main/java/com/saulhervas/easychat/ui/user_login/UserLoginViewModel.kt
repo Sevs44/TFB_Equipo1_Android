@@ -34,7 +34,11 @@ class UserLoginViewModel @Inject constructor(
                 when (response) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${response.error.message}")
-                        _loginResultError.emit(response.error.message)
+                        if (response.error.message.contains("user not found", ignoreCase = true)) {
+                            _loginResultError.emit("El usuario no existe. Verifique sus credenciales.")
+                        } else {
+                            _loginResultError.emit(response.error.message)
+                        }
                     }
 
                     is BaseResponse.Success -> {

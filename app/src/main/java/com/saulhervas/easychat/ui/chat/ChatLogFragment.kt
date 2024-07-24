@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -44,11 +46,10 @@ class ChatLogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatLogBinding.inflate(inflater, container, false)
-        inflateBinding()
         return binding.root
     }
 
-    private fun inflateBinding() {
+    private fun configClickListeners() {
         binding.apply {
             imBtnBack.setOnClickListener {
                 findNavController().popBackStack()
@@ -77,6 +78,27 @@ class ChatLogFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+        configClickListeners()
+        adjustNestedScrollViewFillPortKeyboardEvent()
+    }
+
+    private fun adjustNestedScrollViewFillPortKeyboardEvent() {
+        val rootView = binding.root
+        val nsvContainer = binding.nsvContainer
+
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            ViewCompat.getRootWindowInsets(rootView)?.let { insets ->
+                val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+                val keypadHeight = imeHeight - navBarHeight
+
+                if (keypadHeight > 0) {
+                    nsvContainer.setPadding(0, 0, 0, keypadHeight)
+                } else {
+                    nsvContainer.setPadding(0, 0, 0, 0)
+                }
+            }
+        }
     }
 
     private fun observeViewModel() {
