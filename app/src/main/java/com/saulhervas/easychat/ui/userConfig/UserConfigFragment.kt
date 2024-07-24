@@ -11,18 +11,22 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentUserConfigBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
 
     private val args: UserConfigFragmentArgs by navArgs()
+    private val viewModel: UserConfigViewModel by viewModels()
     private lateinit var token: String
     private lateinit var imageUri: Uri
 
@@ -40,6 +44,12 @@ class UserConfigFragment : Fragment() {
         loadImageUri()
         setupUI(binding.root)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        viewModel.getUserConfig()
     }
 
     private fun setOnClickListener() {
@@ -64,6 +74,16 @@ class UserConfigFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.userConfig.collect { userProfile ->
+                if (userProfile != null) {
+                    Log.d("ProfileSettingsFragment", "nick: ${userProfile.nick}")
+                }
+                if (userProfile != null) {
+                    binding.tvNameUser.text = userProfile.nick
+                }
+            }
+        }
         // Aquí puedes observar cambios en el ViewModel si es necesario
     }
 
@@ -101,3 +121,4 @@ class UserConfigFragment : Fragment() {
         token = args.token
     }
 }
+
