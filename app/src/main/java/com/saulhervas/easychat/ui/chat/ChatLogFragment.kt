@@ -20,16 +20,17 @@ import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val LIMIT_MESSAGES = 20
 
 @AndroidEntryPoint
-class ChatLogFragment : Fragment() {
+class ChatLogFragment @Inject constructor() : Fragment() {
     private lateinit var binding: FragmentChatLogBinding
     private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
 
     private val args: ChatLogFragmentArgs by navArgs()
-    private val userSession = UserSession()
+    @Inject lateinit var userSession: UserSession
     private lateinit var nickUser: String
     private lateinit var idChat: String
     private var offset: Int = 0
@@ -50,6 +51,7 @@ class ChatLogFragment : Fragment() {
 
     private fun inflateBinding() {
         binding.apply {
+            tvNameUser.text = nickUser
             imBtnBack.setOnClickListener {
                 findNavController().popBackStack()
             }

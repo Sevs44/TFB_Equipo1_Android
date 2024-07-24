@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
 import com.saulhervas.easychat.domain.usecases.MessageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
