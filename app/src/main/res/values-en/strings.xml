@@ -60,4 +60,6 @@
     <string name="user_register_error">All fields are required</string>
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="users_not_founds">The user does not exist. Please check your credentials.</string>
+    <string name="isUserOnline">Online</string>
+
 </resources>

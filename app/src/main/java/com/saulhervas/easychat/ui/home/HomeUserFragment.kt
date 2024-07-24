@@ -16,7 +16,6 @@ import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
-import com.saulhervas.easychat.ui.userConfig.UserConfigFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -51,7 +50,7 @@ class HomeUserFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, id.toString())
+            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, idUser)
             findNavController().navigate(action)
         }
     }
@@ -107,7 +106,11 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
-        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(openChatItemModel?.idChat.toString(), openChatItemModel?.nickTargetUser.toString())
+        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
+            openChatItemModel?.idChat.toString(),
+            openChatItemModel?.nickTargetUser.toString(),
+            openChatItemModel?.isOnlineUser ?: true
+        )
         findNavController().navigate(action)
     }
 

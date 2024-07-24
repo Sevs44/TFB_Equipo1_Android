@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
 import com.saulhervas.easychat.domain.model.UserSession
@@ -22,18 +23,20 @@ import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val LIMIT_MESSAGES = 20
 
 @AndroidEntryPoint
-class ChatLogFragment : Fragment() {
+class ChatLogFragment @Inject constructor() : Fragment() {
     private lateinit var binding: FragmentChatLogBinding
     private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
 
     private val args: ChatLogFragmentArgs by navArgs()
-    private val userSession = UserSession()
+    @Inject lateinit var userSession: UserSession
     private lateinit var nickUser: String
     private lateinit var idChat: String
+    private var isOnlineUser: Boolean = true
     private var offset: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +54,8 @@ class ChatLogFragment : Fragment() {
 
     private fun configClickListeners() {
         binding.apply {
+            tvNameUser.text = nickUser
+            setIsOnlineUser()
             imBtnBack.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -66,6 +71,12 @@ class ChatLogFragment : Fragment() {
             }
             //ivProfile.setOnClickListener {
             //}
+        }
+    }
+
+    private fun setIsOnlineUser() {
+        if (isOnlineUser == true) {
+            binding.tvOnline.text = getString(R.string.isUserOnline)
         }
     }
 
@@ -129,6 +140,7 @@ class ChatLogFragment : Fragment() {
     private fun getUserArgs() {
         idChat = args.idChat
         nickUser = args.nickTarget
+        isOnlineUser = args.isUserOnline
     }
 }
 
