@@ -2,13 +2,17 @@ package com.saulhervas.easychat.ui.user_login
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,6 +23,7 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentLoginBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
@@ -92,25 +97,47 @@ class UserLoginFragment : Fragment() {
             biometricPrompt.authenticate(promptInfo)
         }
     }
+
     private fun setOnClickListener() {
         binding.btnLogin.setOnClickListener {
-            val username = binding.etUser.text.toString()
+            val userName = binding.etUser.text.toString()
             val password = binding.etPassword.text.toString()
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Enter username and password",
-                    Toast.LENGTH_SHORT
-                ).show()
+            val isUsernameEmpty = userName.isEmpty()
+            val isPasswordEmpty = password.isEmpty()
+
+            updateEditTextUI(binding.etUser, isUsernameEmpty)
+            updateEditTextUI(binding.etPassword, isPasswordEmpty)
+
+            if (isUsernameEmpty || isPasswordEmpty) {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.error))
+                    .setMessage(getString(R.string.error_login))
+                    .setCancelable(true)
+                    .show()
+                lifecycleScope.launch {
+                    delay(2000)
+                    alertDialog.dismiss()
+                }
             } else {
-                userLoginViewModel.loginUser(username, password)
+                showProgressBar(true) // Mostrar el ProgressBar
+                userLoginViewModel.loginUser(userName, password)
             }
         }
+
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_userLogin_to_userRegister)
         }
-        binding.tvRecoverPass.setOnClickListener {
-            findNavController().navigate(R.id.action_userLogin_to_userRecoverPass)
+    }
+
+    private fun updateEditTextUI(editText: EditText, isEmpty: Boolean) {
+        if (isEmpty) {
+            editText.setHintTextColor(Color.RED)
+            editText.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background_error)
+        } else {
+            editText.setHintTextColor(Color.GRAY)
+            editText.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background)
         }
     }
 
@@ -118,30 +145,38 @@ class UserLoginFragment : Fragment() {
         lifecycleScope.launch {
             userLoginViewModel.loginResult.collect {
                 SecurePreferences.saveBiometricToken(requireContext(), it.token)
+                showProgressBar(false)
                 val action =
                     UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
                 findNavController().navigate(action)
-                Toast.makeText(
-                    requireContext(),
-                    "$it.token",
-                    Toast.LENGTH_LONG
-                ).show()
             }
         }
+
         lifecycleScope.launch {
             userLoginViewModel.loginResulterror.collect {
-                Toast.makeText(
-                    requireContext(),
-                    it,
-                    Toast.LENGTH_LONG
-                ).show()
+                showProgressBar(false)
+                showErrorDialog()
             }
         }
     }
 
+    private fun showErrorDialog() {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.error))
+            .setMessage(getString(R.string.users_not_founds))
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (dialog.isShowing) {
+                dialog.dismiss()
+            }
+        }, 2000)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun setupUI(view: View) {
-        // Configurar listener para ocultar el teclado
         if (view !is EditText) {
             view.setOnTouchListener { _, _ ->
                 hideKeyboard()
@@ -149,11 +184,9 @@ class UserLoginFragment : Fragment() {
             }
         }
 
-        // Si una vista es un contenedor, repetir para sus hijos
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
-                val innerView = view.getChildAt(i)
-                setupUI(innerView)
+                setupUI(view.getChildAt(i))
             }
         }
     }
@@ -162,5 +195,9 @@ class UserLoginFragment : Fragment() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    private fun showProgressBar(show: Boolean) {
+        binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

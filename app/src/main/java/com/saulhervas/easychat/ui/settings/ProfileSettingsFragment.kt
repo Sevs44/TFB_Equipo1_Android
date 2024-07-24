@@ -12,9 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentProfileSettingsBinding
@@ -50,6 +48,15 @@ class ProfileSettingsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        savePreferences()
+        viewModel.getUserProfile()
+    }
+
+
+
     private fun setOnClickListener() = with(binding) {
         tvEditPhoto.setOnClickListener {
             navigateToPhotoEdit()
@@ -73,52 +80,27 @@ class ProfileSettingsFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpViewModel()
-        observeViewModel()
-        savePreferences()
-    }
-
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel.getUserProfile()
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userProfile.collect { userProfile ->
-                userProfile?.let {
-                    Log.d(TAG, "observeViewModel: ${it.nick}")
-                    binding.etNameProfile.setText(it.nick)
+                if (userProfile != null) {
+                    Log.d("UserProfile", "Nick: ${userProfile.nick}")
+                    binding.tvNameProfile.text = userProfile.nick
                 }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { observeSessionStatus() }
-                launch { observeOnlineStatus() }
+            viewModel.keepSession.collect { isChecked ->
+                binding.swSession.isChecked = isChecked
             }
         }
-    }
 
-    private suspend fun observeSessionStatus() {
-        viewModel.keepSession.collect { isChecked ->
-            binding.swSession.isChecked = isChecked
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onlineStatus.collect { isChecked ->
+                binding.swOnline.isChecked = isChecked
+            }
         }
-    }
-
-    private suspend fun observeOnlineStatus() {
-        viewModel.onlineStatus.collect { isChecked ->
-            binding.swOnline.isChecked = isChecked
-        }
-    }
-
-    private fun setUpViewModel() {
-        lifecycleScope.launch {
-            viewModel.getUserProfile()
-        }
-    }
-
-    private fun getToken() {
-        token = SecurePreferences.getBiometricToken(requireContext()).toString()
     }
 
     private fun savePreferences() {
@@ -152,5 +134,9 @@ class ProfileSettingsFragment : Fragment() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    private fun getToken() {
+        token = SecurePreferences.getBiometricToken(requireContext()).toString()
     }
 }
