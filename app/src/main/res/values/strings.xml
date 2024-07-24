@@ -59,6 +59,7 @@
     <string name="permissionIsNeeded">Necesitas permisos de galeria</string>
     <string name="goToSettings">Ir a la configuracion</string>
     <string name="cancel">Cancelar</string>
+    <string name="isUserOnline">En línea</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

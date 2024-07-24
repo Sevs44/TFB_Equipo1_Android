@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
 import com.saulhervas.easychat.domain.model.UserSession
@@ -33,6 +34,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     @Inject lateinit var userSession: UserSession
     private lateinit var nickUser: String
     private lateinit var idChat: String
+    private var isOnlineUser: Boolean = true
     private var offset: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private fun inflateBinding() {
         binding.apply {
             tvNameUser.text = nickUser
+            setIsOnlineUser()
             imBtnBack.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -67,6 +70,12 @@ class ChatLogFragment @Inject constructor() : Fragment() {
             }
             //ivProfile.setOnClickListener {
             //}
+        }
+    }
+
+    private fun setIsOnlineUser() {
+        if (isOnlineUser == true) {
+            binding.tvOnline.text = getString(R.string.isUserOnline)
         }
     }
 
@@ -109,6 +118,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private fun getUserArgs() {
         idChat = args.idChat
         nickUser = args.nickTarget
+        isOnlineUser = args.isUserOnline
     }
 }
 

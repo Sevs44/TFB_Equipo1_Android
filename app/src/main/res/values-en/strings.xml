@@ -50,4 +50,5 @@
     <string name="permissionIsNeeded">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
     <string name="goToSettings">Go to Settings</string>
     <string name="cancel">Cancel</string>
+    <string name="isUserOnline">Online</string>
 </resources>
