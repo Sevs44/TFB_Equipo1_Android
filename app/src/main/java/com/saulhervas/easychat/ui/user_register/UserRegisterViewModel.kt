@@ -32,11 +32,11 @@ class UserRegisterViewModel @Inject constructor(
     private val passwordRepeatVisibilityMutableState = MutableStateFlow(false)
     val passwordRepeatVisibilityState: StateFlow<Boolean> = passwordRepeatVisibilityMutableState
 
-    fun registerUser(username: String, password: String) {
+    fun registerUser(username: String, password: String, nick: String) {
         val registerRequest = RegisterRequest(
             login = username,
             password = password,
-            nick = username
+            nick = nick
         )
 
         viewModelScope.launch {

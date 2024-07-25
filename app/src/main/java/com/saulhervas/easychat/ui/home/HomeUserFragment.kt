@@ -23,15 +23,14 @@ import kotlinx.coroutines.launch
 class HomeUserFragment : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
+    private var imageUri: Uri? = null
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
-    private var imageUri: Uri? = null
     private lateinit var idUser: String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUserArgs()
+        getArgs()
     }
 
     override fun onCreateView(
@@ -44,14 +43,14 @@ class HomeUserFragment : Fragment() {
         return binding.root
     }
 
-    fun setOnclickListener() {
+    private fun setOnclickListener() {
         binding.btnAdd.setOnClickListener {
             val action =
-                HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser.toInt())
+                HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser)
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, id.toString())
+            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, idUser)
             findNavController().navigate(action)
         }
     }
@@ -72,13 +71,8 @@ class HomeUserFragment : Fragment() {
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
-            viewModel.getOpenChats(token)
+            viewModel.getOpenChats()
         }
-    }
-
-    private fun getUserArgs() {
-        token = args.token
-        idUser = args.id
     }
 
     private fun observeViewModel() {
@@ -112,8 +106,17 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
-        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(token, idUser, openChatItemModel?.id!!)
+        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
+            openChatItemModel?.idChat.toString(),
+            openChatItemModel?.nickTargetUser.toString(),
+            openChatItemModel?.isOnlineUser ?: true
+        )
         findNavController().navigate(action)
+    }
+
+    private fun getArgs(){
+        idUser = args.id
+        token = args.token
     }
 
 }

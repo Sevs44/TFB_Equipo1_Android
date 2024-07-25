@@ -12,11 +12,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentProfileSettingsBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
@@ -27,17 +24,17 @@ import kotlinx.coroutines.launch
 class ProfileSettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileSettingsBinding
-
     private val viewModel: ProfileSettingViewModel by viewModels()
-    private val args: ProfileSettingsFragmentArgs by navArgs()
     private lateinit var token: String
-
-
     private var imageUri: Uri? = null
+
+    companion object {
+        private const val TAG = "ProfileSettingsFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUserArgs()
+        getToken()
     }
 
     override fun onCreateView(
@@ -45,85 +42,75 @@ class ProfileSettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileSettingsBinding.inflate(inflater, container, false)
+        setupUI(binding.root)
         setOnClickListener()
         loadImageUri()
-        setupUI(binding.root)
         return binding.root
-    }
-
-
-    private fun setOnClickListener() {
-        binding.tvEditPhoto.setOnClickListener {
-            findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
-        }
-        binding.ivProfile.setOnClickListener {
-            Log.d("ProfileSettingsFragment", "ivProfile clicked")
-            findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
-        }
-        binding.imBtnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-    private fun loadImageUri() {
-        SecurePreferences.getProfileImage(requireContext())?.let {
-            binding.ivProfile.setImageURI(it)
-            imageUri = it
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpViewModel()
         observeViewModel()
         savePreferences()
+        viewModel.getUserProfile()
     }
 
 
+
+    private fun setOnClickListener() = with(binding) {
+        tvEditPhoto.setOnClickListener {
+            navigateToPhotoEdit()
+        }
+        ivProfile.setOnClickListener {
+            navigateToPhotoEdit()
+        }
+        imBtnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun navigateToPhotoEdit() {
+        findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
+    }
+
+    private fun loadImageUri() {
+        imageUri = SecurePreferences.getProfileImage(requireContext())
+        imageUri?.let {
+            binding.ivProfile.setImageURI(it)
+        }
+    }
 
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel.getUserProfile(token)
-            viewModel.userProfile.collect {
-                if (it != null) {
-                    Log.d("ProfileSettingsFragment", "observeViewModel: it ${it.nick}")
-                    binding.etNameProfile.setText(it.nick)
-                }
-            }
-        }
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.keepSession.collect { isChecked ->
-                        binding.swSession.isChecked = isChecked
-                    }
+            viewModel.userProfile.collect { userProfile ->
+                if (userProfile != null) {
+                    Log.d("UserProfile", "Nick: ${userProfile.nick}")
+                    binding.tvNameProfile.text = userProfile.nick
                 }
-                launch {
-                    viewModel.onlineStatus.collect { isChecked ->
-                        binding.swOnline.isChecked = isChecked
-                    }
-                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.keepSession.collect { isChecked ->
+                binding.swSession.isChecked = isChecked
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onlineStatus.collect { isChecked ->
+                binding.swOnline.isChecked = isChecked
             }
         }
     }
 
-    private fun setUpViewModel() {
-        lifecycleScope.launch {
-            viewModel.getUserProfile(token)
-        }
-    }
-
-    private fun getUserArgs() {
-        token = args.token
-    }
-
-    fun savePreferences() {
+    private fun savePreferences() {
         binding.swSession.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveKeepSessionPreference(isChecked)
-            Log.d("ProfileSettingsFragment", "savePreferences: $isChecked")
+            Log.d(TAG, "savePreferences: $isChecked")
         }
         binding.swOnline.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveShowOnlineStatusPreference(isChecked)
-            Log.d("ProfileSettingsFragment", "savePreferences: $isChecked")
+            Log.d(TAG, "savePreferences: $isChecked")
         }
     }
 
@@ -138,8 +125,7 @@ class ProfileSettingsFragment : Fragment() {
 
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
-                val innerView = view.getChildAt(i)
-                setupUI(innerView)
+                setupUI(view.getChildAt(i))
             }
         }
     }
@@ -150,4 +136,7 @@ class ProfileSettingsFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
+    private fun getToken() {
+        token = SecurePreferences.getBiometricToken(requireContext()).toString()
+    }
 }

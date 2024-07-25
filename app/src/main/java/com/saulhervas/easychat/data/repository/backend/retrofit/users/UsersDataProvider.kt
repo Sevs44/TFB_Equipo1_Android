@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UsersDataProvider @Inject constructor(
-    val remoteDataSource: UsersDataSource
+    private val remoteDataSource: UsersDataSource
 ) {
     fun getRegisterData(registerRequest: RegisterRequest): Flow<BaseResponse<RegisterResponse>> {
         return remoteDataSource.getRegisterUser(registerRequest)
@@ -21,20 +21,18 @@ class UsersDataProvider @Inject constructor(
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> {
         return remoteDataSource.getLogin(loginRequest)
     }
-
-    fun getUserName(token: String): Flow<BaseResponse<UserProfileResponse>> {
-        return remoteDataSource.getUserProfile(token)
+    fun getUserName(): Flow<BaseResponse<UserProfileResponse>> {
+        return remoteDataSource.getUserProfile()
+    }
+    fun getLogoutUser(): Flow<BaseResponse<LogoutResponse>> {
+        return remoteDataSource.getLogoutUser()
     }
 
-    fun getLogoutUser(token: String): Flow<BaseResponse<LogoutResponse>> {
-        return remoteDataSource.getLogoutUser(token)
+    fun getBiometricUser(): Flow<BaseResponse<LoginResponse>> {
+        return remoteDataSource.getBiometricUser()
     }
 
-    fun getBiometricUser(token: String): Flow<BaseResponse<LoginResponse>> {
-        return remoteDataSource.getBiometricUser(token)
-    }
-
-    fun getUserList(token: String): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> {
-        return remoteDataSource.getUserList(token)
+    fun getUserList(): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> {
+        return remoteDataSource.getUserList()
     }
 }

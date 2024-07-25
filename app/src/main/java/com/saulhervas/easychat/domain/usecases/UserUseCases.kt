@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserUseCases @Inject constructor(
-    val userDataProvider: UsersDataProvider
+    private val userDataProvider: UsersDataProvider
 ) {
     fun registerUser(registerRequest: RegisterRequest): Flow<BaseResponse<RegisterResponse>> {
         return userDataProvider.getRegisterData(registerRequest)
@@ -23,19 +23,18 @@ class UserUseCases @Inject constructor(
         return userDataProvider.getLogin(loginRequest)
     }
 
-    fun userProfile(token: String): Flow<BaseResponse<UserProfileResponse>> {
-        return userDataProvider.getUserName(token)
+    fun userProfile(): Flow<BaseResponse<UserProfileResponse>> {
+        return userDataProvider.getUserName()
+    }
+    fun logoutUser(): Flow<BaseResponse<LogoutResponse>> {
+        return userDataProvider.getLogoutUser()
     }
 
-    fun logoutUser(token: String): Flow<BaseResponse<LogoutResponse>> {
-        return userDataProvider.getLogoutUser(token)
+    fun biometricUser(): Flow<BaseResponse<LoginResponse>> {
+        return userDataProvider.getBiometricUser()
     }
 
-    fun biometricUser(token: String): Flow<BaseResponse<LoginResponse>> {
-        return userDataProvider.getBiometricUser(token)
-    }
-
-    fun userList(token: String): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> {
-        return userDataProvider.getUserList(token)
+    fun userList(): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> {
+        return userDataProvider.getUserList()
     }
 }

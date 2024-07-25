@@ -2,7 +2,10 @@ package com.saulhervas.easychat.ui.user_register
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
@@ -14,6 +17,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,7 +40,7 @@ class UserRegisterFragment : Fragment() {
     ): View {
         binding = FragmentUserRegisterBinding.inflate(inflater, container, false)
         setupListeners()
-        setOnCLickListener()
+        setOnClickListener()
         setupUI(binding.root)
         return binding.root
     }
@@ -47,16 +52,16 @@ class UserRegisterFragment : Fragment() {
 
     private fun observeViewModels() {
         lifecycleScope.launch {
-            viewModel.loadingState.collect { visibility ->
-                //binding.progressBar.visibility = if (visibility) View.VISIBLE else View.GONE
+            viewModel.loadingState.collect { isLoading ->
+                // Controlar la visibilidad del ProgressBar si se utiliza
+                // binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
         }
 
         lifecycleScope.launch {
-            viewModel.registerUserState.collect { isRegister ->
-                if (isRegister) {
-                    Toast.makeText(context, "Usuario creado con éxito", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_userRegister_to_userLogin)
+            viewModel.registerUserState.collect { isRegistered ->
+                if (isRegistered) {
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -66,32 +71,25 @@ class UserRegisterFragment : Fragment() {
                 errorMsg?.let {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                     // Limpiar el error después de mostrarlo
+                    viewModel.errorState
                 }
             }
         }
 
         lifecycleScope.launch {
             viewModel.passwordVisibilityState.collect { isVisible ->
-                if (isVisible) {
-                    binding.etPassword.transformationMethod =
-                        HideReturnsTransformationMethod.getInstance()
-                } else {
-                    binding.etPassword.transformationMethod =
-                        PasswordTransformationMethod.getInstance()
-                }
+                binding.etPassword.transformationMethod =
+                    if (isVisible) HideReturnsTransformationMethod.getInstance()
+                    else PasswordTransformationMethod.getInstance()
                 binding.etPassword.setSelection(binding.etPassword.text.length)
             }
         }
 
         lifecycleScope.launch {
             viewModel.passwordRepeatVisibilityState.collect { isVisible ->
-                if (isVisible) {
-                    binding.etPasswordRepeat.transformationMethod =
-                        HideReturnsTransformationMethod.getInstance()
-                } else {
-                    binding.etPasswordRepeat.transformationMethod =
-                        PasswordTransformationMethod.getInstance()
-                }
+                binding.etPasswordRepeat.transformationMethod =
+                    if (isVisible) HideReturnsTransformationMethod.getInstance()
+                    else PasswordTransformationMethod.getInstance()
                 binding.etPasswordRepeat.setSelection(binding.etPasswordRepeat.text.length)
             }
         }
@@ -100,14 +98,8 @@ class UserRegisterFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupListeners() {
         val textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No necesitas hacer nada aquí
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // No necesitas hacer nada aquí
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 validatePasswords()
             }
@@ -135,42 +127,98 @@ class UserRegisterFragment : Fragment() {
             }
             false
         }
-
-        binding.btnRegister.setOnClickListener {
-            if (validateFields()) {
-                if (validatePasswords()) {
-                    val username = binding.etUser.text.toString()
-                    val password = binding.etPassword.text.toString()
-                    viewModel.registerUser(username, password)
-                } else {
-                    Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            } else {
-                Toast.makeText(context, "Todos los campos son obligatorios", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
     }
 
-    private fun setOnCLickListener() {
+    private fun setOnClickListener() {
         binding.imageButton.setOnClickListener {
             findNavController().navigate(R.id.action_userRegister_to_userLogin)
-        }
-
-        binding.tvRecoverPass.setOnClickListener {
-            findNavController().navigate(R.id.action_userRegister_to_userRecoverPass)
         }
 
         binding.tvSession.setOnClickListener {
             findNavController().navigate(R.id.action_userRegister_to_userLogin)
         }
+
+        binding.btnRegister.setOnClickListener {
+            val username = binding.etUser.text.toString()
+            val password = binding.etPassword.text.toString()
+            val confirmPassword = binding.etPasswordRepeat.text.toString()
+            val nick = binding.etNick.text.toString()
+
+            val isUsernameEmpty = username.isEmpty()
+            val isPasswordEmpty = password.isEmpty()
+            val isConfirmPasswordEmpty = confirmPassword.isEmpty()
+            val isNickEmpty = nick.isEmpty()
+
+            updateEditTextUI(binding.etUser, isUsernameEmpty)
+            updateEditTextUI(binding.etPassword, isPasswordEmpty)
+            updateEditTextUI(binding.etPasswordRepeat, isConfirmPasswordEmpty)
+            updateEditTextUI(binding.etNick, isNickEmpty)
+
+            if (isUsernameEmpty || isPasswordEmpty || isConfirmPasswordEmpty || isNickEmpty) {
+                showAlertDialog(getString(R.string.error), getString(R.string.user_register_error))
+            } else if (!validatePasswords()) {
+                updatePasswordEditTextUI(true)
+                showAlertDialog(
+                    getString(R.string.error),
+                    getString(R.string.error_password_mismatch)
+                )
+            } else {
+                viewModel.registerUser(username, password, nick)
+                showAlertDialog(
+                    getString(R.string.user_register),
+                    getString(R.string.user_register_error)
+                )
+            }
+        }
     }
 
-    private fun validateFields(): Boolean {
-        return binding.etUser.text.isNotEmpty() &&
-                binding.etPassword.text.isNotEmpty() &&
-                binding.etPasswordRepeat.text.isNotEmpty()
+    private fun showAlertDialog(
+        title: String,
+        message: String,
+        onDismiss: (() -> Unit)? = null
+    ) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(true)
+            .show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (alertDialog.isShowing) {
+                alertDialog.dismiss()
+                onDismiss?.invoke()
+            }
+        }, 2500)
+    }
+
+    private fun updateEditTextUI(editText: EditText, isEmpty: Boolean) {
+        if (isEmpty) {
+            editText.setHintTextColor(Color.RED)
+            editText.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background_error)
+        } else {
+            editText.setHintTextColor(Color.GRAY)
+            editText.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background)
+        }
+    }
+
+    private fun updatePasswordEditTextUI(isMismatch: Boolean) {
+        if (isMismatch) {
+            binding.etPassword.setHintTextColor(Color.RED)
+            binding.etPassword.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background_error)
+            binding.etPasswordRepeat.setHintTextColor(Color.RED)
+            binding.etPasswordRepeat.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background_error)
+        } else {
+            binding.etPassword.setHintTextColor(Color.GRAY)
+            binding.etPassword.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background)
+            binding.etPasswordRepeat.setHintTextColor(Color.GRAY)
+            binding.etPasswordRepeat.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_background)
+        }
     }
 
     private fun validatePasswords(): Boolean {
@@ -181,15 +229,12 @@ class UserRegisterFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupUI(view: View) {
-        // Configurar listener para ocultar el teclado
         if (view !is EditText) {
             view.setOnTouchListener { _, _ ->
                 hideKeyboard()
                 false
             }
         }
-
-        // Si una vista es un contenedor, repetir para sus hijos
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)

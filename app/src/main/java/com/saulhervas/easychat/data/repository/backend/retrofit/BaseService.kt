@@ -1,14 +1,20 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit
 
+import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
+import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.error.ErrorResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
 import retrofit2.Response
 
-abstract class BaseService {
+abstract class BaseService(
+//    private val context: Context
+) {
+
     suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): BaseResponse<T> {
         val response: Response<T>
+
         try {
             response = call.invoke()
 
@@ -48,8 +54,9 @@ abstract class BaseService {
     private fun mapErrorResponse(throwable: Throwable): ErrorResponse {
         Log.i("TAG", "mapErrorResponse: throwable ==> $throwable")
         return ErrorResponse(
-            "Lo sentimos, estamos presentando problemas de conexión.",
-            "Vuelve a intentarlo más tarde."
+            "", ""
+            //context.getString(R.string.string_errorresponsetoken),
+            //context.getString(R.string.errorResponseTryBefore)
         )
     }
 }

@@ -3,13 +3,14 @@ package com.saulhervas.easychat.data.repository.backend.retrofit
 import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
-import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
 import com.saulhervas.easychat.data.repository.response.messages_list.MessagesListResponse
+import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
+import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
-import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
+
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
 import com.saulhervas.easychat.data.repository.response.user_list.UserListResponse
@@ -29,34 +30,32 @@ interface ApiService {
     suspend fun registerUser(@Body registerRequest: RegisterRequest): Response<RegisterResponse>
 
     @GET("users/profile")
-    suspend fun getProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
+    suspend fun getProfile(): Response<UserProfileResponse>
 
     @GET("chats/view")
-    suspend fun getOpenChats(@Header("Authorization") token: String): Response<OpenChatsResponse>
+    suspend fun getOpenChats(): Response<OpenChatsResponse>
 
     @GET("messages/list/{id}")
     suspend fun getMessagesList(
-        @Header("Authorization") token: String,
         @Path("id") id: String,
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): Response<MessagesListResponse>
 
     @POST("messages/new")
-    suspend fun newMessage(@Header("Authorization") token: String, @Body newMessageRequest: NewMessageRequest): Response<NewMessageResponse>
+    suspend fun newMessage(@Body newMessageRequest: NewMessageRequest): Response<NewMessageResponse>
 
     @POST("users/logout")
-    suspend fun postLogoutUser(@Header("Authorization") token: String): Response<LogoutResponse>
+    suspend fun postLogoutUser(): Response<LogoutResponse>
 
     @POST("users/biometric")
-    suspend fun postBiometric(@Header("Authorization") token: String): Response<LoginResponse>
+    suspend fun postBiometric(): Response<LoginResponse>
 
     @GET("users")
-    suspend fun getUserList(@Header("Authorization") token: String): Response<UserListResponse>
+    suspend fun getUserList(): Response<UserListResponse>
 
     @POST("chats")
     suspend fun postNewChat(
-        @Header("Authorization") token: String,
         @Body newChatRequest: NewChatRequest
     ): Response<NewChatResponse>
 

@@ -14,7 +14,7 @@ class OpenChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         onClickListener: (OpenChatItemModel?) -> Unit
     ) {
         binding.apply {
-            tvUserName.text = itemChat?.nickUser2
+            tvUserName.text = itemChat?.nickTargetUser
             itemView.setOnClickListener { onClickListener(itemChat) }
         }
     }

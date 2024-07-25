@@ -9,6 +9,7 @@
     <string name="tv_register">"Sign up "</string>
     <string name="error_no_data_found">Empty data</string>
     <string name="hint_password">Password</string>
+    <string name="hint_nick">Nick</string>
     <string name="hint_repeat_password">Repeat password</string>
     <string name="btn_register">Check in</string>
     <string name="tv_have_account">"Do you already have an account? "</string>
@@ -43,4 +44,22 @@
     <string name="send_messages">Send a message</string>
     <string name="recent_photos">Recent photos</string>
     <string name="new_chat">Start a new chat</string>
+    <string name="string_errorresponsetoken">Sorry, we are having connection problems.</string>
+    <string name="errorResponseTryBefore">Try again later.</string>
+    <string name="failTakePicture">Failed to take picture</string>
+    <string name="permisionDenied">Permission denied</string>
+    <string name="permissionIsNeeded">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
+    <string name="goToSettings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_login">Enter username and password</string>
+    <string name="error">Error</string>
+    <string name="login_success">Login successful</string>
+    <string name="welcome">Welcome,</string>
+    <string name="user_success">User created</string>
+    <string name="user_register">Register successful</string>
+    <string name="user_register_error">All fields are required</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="users_not_founds">The user does not exist. Please check your credentials.</string>
+    <string name="isUserOnline">Online</string>
+
 </resources>

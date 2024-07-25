@@ -11,10 +11,10 @@ import javax.inject.Inject
 class MessageUseCases @Inject constructor(
     private val dataProvider: MessagesDataProvider
 ) {
-    fun getMessagesList(token: String, id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> {
-        return dataProvider.getMessagesList(token, id, offset, limit)
+    fun getMessagesList(id: String, offset: Int, limit: Int): Flow<BaseResponse<MessagesModel>> {
+        return dataProvider.getMessagesList(id, offset, limit)
     }
-    fun newMessage(token: String, newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> {
-        return dataProvider.newMessage(token, newMessageRequest)
+    fun newMessage(newMessageRequest: NewMessageRequest): Flow<BaseResponse<NewMessageResponse>> {
+        return dataProvider.newMessage(newMessageRequest)
     }
 }

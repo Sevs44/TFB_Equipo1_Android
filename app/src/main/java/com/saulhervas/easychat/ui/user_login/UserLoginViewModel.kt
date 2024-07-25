@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.usecases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 class UserLoginViewModel @Inject constructor(
     private val loginUserCase: UserUseCases,
+    private val userSession: UserSession
 ) : ViewModel() {
 
     private val _loginResultError = MutableSharedFlow<String>()
@@ -32,10 +34,16 @@ class UserLoginViewModel @Inject constructor(
                 when (response) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${response.error.message}")
-                        _loginResultError.emit(response.error.message)
+                        if (response.error.message.contains("user not found", ignoreCase = true)) {
+                            _loginResultError.emit("El usuario no existe. Verifique sus credenciales.")
+                        } else {
+                            _loginResultError.emit(response.error.message)
+                        }
                     }
 
                     is BaseResponse.Success -> {
+                        userSession.token = response.data.token
+                        userSession.id = response.data.userLogin.id
                         _loginResult.emit(response.data)
                     }
                 }
@@ -43,9 +51,9 @@ class UserLoginViewModel @Inject constructor(
         }
     }
 
-    fun loginWithBiometrics(biometricToken: String) {
+    fun loginWithBiometrics() {
         viewModelScope.launch {
-            loginUserCase.biometricUser(biometricToken).collect { response ->
+            loginUserCase.biometricUser().collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${response.error.message}")

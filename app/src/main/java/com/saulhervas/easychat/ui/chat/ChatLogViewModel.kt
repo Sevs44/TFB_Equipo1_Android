@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
 import com.saulhervas.easychat.domain.usecases.MessageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,9 +24,9 @@ class ChatLogViewModel @Inject constructor(
     private val messageSentMutableState = MutableStateFlow("")
     val messagesSentState: StateFlow<String> = messageSentMutableState
 
-    fun getOpenChats(token: String, id: String, offset: Int, limit: Int) {
+    fun getOpenChats(id: String, offset: Int, limit: Int) {
         viewModelScope.launch {
-            messageUseCases.getMessagesList(token, id, offset, limit).collect {
+            messageUseCases.getMessagesList(id, offset, limit).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "l> Error: ${it.error.message}")
@@ -43,9 +44,9 @@ class ChatLogViewModel @Inject constructor(
         }
     }
 
-    fun sendMessage(token: String, newMessageRequest: NewMessageRequest) {
+    fun sendMessage(newMessageRequest: NewMessageRequest) {
         viewModelScope.launch {
-            messageUseCases.newMessage(token, newMessageRequest).collect {
+            messageUseCases.newMessage(newMessageRequest).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "l> Error: ${it.error.message}")

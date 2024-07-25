@@ -35,7 +35,6 @@ class ProfileSettingViewModel @Inject constructor(
 
     private val _onlineStatus = MutableSharedFlow<Boolean>(replay = 1)
     val onlineStatus: SharedFlow<Boolean> = _onlineStatus
-
     init {
         viewModelScope.launch {
             _keepSession.emit(SecurePreferences.getKeepSession(context))
@@ -43,10 +42,9 @@ class ProfileSettingViewModel @Inject constructor(
         }
     }
 
-
-    fun getUserProfile(token: String) {
+    fun getUserProfile() {
         viewModelScope.launch {
-            profileUseCase.userProfile(token).collect {
+            profileUseCase.userProfile().collect {
                 _userProfile.value
                 Log.d("Profile", it.toString())
                 when (it) {
@@ -75,6 +73,5 @@ class ProfileSettingViewModel @Inject constructor(
             _onlineStatus.emit(value)
         }
     }
-
 
 }

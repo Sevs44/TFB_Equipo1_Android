@@ -7,7 +7,7 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 
 class OpenChatAdapter(
-    val itemList: MutableList<OpenChatItemModel>?,
+    private val itemList: MutableList<OpenChatItemModel>?,
     private val onClickListener: (OpenChatItemModel?) -> Unit
 ) : RecyclerView.Adapter<OpenChatViewHolder>() {
 

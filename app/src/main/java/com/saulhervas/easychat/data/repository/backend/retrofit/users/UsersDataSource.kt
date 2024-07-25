@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.users
 
+import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
@@ -16,7 +17,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UsersDataSource @Inject constructor(
-    val userCalls: UsersCalls
+    private val userCalls: UsersCalls,
+    //val context: Context
 ) : BaseService() {
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> =
         flow {
@@ -38,9 +40,9 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getUserProfile(token: String): Flow<BaseResponse<UserProfileResponse>> =
+    fun getLogoutUser(): Flow<BaseResponse<LogoutResponse>> =
         flow {
-            val apiResult = userCalls.callUserProfile(token)
+            val apiResult = userCalls.callLogout()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
@@ -48,9 +50,9 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getLogoutUser(token: String): Flow<BaseResponse<LogoutResponse>> =
+    fun getBiometricUser(): Flow<BaseResponse<LoginResponse>> =
         flow {
-            val apiResult = userCalls.callLogout(token)
+            val apiResult = userCalls.callBiometric()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
@@ -58,21 +60,21 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getBiometricUser(token: String): Flow<BaseResponse<LoginResponse>> =
+    fun getUserList(): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> =
         flow {
-            val apiResult = userCalls.callBiometric(token)
-            if (apiResult is BaseResponse.Success) {
-                emit(BaseResponse.Success(apiResult.data))
-            } else if (apiResult is BaseResponse.Error) {
-                emit(BaseResponse.Error(apiResult.error))
-            }
-        }
-
-    fun getUserList(token: String): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> =
-        flow {
-            val apiResult = userCalls.callUserList(token)
+            val apiResult = userCalls.callUserList()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(UserListMapper.userListResponseToUserListModel(apiResult.data)))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getUserProfile(): Flow<BaseResponse<UserProfileResponse>> =
+        flow {
+            val apiResult = userCalls.callUserProfile()
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }

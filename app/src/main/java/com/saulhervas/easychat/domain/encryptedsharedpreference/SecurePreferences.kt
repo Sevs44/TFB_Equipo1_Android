@@ -87,4 +87,5 @@ object SecurePreferences {
         val sharedPreferences = getEncryptedSharedPreferences(context)
         return sharedPreferences.getString(LANGUAGE_KEY, null)
     }
+
 }
