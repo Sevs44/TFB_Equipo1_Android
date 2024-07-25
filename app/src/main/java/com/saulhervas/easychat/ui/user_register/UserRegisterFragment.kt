@@ -16,7 +16,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -53,15 +52,19 @@ class UserRegisterFragment : Fragment() {
     private fun observeViewModels() {
         lifecycleScope.launch {
             viewModel.loadingState.collect { isLoading ->
-                // Controlar la visibilidad del ProgressBar si se utiliza
-                // binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+                showProgressBar(isLoading)
             }
         }
 
         lifecycleScope.launch {
             viewModel.registerUserState.collect { isRegistered ->
                 if (isRegistered) {
-                    findNavController().popBackStack()
+                    showAlertDialog(
+                        getString(R.string.user_register),
+                        getString(R.string.user_success)
+                    ) {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
@@ -69,9 +72,18 @@ class UserRegisterFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.errorState.collect { errorMsg ->
                 errorMsg?.let {
-                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                    // Limpiar el error después de mostrarlo
-                    viewModel.errorState
+                    when {
+                        it.contains("401") -> {
+                            showAlertDialog(
+                                getString(R.string.error),
+                                getString(R.string.user_already_exists)
+                            )
+                        }
+
+                        else -> {
+                            showAlertDialog(getString(R.string.error), it)
+                        }
+                    }
                 }
             }
         }
@@ -154,20 +166,26 @@ class UserRegisterFragment : Fragment() {
             updateEditTextUI(binding.etPasswordRepeat, isConfirmPasswordEmpty)
             updateEditTextUI(binding.etNick, isNickEmpty)
 
-            if (isUsernameEmpty || isPasswordEmpty || isConfirmPasswordEmpty || isNickEmpty) {
-                showAlertDialog(getString(R.string.error), getString(R.string.user_register_error))
-            } else if (!validatePasswords()) {
-                updatePasswordEditTextUI(true)
-                showAlertDialog(
-                    getString(R.string.error),
-                    getString(R.string.error_password_mismatch)
-                )
-            } else {
-                viewModel.registerUser(username, password, nick)
-                showAlertDialog(
-                    getString(R.string.user_register),
-                    getString(R.string.user_register_error)
-                )
+            when {
+                isUsernameEmpty || isPasswordEmpty || isConfirmPasswordEmpty || isNickEmpty -> {
+                    showAlertDialog(
+                        getString(R.string.error),
+                        getString(R.string.user_register_error)
+                    )
+                }
+
+                !validatePasswords() -> {
+                    updatePasswordEditTextUI(true)
+                    showAlertDialog(
+                        getString(R.string.error),
+                        getString(R.string.error_password_mismatch)
+                    )
+                }
+
+                else -> {
+                    showProgressBar(true)
+                    viewModel.registerUser(username, password, nick)
+                }
             }
         }
     }
@@ -248,4 +266,13 @@ class UserRegisterFragment : Fragment() {
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
+
+    private fun showProgressBar(show: Boolean) {
+        if (show) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
 }

@@ -27,6 +27,7 @@
     <string name="user_register">Registro exitoso</string>
     <string name="user_register_error">Todos los campos son obligatorios</string>
     <string name="error_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="user_already_exists">El usuario ya existe</string>
 
     //Recover Password
     <string name="tv_recover_password">Recuperar contraseña</string>
