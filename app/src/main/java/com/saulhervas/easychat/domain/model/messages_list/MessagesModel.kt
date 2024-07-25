@@ -6,6 +6,7 @@ val messageList: ArrayList<MessageItemModel>?
 )
 
 data class MessageItemModel(
+    val idMessage: String?,
     val messageSentAt: String?,
     val messageContent: String?,
     val sentBy: String?

@@ -17,7 +17,6 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
 import com.saulhervas.easychat.domain.model.UserSession
-import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,6 +35,10 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private lateinit var idChat: String
     private var isOnlineUser: Boolean = true
     private var offset: Int = 0
+
+    private val messagesAdapter: MessagesAdapter by lazy {
+        MessagesAdapter(userSession.id)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +71,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 cleanText(etSendMessage)
                 viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
             }
-            //ivProfile.setOnClickListener {
-            //}
         }
     }
 
@@ -88,29 +89,28 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+        setupRecyclerView()
     }
 
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.messagesState.collect {
                 Log.i("TAG", "observeViewModel: it $it")
-                setupRecyclerView(it.messageList)
+                messagesAdapter.submitList(it.messageList)
             }
         }
     }
 
-    private fun setupRecyclerView(messages: ArrayList<MessageItemModel>?) {
-        Log.i("TAG", "setupRecyclerView: messages => $messages")
+    private fun setupRecyclerView() {
         binding.rvMessage.layoutManager =
             LinearLayoutManager(requireContext()).apply {
-            reverseLayout = true
-        }
-        binding.rvMessage.adapter = MessagesAdapter(messages, userSession.id)
+                reverseLayout = true
+            }
+        binding.rvMessage.adapter = messagesAdapter
     }
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
-            Log.i("TAG", "setUpViewModel: id => $idChat")
             viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
         }
     }
@@ -121,5 +121,3 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         isOnlineUser = args.isUserOnline
     }
 }
-
-
