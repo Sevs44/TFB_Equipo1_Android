@@ -17,6 +17,7 @@ import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreference
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -45,8 +46,7 @@ class HomeUserFragment : Fragment() {
 
     private fun setOnclickListener() {
         binding.btnAdd.setOnClickListener {
-            val action =
-                HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser)
+            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser)
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
@@ -68,7 +68,6 @@ class HomeUserFragment : Fragment() {
         }
     }
 
-
     private fun setUpViewModel() {
         lifecycleScope.launch {
             viewModel.getOpenChats()
@@ -87,6 +86,11 @@ class HomeUserFragment : Fragment() {
                 showBackgroundImage(it)
             }
         }
+        lifecycleScope.launch {
+            viewModel.loadingState.collect { isLoading ->
+                showProgressBar(isLoading)
+            }
+        }
     }
 
     private fun showBackgroundImage(show: Boolean) {
@@ -101,22 +105,31 @@ class HomeUserFragment : Fragment() {
 
     private fun setUpRecyclerView(itemList: MutableList<OpenChatItemModel>) {
         binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvChats.adapter =
-            OpenChatAdapter(itemList) { chat -> changeScreen(chat) }
+        binding.rvChats.adapter = OpenChatAdapter(itemList) { chat ->
+            showProgressBar(true)
+            changeScreen(chat)
+        }
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
-        val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
-            openChatItemModel?.idChat.toString(),
-            openChatItemModel?.nickTargetUser.toString(),
-            openChatItemModel?.isOnlineUser ?: true
-        )
-        findNavController().navigate(action)
+        lifecycleScope.launch {
+            delay(300)
+            val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
+                openChatItemModel?.idChat.toString(),
+                openChatItemModel?.nickTargetUser.toString(),
+                openChatItemModel?.isOnlineUser ?: true
+            )
+            findNavController().navigate(action)
+            showProgressBar(false)
+        }
     }
 
-    private fun getArgs(){
+    private fun getArgs() {
         idUser = args.id
         token = args.token
     }
 
+    private fun showProgressBar(show: Boolean) {
+        binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
+    }
 }

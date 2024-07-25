@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
 import com.saulhervas.easychat.domain.usecases.MessageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,26 +17,24 @@ import javax.inject.Inject
 class ChatLogViewModel @Inject constructor(
     private val messageUseCases: MessageUseCases
 ) : ViewModel() {
-    private val messagesMutableState = MutableStateFlow(MessagesModel(0, ArrayList(emptyList())))
-    val messagesState: StateFlow<MessagesModel> = messagesMutableState
+    private val _messagesMutableState = MutableStateFlow(MessagesModel(0, ArrayList(emptyList())))
+    val messagesState: StateFlow<MessagesModel> = _messagesMutableState
 
-    private val messageSentMutableState = MutableStateFlow("")
-    val messagesSentState: StateFlow<String> = messageSentMutableState
+    private val _messageSentMutableState = MutableStateFlow("")
+    val messagesSentState: StateFlow<String> = _messageSentMutableState
+
 
     fun getOpenChats(id: String, offset: Int, limit: Int) {
         viewModelScope.launch {
             messageUseCases.getMessagesList(id, offset, limit).collect {
                 when (it) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "l> Error: ${it.error.message}")
-                        //loadingMutableSharedFlow.emit(false)
-                        //errorMutableSharedFlow.emit(it.error)
+                        Log.d("TAG", "Error: ${it.error.message}")
+                        // Handle error
                     }
-
                     is BaseResponse.Success -> {
-                        //loadingMutableSharedFlow.emit(false)
-                        Log.d("TAG", "l> Success ${it.data}")
-                        messagesMutableState.value = it.data
+                        Log.d("TAG", "Success ${it.data}")
+                        _messagesMutableState.value = it.data
                     }
                 }
             }
@@ -49,20 +46,15 @@ class ChatLogViewModel @Inject constructor(
             messageUseCases.newMessage(newMessageRequest).collect {
                 when (it) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "l> Error: ${it.error.message}")
-                        //loadingMutableSharedFlow.emit(false)
-                        //errorMutableSharedFlow.emit(it.error)
+                        Log.d("TAG", "Error: ${it.error.message}")
+                        // Handle error
                     }
-
                     is BaseResponse.Success -> {
-                        //loadingMutableSharedFlow.emit(false)
-                        Log.d("TAG", "l> Success ${it.data}")
-                        //messagesMutableState.value = it.data
-                        messageSentMutableState.value = it.data.success
+                        Log.d("TAG", "Success ${it.data}")
+                        _messageSentMutableState.value = it.data.success
                     }
                 }
             }
         }
     }
-
 }
