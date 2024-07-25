@@ -100,9 +100,12 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(itemList: MutableList<OpenChatItemModel>) {
+
         binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChats.adapter =
-            OpenChatAdapter(itemList) { chat -> changeScreen(chat) }
+            OpenChatAdapter(itemList) { chat ->
+                changeScreen(chat)
+            }
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {

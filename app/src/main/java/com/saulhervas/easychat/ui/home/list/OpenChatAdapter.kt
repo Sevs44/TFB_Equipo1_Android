@@ -8,8 +8,10 @@ import com.saulhervas.easychat.domain.model.OpenChatItemModel
 
 class OpenChatAdapter(
     private val itemList: MutableList<OpenChatItemModel>?,
-    private val onClickListener: (OpenChatItemModel?) -> Unit
+    private val onClickListener: (OpenChatItemModel?) -> Unit,
+
 ) : RecyclerView.Adapter<OpenChatViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
