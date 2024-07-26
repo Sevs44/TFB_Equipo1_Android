@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
+import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.domain.usecases.MessageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,11 +17,15 @@ import javax.inject.Inject
 class ChatLogViewModel @Inject constructor(
     private val messageUseCases: MessageUseCases
 ) : ViewModel() {
-    private val _messagesMutableState = MutableStateFlow(MessagesModel(0, ArrayList(emptyList())))
-    val messagesState: StateFlow<MessagesModel> = _messagesMutableState
 
-    private val _messageSentMutableState = MutableStateFlow("")
-    val messagesSentState: StateFlow<String> = _messageSentMutableState
+    private val messagesCountMutableState = MutableStateFlow(0)
+    val messagesCountState: StateFlow<Int> = messagesCountMutableState
+
+    private val messagesMutableState = MutableStateFlow<ArrayList<MessageItemModel>>(ArrayList(emptyList()))
+    val messagesState: StateFlow<ArrayList<MessageItemModel>> = messagesMutableState
+
+    private val messageSentMutableState = MutableStateFlow("")
+    val messagesSentState: StateFlow<String> = messageSentMutableState
 
 
     fun getOpenChats(id: String, offset: Int, limit: Int) {
@@ -34,7 +38,8 @@ class ChatLogViewModel @Inject constructor(
                     }
                     is BaseResponse.Success -> {
                         Log.d("TAG", "Success ${it.data}")
-                        _messagesMutableState.value = it.data
+                        messagesCountMutableState.value = it.data.nMessages!!
+                        messagesMutableState.value = (messagesMutableState.value + it.data.messageList!!) as ArrayList<MessageItemModel>
                     }
                 }
             }
@@ -51,7 +56,7 @@ class ChatLogViewModel @Inject constructor(
                     }
                     is BaseResponse.Success -> {
                         Log.d("TAG", "Success ${it.data}")
-                        _messageSentMutableState.value = it.data.success
+                        messageSentMutableState.value = it.data.success
                     }
                 }
             }

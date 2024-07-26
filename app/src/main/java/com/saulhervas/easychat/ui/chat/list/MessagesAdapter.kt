@@ -51,4 +51,5 @@ class MessagesAdapter(
             VIEW_MESSAGE_RECEIVED
         }
     }
+
 }
