@@ -17,6 +17,7 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
 import com.saulhervas.easychat.domain.model.UserSession
+import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -71,6 +72,8 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 cleanText(etSendMessage)
                 viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
             }
+            //ivProfile.setOnClickListener {
+            //}
         }
     }
 
@@ -90,6 +93,27 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         setUpViewModel()
         observeViewModel()
         setupRecyclerView()
+        configClickListeners()
+        adjustNestedScrollViewFillPortKeyboardEvent()
+    }
+
+    private fun adjustNestedScrollViewFillPortKeyboardEvent() {
+        val rootView = binding.root
+        val nsvContainer = binding.nsvContainer
+
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            ViewCompat.getRootWindowInsets(rootView)?.let { insets ->
+                val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+                val keypadHeight = imeHeight - navBarHeight
+
+                if (keypadHeight > 0) {
+                    nsvContainer.setPadding(0, 0, 0, keypadHeight)
+                } else {
+                    nsvContainer.setPadding(0, 0, 0, 0)
+                }
+            }
+        }
     }
 
     private fun observeViewModel() {
@@ -111,6 +135,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun setUpViewModel() {
         lifecycleScope.launch {
+            Log.i("TAG", "setUpViewModel: id => $idChat")
             viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
         }
     }
@@ -120,4 +145,14 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         nickUser = args.nickTarget
         isOnlineUser = args.isUserOnline
     }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+    }
 }
+
+

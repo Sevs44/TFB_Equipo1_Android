@@ -15,36 +15,42 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val chatUseCases: ChatUseCases
-): ViewModel() {
+) : ViewModel() {
+
     private val openChatsMutableState = MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
     val openChatsState: StateFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
 
     private val showImageBackgroundMutableState = MutableStateFlow(true)
     val showImageBackgroundState: StateFlow<Boolean> = showImageBackgroundMutableState
 
+    private val loadingMutableState = MutableStateFlow(false)
+    val loadingState: StateFlow<Boolean> = loadingMutableState
+
+    val colorMap = mutableMapOf<String, Int>()
+
     fun getOpenChats() {
         viewModelScope.launch {
-             chatUseCases.getOpenChats().collect {
-                 when (it) {
-                     is BaseResponse.Error -> {
-                         Log.d("TAG", "l> Error: ${it.error.message}")
-                         //loadingMutableSharedFlow.emit(false)
-                         //errorMutableSharedFlow.emit(it.error)
-                     }
+            loadingMutableState.value = true
+            chatUseCases.getOpenChats().collect {
+                when (it) {
+                    is BaseResponse.Error -> {
+                        Log.d("TAG", "Error: ${it.error.message}")
+                        loadingMutableState.value = false
+                    }
 
-                     is BaseResponse.Success -> {
-                         //loadingMutableSharedFlow.emit(false)
-                         Log.d("TAG", "l> Success ${it.data.size}")
-                         Log.d("TAG", "l> Success ${it.data}")
-                         if (it.data.isNotEmpty()) {
-                             openChatsMutableState.value = it.data
-                             showImageBackgroundMutableState.value = false
-                         } else {
-                             showImageBackgroundMutableState.value = true
-                         }
-                     }
-                 }
-             }
+                    is BaseResponse.Success -> {
+                        Log.d("TAG", "Success ${it.data.size}")
+                        Log.d("TAG", "Success ${it.data}")
+                        if (it.data.isNotEmpty()) {
+                            openChatsMutableState.value = it.data
+                            showImageBackgroundMutableState.value = false
+                        } else {
+                            showImageBackgroundMutableState.value = true
+                        }
+                        loadingMutableState.value = false
+                    }
+                }
+            }
         }
     }
 }

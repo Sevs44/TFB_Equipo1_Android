@@ -1,11 +1,15 @@
 package com.saulhervas.easychat.ui.home.list
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.ItemUserRowMessageBinding
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import kotlin.random.Random
 
-class OpenChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class OpenChatViewHolder(view: View, private val colorMap: MutableMap<String, Int>) :
+    RecyclerView.ViewHolder(view) {
 
     val binding = ItemUserRowMessageBinding.bind(view)
 
@@ -14,8 +18,26 @@ class OpenChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         onClickListener: (OpenChatItemModel?) -> Unit
     ) {
         binding.apply {
-            tvUserName.text = itemChat?.nickTargetUser
+            val userName = itemChat?.nickTargetUser ?: ""
+            val color = colorMap.getOrPut(userName) {
+                generateRandomColor()
+            }
+            tvUserName.text = userName
+            tvInitial.text = userName.firstOrNull()?.uppercase().toString()
+            tvInitial.background = createCircleDrawable(color)
             itemView.setOnClickListener { onClickListener(itemChat) }
+        }
+    }
+
+    private fun generateRandomColor(): Int {
+        val random = Random
+        return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256))
+    }
+
+    private fun createCircleDrawable(color: Int): GradientDrawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(color)
         }
     }
 }
