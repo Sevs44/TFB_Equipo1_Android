@@ -1,6 +1,5 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.chats
 
-import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
@@ -15,8 +14,8 @@ import javax.inject.Inject
 class ChatsDataSource @Inject constructor(
     private val userSession: UserSession,
     private val chatsCalls: ChatsCalls,
-    //val context: Context
-) : BaseService() {
+
+    ) : BaseService() {
     fun getOpenChats(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> =
         flow {
             val apiResult = chatsCalls.callOpenChats()

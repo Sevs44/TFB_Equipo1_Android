@@ -14,10 +14,7 @@ class ChatsDataProvider @Inject constructor(
         return remoteDataSource.getOpenChats()
     }
 
-    fun newChat(
-        token: String,
-        newChatRequest: NewChatRequest
-    ): Flow<BaseResponse<NewChatResponse>> {
+    fun newChat(newChatRequest: NewChatRequest): Flow<BaseResponse<NewChatResponse>> {
         return remoteDataSource.newChat(newChatRequest)
     }
 }

@@ -45,8 +45,7 @@ class HomeUserFragment : Fragment() {
 
     private fun setOnclickListener() {
         binding.btnAdd.setOnClickListener {
-            val action =
-                HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser)
+            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment(idUser)
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
@@ -68,11 +67,8 @@ class HomeUserFragment : Fragment() {
         }
     }
 
-
     private fun setUpViewModel() {
-        lifecycleScope.launch {
-            viewModel.getOpenChats()
-        }
+        viewModel.getOpenChats()
     }
 
     private fun observeViewModel() {

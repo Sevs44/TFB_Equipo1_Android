@@ -30,7 +30,6 @@ class HomeViewModel @Inject constructor(
     private val isChatCreatedMutableState = MutableStateFlow(false)
     val isChatCreatedState: StateFlow<Boolean> = isChatCreatedMutableState
 
-
     private val showImageBackgroundMutableState = MutableStateFlow(true)
     val showImageBackgroundState: StateFlow<Boolean> = showImageBackgroundMutableState
 
@@ -40,12 +39,9 @@ class HomeViewModel @Inject constructor(
                  when (it) {
                      is BaseResponse.Error -> {
                          Log.d("TAG", "l> Error: ${it.error.message}")
-                         //loadingMutableSharedFlow.emit(false)
-                         //errorMutableSharedFlow.emit(it.error)
                      }
 
                      is BaseResponse.Success -> {
-                         //loadingMutableSharedFlow.emit(false)
                          Log.d("TAG", "l> Success ${it.data.size}")
                          Log.d("TAG", "l> Success ${it.data}")
                          if (it.data.isNotEmpty()) {
@@ -60,9 +56,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getUserList(token: String) {
+    fun getUserList() {
         viewModelScope.launch {
-            userUseCases.userList(token).collect { result ->
+            userUseCases.userList().collect { result ->
                 when (result) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "l> Error: ${result.error.message}")
@@ -78,22 +74,35 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun filterUsers(
-        originalList: List<UserNewChatItemModel>,
-        openChatList: MutableList<OpenChatItemModel>
-    ): List<UserNewChatItemModel> {
-        val openChatUserIds = openChatList.flatMap { listOfNotNull(it.idUser1, it.idUser2) }
-        return originalList.filterNot { user -> user.id in openChatUserIds }
+    fun filterUsers(idUser: String) {
+        viewModelScope.launch {
+            openChatsState.collect { list ->
+                val openChatUserIds = list.flatMap { listOfNotNull(it.idTargetUser) }
+                updateUserNewChatState(idUser, openChatUserIds)
+            }
+        }
     }
 
+    private fun updateUserNewChatState(idUser: String, openChatUserIds: List<String>) {
+        viewModelScope.launch {
+            newChatsState.collect { list ->
+                getFilteredList(list.filterNot { user ->
+                    user.id in openChatUserIds || user.id != idUser
+                })
+            }
+        }
+    }
 
-    fun createChat(token: String, idUser: String, idTarget: String) {
+    fun getFilteredList(filteredList: List<UserNewChatItemModel>) =
+        filteredList.sortedBy { user -> user.nick }
+
+    fun createChat(idUser: String, idTarget: String) {
         val newChatRequest = NewChatRequest(
             idSource = idUser,
             idTarget = idTarget
         )
         viewModelScope.launch {
-            chatUseCases.newChat(token, newChatRequest).collect { result ->
+            chatUseCases.newChat(newChatRequest).collect { result ->
                 when (result) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "l> Error: ${result.error.message}")

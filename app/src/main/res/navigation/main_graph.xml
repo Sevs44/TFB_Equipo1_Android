@@ -202,9 +202,6 @@
         android:label="fragment_new_chat"
         tools:layout="@layout/fragment_new_chat">
         <argument
-            android:name="token"
-            app:argType="string" />
-        <argument
             android:name="idUser"
             app:argType="string" />
     </fragment>

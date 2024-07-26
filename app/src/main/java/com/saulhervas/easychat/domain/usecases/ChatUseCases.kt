@@ -16,9 +16,8 @@ class ChatUseCases @Inject constructor(
     }
 
     fun newChat(
-        token: String,
         newChatRequest: NewChatRequest
     ): Flow<BaseResponse<NewChatResponse>> {
-        return dataProvider.newChat(token, newChatRequest)
+        return dataProvider.newChat(newChatRequest)
     }
 }
