@@ -53,4 +53,24 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteChats(idChat: String) {
+        viewModelScope.launch {
+            loadingMutableState.value = true
+            chatUseCases.deleteChat(idChat).collect {
+                when (it) {
+                    is BaseResponse.Error -> {
+                        Log.d("TAG", "Error: ${it.error.message}")
+                        Log.d("TAG", "Error: ${it.error.token}")
+                        loadingMutableState.value = false
+                    }
+
+                    is BaseResponse.Success -> {
+                        Log.d("TAG", "Success ${it.data}")
+                        loadingMutableState.value = false
+                    }
+                }
+            }
+        }
+    }
 }

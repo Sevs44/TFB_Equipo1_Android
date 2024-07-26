@@ -1,6 +1,5 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.users
 
-import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.ApiService
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest

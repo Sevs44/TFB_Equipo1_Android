@@ -1,7 +1,7 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.chats
 
-import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
+import com.saulhervas.easychat.data.repository.response.delete_chat.DeleteChatResponse
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
 import com.saulhervas.easychat.domain.mappers.ChatsMappers
@@ -22,6 +22,15 @@ class ChatsDataSource @Inject constructor(
             val apiResult = chatsCalls.callOpenChats()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(ChatsMappers.openChatsResponseToOpenChatsModel(userSession.id, apiResult.data)))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+    fun deleteChat(idChat: String): Flow<BaseResponse<DeleteChatResponse>> =
+        flow {
+            val apiResult = chatsCalls.callDeleteChat(idChat)
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }
