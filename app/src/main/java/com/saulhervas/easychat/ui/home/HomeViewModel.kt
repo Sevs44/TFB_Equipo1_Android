@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val chatUseCases: ChatUseCases
-): ViewModel() {
+) : ViewModel() {
 
     private val openChatsMutableState = MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
     val openChatsState: StateFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
@@ -25,6 +25,8 @@ class HomeViewModel @Inject constructor(
 
     private val loadingMutableState = MutableStateFlow(false)
     val loadingState: StateFlow<Boolean> = loadingMutableState
+
+    val colorMap = mutableMapOf<String, Int>()
 
     fun getOpenChats() {
         viewModelScope.launch {

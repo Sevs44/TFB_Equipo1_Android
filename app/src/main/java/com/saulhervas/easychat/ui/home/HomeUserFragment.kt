@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +29,8 @@ class HomeUserFragment : Fragment() {
     private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
     private lateinit var idUser: String
+    private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
+    private lateinit var chatAdapter: OpenChatAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,16 +72,15 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun setUpViewModel() {
-        lifecycleScope.launch {
-            viewModel.getOpenChats()
-        }
+        viewModel.getOpenChats()
     }
 
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.openChatsState.collect {
                 Log.i("TAG", "observeViewModel: it $it")
-                setUpRecyclerView(it)
+                allChats = it
+                setUpRecyclerView(allChats)
             }
         }
         lifecycleScope.launch {
@@ -104,11 +106,23 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(itemList: MutableList<OpenChatItemModel>) {
-        binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvChats.adapter = OpenChatAdapter(itemList) { chat ->
+        chatAdapter = OpenChatAdapter(itemList, viewModel.colorMap) { chat ->
             showProgressBar(true)
             changeScreen(chat)
         }
+        binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvChats.adapter = chatAdapter
+
+        binding.swChat.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterUsers(newText.orEmpty())
+                return true
+            }
+        })
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
@@ -122,6 +136,15 @@ class HomeUserFragment : Fragment() {
             findNavController().navigate(action)
             showProgressBar(false)
         }
+    }
+
+    private fun filterUsers(query: String) {
+        val filteredUsers = if (query.isEmpty()) {
+            allChats
+        } else {
+            allChats.filter { it.nickTargetUser?.contains(query, ignoreCase = true) == true }
+        }
+        chatAdapter.updateList(filteredUsers)
     }
 
     private fun getArgs() {
