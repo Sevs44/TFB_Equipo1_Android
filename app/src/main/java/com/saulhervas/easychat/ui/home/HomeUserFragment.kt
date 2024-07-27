@@ -29,7 +29,6 @@ class HomeUserFragment : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
     private var imageUri: Uri? = null
-    private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
     private lateinit var idUser: String
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
@@ -37,7 +36,6 @@ class HomeUserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getArgs()
     }
 
     override fun onCreateView(
@@ -52,7 +50,7 @@ class HomeUserFragment : Fragment() {
 
     private fun setOnclickListener() {
         binding.btnAdd.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment(token, idUser)
+            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
@@ -63,7 +61,7 @@ class HomeUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpViewModelGetOpenChats()
+        setUpViewModel()
         observeViewModel()
     }
 
@@ -74,7 +72,7 @@ class HomeUserFragment : Fragment() {
         }
     }
 
-    private fun setUpViewModelGetOpenChats() {
+    private fun setUpViewModel() {
         viewModel.getOpenChats()
     }
 
@@ -189,11 +187,6 @@ class HomeUserFragment : Fragment() {
             allChats.filter { it.nickTargetUser?.contains(query, ignoreCase = true) == true }
         }
         chatAdapter.updateList(filteredUsers)
-    }
-
-    private fun getArgs() {
-        idUser = args.id
-        token = args.token
     }
 
     private fun showProgressBar(show: Boolean) {

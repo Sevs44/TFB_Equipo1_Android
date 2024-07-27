@@ -15,8 +15,8 @@ import javax.inject.Inject
 class ChatsDataSource @Inject constructor(
     private val userSession: UserSession,
     private val chatsCalls: ChatsCalls,
-    //val context: Context
-) : BaseService() {
+
+    ) : BaseService() {
     fun getOpenChats(): Flow<BaseResponse<ArrayList<OpenChatItemModel>>> =
         flow {
             val apiResult = chatsCalls.callOpenChats()
