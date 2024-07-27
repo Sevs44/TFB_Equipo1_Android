@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
@@ -24,13 +23,11 @@ class HomeUserFragment : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
     private var imageUri: Uri? = null
-    private val args: HomeUserFragmentArgs by navArgs()
     private lateinit var token: String
     private lateinit var idUser: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getArgs()
     }
 
     override fun onCreateView(
@@ -45,7 +42,7 @@ class HomeUserFragment : Fragment() {
 
     private fun setOnclickListener() {
         binding.btnAdd.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment(idUser)
+            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
@@ -109,10 +106,4 @@ class HomeUserFragment : Fragment() {
         )
         findNavController().navigate(action)
     }
-
-    private fun getArgs(){
-        idUser = args.id
-        token = args.token
-    }
-
 }

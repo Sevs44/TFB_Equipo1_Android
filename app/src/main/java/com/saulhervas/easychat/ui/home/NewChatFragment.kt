@@ -1,10 +1,11 @@
-package com.saulhervas.easychat.ui.home
+package com.saulhervas.easychat.ui.user_login
 
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,26 +19,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.FragmentNewChatBinding
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
+import com.saulhervas.easychat.domain.model.UserSession
+import com.saulhervas.easychat.ui.home.HomeViewModel
 import com.saulhervas.easychat.ui.home.new_chat_list.NewChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewChatFragment : Fragment() {
-
-    private val args: NewChatFragmentArgs by navArgs()
-    private val idUser: String = args.idUser
-
     private val viewModel: HomeViewModel by viewModels()
-
     private lateinit var binding: FragmentNewChatBinding
     private lateinit var newChatAdapter: NewChatAdapter
+
+    @Inject
+    lateinit var userSession: UserSession
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +52,6 @@ class NewChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
-
     }
 
     private fun setOnClickListener() {
@@ -72,7 +72,7 @@ class NewChatFragment : Fragment() {
     private fun updateLists() {
         viewModel.getOpenChats()
         viewModel.getUserList()
-        viewModel.filterUsers(idUser)
+        viewModel.filterUsers(userSession.id)
     }
 
     private fun setUpRecyclerView(userList: List<UserNewChatItemModel>) {
@@ -81,22 +81,21 @@ class NewChatFragment : Fragment() {
             NewChatAdapter(userList) { user ->
                 showCreateChatDialog(user)
             }
-        //setUpAlphabetScroller()
     }
 
     private fun showCreateChatDialog(newChatItemModel: UserNewChatItemModel?) {
-        //HACER STRINGS
         val message = "Crear Chat"
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage(message)
             .setPositiveButton("Yes") { dialog, _ ->
                 newChatItemModel?.id?.let { idTarget ->
                     viewModel.createChat(
-                        idUser = idUser,
+                        idUser = userSession.id,
                         idTarget = idTarget
                     )
                     lifecycleScope.launch {
                         viewModel.isChatCreatedState.collect {
+                            Log.d(userSession.id, "isChatCreatedState: $idTarget")
                             if (it)
                                 findNavController().navigateUp()
                             else
@@ -113,7 +112,6 @@ class NewChatFragment : Fragment() {
                 dialog.dismiss()
             }
         builder.create().show()
-
     }
 
     private fun setUpAlphabetScroller() {
@@ -150,8 +148,9 @@ class NewChatFragment : Fragment() {
                 }
             smoothScroller.targetPosition = position
             binding.rvUsersNewChat.layoutManager?.startSmoothScroll(smoothScroller)
-        } else
+        } else {
             highlightLetter(tv, Color.RED)
+        }
     }
 
     private fun highlightLetter(textView: TextView, color: Int) {
@@ -172,5 +171,4 @@ class NewChatFragment : Fragment() {
             colorAnimator.start()
         }, 1000)
     }
-
 }
