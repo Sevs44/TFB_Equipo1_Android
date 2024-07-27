@@ -8,22 +8,22 @@ class ChatsMappers {
         fun openChatsResponseToOpenChatsModel(idUser: String, openChatsResponse: OpenChatsResponse?): ArrayList<OpenChatItemModel> {
             val list: ArrayList<OpenChatItemModel> = arrayListOf()
             openChatsResponse?.map {
-                if (it.idUser1 == idUser) {
+                if (it.idSource == idUser) {
                     list.add(
                         OpenChatItemModel(
                             idChat = it.id,
-                            idTargetUser = it.idUser2,
-                            nickTargetUser = it.user2Nick,
-                            isOnlineUser = it.user2IsOnline,
+                            idTargetUser = it.idTarget,
+                            nickTargetUser = it.targetNick,
+                            isOnlineUser = it.targetIsOnline,
                         )
                     )
                 } else {
                     list.add(
                         OpenChatItemModel(
                             idChat = it.id,
-                            idTargetUser = it.idUser1,
-                            nickTargetUser = it.user1Nick,
-                            isOnlineUser = it.user1IsOnline,
+                            idTargetUser = it.idSource,
+                            nickTargetUser = it.sourceNick,
+                            isOnlineUser = it.sourceIsOnline,
                         )
                     )
                 }

@@ -147,7 +147,7 @@ class UserLoginFragment : Fragment() {
                 SecurePreferences.saveBiometricToken(requireContext(), it.token)
                 showProgressBar(false)
                 val action =
-                    UserLoginFragmentDirections.actionUserLoginToHomeUser(it.token, it.userLogin.id)
+                    UserLoginFragmentDirections.actionUserLoginToHomeUser()
                 findNavController().navigate(action)
             }
         }
