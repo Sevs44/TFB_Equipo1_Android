@@ -34,7 +34,8 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private val viewModel: ChatLogViewModel by viewModels<ChatLogViewModel>()
 
     private val args: ChatLogFragmentArgs by navArgs()
-    @Inject lateinit var userSession: UserSession
+    @Inject
+    lateinit var userSession: UserSession
     private lateinit var nickUser: String
     private lateinit var idChat: String
     private var isOnlineUser: Boolean = true
@@ -72,9 +73,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                     etSendMessage.text.toString()
                 )
                 viewModel.sendMessage(newMessage)
-                cleanText(etSendMessage)
-                viewModel.getOpenChats(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
-
             }
             //ivProfile.setOnClickListener {
             //}
@@ -153,6 +151,14 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             viewModel.messagesCountState.collect {
                 nMessages = it
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.messagesSentState.collect {
+                if (it) {
+                    cleanText(binding.etSendMessage)
+                    viewModel.getOpenChats(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
+                }
             }
         }
     }
