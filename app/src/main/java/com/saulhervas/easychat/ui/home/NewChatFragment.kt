@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.user_login
+package com.saulhervas.easychat.ui.home
 
 import android.animation.ValueAnimator
 import android.graphics.Color
@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.FragmentNewChatBinding
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import com.saulhervas.easychat.domain.model.UserSession
-import com.saulhervas.easychat.ui.home.HomeViewModel
 import com.saulhervas.easychat.ui.home.new_chat_list.NewChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,7 +35,6 @@ class NewChatFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentNewChatBinding
     private lateinit var newChatAdapter: NewChatAdapter
-
     @Inject
     lateinit var userSession: UserSession
 

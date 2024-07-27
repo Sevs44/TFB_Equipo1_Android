@@ -184,7 +184,7 @@
     </fragment>
     <fragment
         android:id="@+id/newChatFragment"
-        android:name="com.saulhervas.easychat.ui.user_login.NewChatFragment"
+        android:name="com.saulhervas.easychat.ui.home.NewChatFragment"
         android:label="fragment_new_chat"
         tools:layout="@layout/fragment_new_chat">
     </fragment>
