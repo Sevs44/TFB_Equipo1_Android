@@ -10,7 +10,9 @@ import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import com.saulhervas.easychat.domain.usecases.ChatUseCases
 import com.saulhervas.easychat.domain.usecases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,8 +31,9 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow<ArrayList<UserNewChatItemModel>>(ArrayList(emptyList()))
     val newChatsState: StateFlow<ArrayList<UserNewChatItemModel>> = newChatsMutableState
 
-    private val isChatCreatedMutableState = MutableStateFlow(false)
-    val isChatCreatedState: StateFlow<Boolean> = isChatCreatedMutableState
+    private val _isChatCreatedSharedFlow = MutableSharedFlow<Boolean>()
+    val isChatCreatedSharedFlow: SharedFlow<Boolean> = _isChatCreatedSharedFlow
+
 
     private val showImageBackgroundMutableState = MutableStateFlow(true)
     val showImageBackgroundState: StateFlow<Boolean> = showImageBackgroundMutableState
@@ -115,15 +118,12 @@ class HomeViewModel @Inject constructor(
             chatUseCases.newChat(newChatRequest).collect {
                 when (it) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "Error: ${it.error.message}")
-                        Log.d("TAG", "Error: ${it.error.token}")
                         loadingMutableState.value = false
                     }
 
                     is BaseResponse.Success -> {
-                        Log.d("TAG", "Success ${it.data}")
                         loadingMutableState.value = false
-                        isChatCreatedMutableState.value = true
+                        _isChatCreatedSharedFlow.emit(true)
                     }
                 }
             }

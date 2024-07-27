@@ -27,6 +27,7 @@ import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.ui.home.new_chat_list.NewChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,6 +36,7 @@ class NewChatFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentNewChatBinding
     private lateinit var newChatAdapter: NewChatAdapter
+
     @Inject
     lateinit var userSession: UserSession
 
@@ -73,40 +75,69 @@ class NewChatFragment : Fragment() {
         viewModel.filterUsers(userSession.id)
     }
 
+    private fun openChatCreated(chat: UserNewChatItemModel) {
+        Log.d("openChatCreated", "openChatCreated: $chat")
+        changeScreen(chat)
+    }
+
     private fun setUpRecyclerView(userList: List<UserNewChatItemModel>) {
         binding.rvUsersNewChat.layoutManager = LinearLayoutManager(requireContext())
         binding.rvUsersNewChat.adapter =
             NewChatAdapter(userList) { user ->
+                Log.d("el usuario que clico", "setUpRecyclerView: $user")
                 showCreateChatDialog(user)
             }
     }
 
-    private fun showCreateChatDialog(newChatItemModel: UserNewChatItemModel?) {
+    private fun changeScreen(openChatItemModel: UserNewChatItemModel?) {
+        Log.d("changeScreen", "changeScreen: $openChatItemModel")
+        lifecycleScope.launch {
+            delay(300)
+            val action = NewChatFragmentDirections.actionNewChatFragmentToChatLog(
+                openChatItemModel?.id.toString(),
+                openChatItemModel?.nick.toString(),
+                openChatItemModel?.onlineStatus ?: true
+            )
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun showCreateChatDialog(newChatItem: UserNewChatItemModel?) {
         val message = "Crear Chat"
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage(message)
             .setPositiveButton("Yes") { dialog, _ ->
-                newChatItemModel?.id?.let { idTarget ->
-                    viewModel.createChat(
-                        idUser = userSession.id,
-                        idTarget = idTarget
-                    )
+                Log.d("newChatItem", "YES: $newChatItem")
+                if (newChatItem != null) {
+                    newChatItem.id?.let {
+                        viewModel.createChat(
+                            userSession.id,
+                            idTarget = it
+                        )
+                    }
                     lifecycleScope.launch {
-                        viewModel.isChatCreatedState.collect {
-                            Log.d(userSession.id, "isChatCreatedState: $idTarget")
-                            if (it)
-                                findNavController().navigateUp()
-                            else
+                        Log.d("newChatItem", "handleCreateChat: $newChatItem")
+                        viewModel.isChatCreatedSharedFlow.collect { isChatCreated ->
+                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $isChatCreated")
+                            if (isChatCreated) {
+                                viewModel.openChatsState.collect {
+                                    Log.d("newChatItem", "handleCreateChatasd: $it")
+                                    Log.d("newChatItem", "handleCreateChat: $newChatItem")
+                                    openChatCreated(newChatItem)
+                                }
+                            } else {
                                 Toast.makeText(
                                     requireContext(),
                                     "Chat no creado",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                            }
                         }
                     }
                 }
                 dialog.dismiss()
-            }.setNegativeButton("No") { dialog, _ ->
+            }
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
             }
         builder.create().show()

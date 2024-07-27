@@ -167,6 +167,14 @@
         android:name="com.saulhervas.easychat.ui.home.NewChatFragment"
         android:label="fragment_new_chat"
         tools:layout="@layout/fragment_new_chat">
+        <action
+            android:id="@+id/action_newChatFragment_to_chatLog"
+            app:destination="@id/chatLog"
+            app:popUpTo="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/profileSettingsFragment"
@@ -195,16 +203,15 @@
         tools:layout="@layout/fragment_user_logout">
         <action
             android:id="@+id/action_userLogoutFragment_to_userLogin"
-            app:destination="@id/userLogin" />
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
-
     <fragment
         android:id="@+id/photoEditFragment"
         android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
-
         android:label="PhotoEditFragment">
-
     </fragment>
-
-
 </navigation>
