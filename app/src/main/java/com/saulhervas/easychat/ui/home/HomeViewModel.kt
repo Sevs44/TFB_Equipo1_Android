@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import com.saulhervas.easychat.domain.usecases.ChatUseCases
 import com.saulhervas.easychat.domain.usecases.UserUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,8 @@ class HomeViewModel @Inject constructor(
     private val userUseCases: UserUseCases
 ) : ViewModel() {
 
-    private val openChatsMutableState = MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
+    private val openChatsMutableState =
+        MutableStateFlow<ArrayList<OpenChatItemModel>>(ArrayList(emptyList()))
     val openChatsState: StateFlow<ArrayList<OpenChatItemModel>> = openChatsMutableState
 
     private val newChatsMutableState =
@@ -109,11 +111,24 @@ class HomeViewModel @Inject constructor(
             idTarget = idTarget
         )
         viewModelScope.launch {
-            chatUseCases.newChat(newChatRequest).collect { result ->
-                when (result) {
+            loadingMutableState.value = true
+            chatUseCases.newChat(newChatRequest).collect {
+                when (it) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "l> Error: ${result.error.message}")
+                        Log.d("TAG", "Error: ${it.error.message}")
+                        Log.d("TAG", "Error: ${it.error.token}")
+                        loadingMutableState.value = false
                     }
+
+                    is BaseResponse.Success -> {
+                        Log.d("TAG", "Success ${it.data}")
+                        loadingMutableState.value = false
+                        isChatCreatedMutableState.value = true
+                    }
+                }
+            }
+        }
+    }
 
     fun deleteChats(idChat: String) {
         viewModelScope.launch {

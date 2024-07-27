@@ -12,14 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
-import com.saulhervas.easychat.ui.home.list.OpenChatAdapter
+import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -33,10 +32,6 @@ class HomeUserFragment : Fragment() {
     private lateinit var idUser: String
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
     private lateinit var chatAdapter: OpenChatAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +49,7 @@ class HomeUserFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.imBtnSettings.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, idUser)
+            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
             findNavController().navigate(action)
         }
     }
@@ -147,6 +142,7 @@ class HomeUserFragment : Fragment() {
                     lifecycleScope.launch {
                         try {
                             if (idChat != null) {
+                                viewModel.deleteChats(idChat)
                                 allChats.removeAt(position)
                                 chatAdapter.notifyItemRemoved(position)
                                 checkAndShowBackgroundImage()

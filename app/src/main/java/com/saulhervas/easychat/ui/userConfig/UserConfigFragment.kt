@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentUserConfigBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
@@ -25,15 +24,9 @@ import kotlinx.coroutines.launch
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
 
-    private val args: UserConfigFragmentArgs by navArgs()
     private val viewModel: UserConfigViewModel by viewModels()
     private lateinit var token: String
     private lateinit var imageUri: Uri
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        getUserArgs()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +48,7 @@ class UserConfigFragment : Fragment() {
     private fun setOnClickListener() {
         binding.btnProfile.setOnClickListener {
             Log.d("ProfileSettingsFragment", "boton perfil")
-            val action = UserConfigFragmentDirections.actionUserConfigToProfileSettingsFragment(
-                token,
-                id.toString()
-            )
+            val action = UserConfigFragmentDirections.actionUserConfigToProfileSettingsFragment()
             findNavController().navigate(action)
         }
         binding.imBtnBack.setOnClickListener {
@@ -84,7 +74,6 @@ class UserConfigFragment : Fragment() {
                 }
             }
         }
-        // Aquí puedes observar cambios en el ViewModel si es necesario
     }
 
     private fun loadImageUri() {
@@ -96,7 +85,6 @@ class UserConfigFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupUI(view: View) {
-        // Configurar listener para ocultar el teclado
         if (view !is EditText) {
             view.setOnTouchListener { _, _ ->
                 hideKeyboard()
@@ -115,10 +103,6 @@ class UserConfigFragment : Fragment() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
-    }
-
-    private fun getUserArgs() {
-        token = args.token
     }
 }
 
