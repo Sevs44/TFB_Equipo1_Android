@@ -8,6 +8,7 @@ import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.domain.usecases.MessageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,7 +29,6 @@ class ChatLogViewModel @Inject constructor(
 
     private val messageSentMutableState = MutableSharedFlow<Boolean>()
     val messagesSentState: SharedFlow<Boolean> = messageSentMutableState
-
 
     fun getOpenChats(id: String, offset: Int, limit: Int) {
         viewModelScope.launch {
@@ -69,6 +69,15 @@ class ChatLogViewModel @Inject constructor(
                         messageSentMutableState.emit(it.data.success.toBoolean())
                     }
                 }
+            }
+        }
+    }
+
+    fun startPeriodicRefresh(id: String, offset: Int, limit: Int) {
+        viewModelScope.launch() {
+            while (true) {
+                delay(5000)
+                getOpenChats(id, offset, limit)
             }
         }
     }

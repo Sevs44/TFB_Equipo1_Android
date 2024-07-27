@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val LIMIT_MESSAGES = 10
+private const val LIMIT_MESSAGES = 20
 private const val OFFSET_0_MESSAGE_SENT = 0
 
 @AndroidEntryPoint
@@ -98,14 +98,17 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         configClickListeners()
         setOnScrollRecyclerView()
         adjustNestedScrollViewFillPortKeyboardEvent()
+        startTimerRefresh()
+    }
+
+    private fun startTimerRefresh() {
+        viewModel.startPeriodicRefresh(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
     }
 
     private fun setOnScrollRecyclerView() {
         binding.rvMessage.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
-                // Obtén el LayoutManager del RecyclerView
                 val layoutManager = recyclerView.layoutManager as? LinearLayoutManager
                 layoutManager?.let {
                     if (it.findLastVisibleItemPosition() == messagesAdapter.itemCount - 1) {
