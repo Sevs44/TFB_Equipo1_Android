@@ -61,5 +61,6 @@
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="users_not_founds">The user does not exist. Please check your credentials.</string>
     <string name="isUserOnline">Online</string>
+    <string name="user_already_exists">The user already exists</string>
 
 </resources>

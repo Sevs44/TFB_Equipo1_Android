@@ -7,31 +7,28 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 
 class OpenChatAdapter(
-    private val itemList: MutableList<OpenChatItemModel>?,
+    private var itemList: MutableList<OpenChatItemModel>,
+    private val colorMap: MutableMap<String, Int>,
     private val onClickListener: (OpenChatItemModel?) -> Unit
 ) : RecyclerView.Adapter<OpenChatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return OpenChatViewHolder(
-            layoutInflater.inflate(
-                R.layout.item_user_row_message,
-                parent,
-                false
-            )
-        )
+        val view = layoutInflater.inflate(R.layout.item_user_row_message, parent, false)
+        return OpenChatViewHolder(view, colorMap)
     }
 
     override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {
-        val item = itemList?.get(position)
-        holder.onBind(
-            item,
-            onClickListener
-        )
+        val item = itemList[position]
+        holder.onBind(item, onClickListener)
     }
 
     override fun getItemCount(): Int {
-        return itemList?.size ?: 0
+        return itemList.size
     }
 
+    fun updateList(newList: List<OpenChatItemModel>) {
+        itemList = newList.toMutableList()
+        notifyDataSetChanged()
+    }
 }

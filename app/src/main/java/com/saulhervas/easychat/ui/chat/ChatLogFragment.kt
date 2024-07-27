@@ -57,6 +57,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
             tvNameUser.text = nickUser
             setIsOnlineUser()
             imBtnBack.setOnClickListener {
+                showProgressBar()  // Show progress bar when going back
                 findNavController().popBackStack()
             }
             btnSend.setOnClickListener {
@@ -125,8 +126,8 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         Log.i("TAG", "setupRecyclerView: messages => $messages")
         binding.rvMessage.layoutManager =
             LinearLayoutManager(requireContext()).apply {
-            reverseLayout = true
-        }
+                reverseLayout = true
+            }
         binding.rvMessage.adapter = MessagesAdapter(messages, userSession.id)
     }
 
@@ -141,6 +142,14 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         idChat = args.idChat
         nickUser = args.nickTarget
         isOnlineUser = args.isUserOnline
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 }
 

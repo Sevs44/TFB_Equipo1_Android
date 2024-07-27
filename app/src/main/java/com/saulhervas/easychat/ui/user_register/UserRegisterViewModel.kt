@@ -17,7 +17,7 @@ import javax.inject.Inject
 class UserRegisterViewModel @Inject constructor(
     private val registerUserCase: UserUseCases
 ) : ViewModel() {
-    private val loadingMutableState = MutableStateFlow(true)
+    private val loadingMutableState = MutableStateFlow(false)
     val loadingState: StateFlow<Boolean> = loadingMutableState
 
     private val errorMutableState = MutableSharedFlow<String?>()
@@ -42,12 +42,12 @@ class UserRegisterViewModel @Inject constructor(
         viewModelScope.launch {
             loadingMutableState.value = true
             registerUserCase.registerUser(registerRequest).collect { result ->
+                loadingMutableState.value = false
                 when (result) {
                     is BaseResponse.Error -> {
                         errorMutableState.emit(result.error.message)
                         registerUserMutableState.value = false
                     }
-
                     is BaseResponse.Success -> {
                         registerUserMutableState.value = true
                     }
