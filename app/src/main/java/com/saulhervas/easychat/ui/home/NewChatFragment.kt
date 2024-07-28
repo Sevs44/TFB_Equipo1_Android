@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -36,6 +37,7 @@ class NewChatFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentNewChatBinding
     private lateinit var newChatAdapter: NewChatAdapter
+    private var allChats: MutableList<UserNewChatItemModel> = mutableListOf()
 
     @Inject
     lateinit var userSession: UserSession
@@ -52,6 +54,7 @@ class NewChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
+        setUpAlphabetScroller()
     }
 
     private fun setOnClickListener() {
@@ -64,7 +67,8 @@ class NewChatFragment : Fragment() {
         updateLists()
         lifecycleScope.launch {
             viewModel.newChatsState.collect {
-                setUpRecyclerView(viewModel.getFilteredList(it))
+                allChats = it
+                setUpRecyclerView(it)
             }
         }
     }
@@ -80,13 +84,36 @@ class NewChatFragment : Fragment() {
         changeScreen(chat)
     }
 
-    private fun setUpRecyclerView(userList: List<UserNewChatItemModel>) {
+    private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
+        newChatAdapter = NewChatAdapter(userList) { user ->
+            Log.d("el usuario que clico", "setUpRecyclerView: $user")
+            showCreateChatDialog(user)
+        }
         binding.rvUsersNewChat.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvUsersNewChat.adapter =
-            NewChatAdapter(userList) { user ->
-                Log.d("el usuario que clico", "setUpRecyclerView: $user")
-                showCreateChatDialog(user)
+        binding.rvUsersNewChat.adapter = newChatAdapter
+
+        binding.swChat.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterUsers(newText.orEmpty())
+                return true
+            }
+
+        })
+        
+    }
+
+    private fun filterUsers(query: String) {
+        val filteredUsers = if (query.isEmpty()) {
+            allChats
+        } else {
+            allChats.filter { it.nick?.contains(query, ignoreCase = true) ?: false }
+        }
+
+        newChatAdapter.updateItems(filteredUsers)
     }
 
     private fun changeScreen(openChatItemModel: UserNewChatItemModel?) {

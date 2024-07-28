@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_marginBottom="10dp"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="40dp"
     app:cardCornerRadius="15dp"
     app:cardElevation="8dp"
     app:cardBackgroundColor="@color/white">
@@ -44,23 +45,8 @@
                 tools:text="Pepe"
                 android:layout_gravity="start" />
 
-            <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="220dp"
-                android:layout_height="20dp"
-                android:textSize="16sp"
-                tools:text="Buenos dias Pepe"
-                android:layout_gravity="center" />
-
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_hour_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            tools:text="12:00" />
 
     </LinearLayout>
 
