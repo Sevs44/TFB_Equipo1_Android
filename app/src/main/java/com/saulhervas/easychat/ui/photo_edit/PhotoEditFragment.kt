@@ -57,17 +57,9 @@ class PhotoEditFragment : Fragment() {
     ): View {
         binding = FragmentPhotoEditBinding.inflate(inflater, container, false)
         setupUI(binding.root)
-        loadSavedImage()
+        setUpProfileBaseImage()
         setOnClickListener()
         return binding.root
-    }
-
-    private fun loadSavedImage() {
-        val savedUri = SecurePreferences.getProfileImage(requireContext())
-        savedUri?.let {
-            binding.ivProfile.setImageURI(it)
-            imageUri = it
-        }
     }
 
     private fun copyUriToInternalStorage(uri: Uri): Uri? {
@@ -226,6 +218,20 @@ class PhotoEditFragment : Fragment() {
 
     private fun observeViewModel() {
         // Aquí puedes observar cambios en el ViewModel si es necesario
+    }
+
+
+    private fun setUpProfileBaseImage() {
+        loadImageUri()
+        if (binding.ivProfile.drawable == null) binding.ivProfile.setImageResource(R.drawable.usuario_1)
+    }
+
+    private fun loadImageUri() {
+        val savedUri = SecurePreferences.getProfileImage(requireContext())
+        savedUri?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

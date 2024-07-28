@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.ItemUserRowMessageBinding
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import kotlin.random.Random
 
 class OpenChatViewHolder(view: View, private val colorMap: MutableMap<String, Int>) :
@@ -25,7 +26,11 @@ class OpenChatViewHolder(view: View, private val colorMap: MutableMap<String, In
             tvUserName.text = userName
             tvInitial.text = userName.firstOrNull()?.uppercase().toString()
             tvInitial.background = createCircleDrawable(color)
-            itemView.setOnClickListener { onClickListener(itemChat) }
+            itemView.setOnClickListener(object : DebouncedOnClickListener() {
+                override fun onDebouncedClick(v: View) {
+                    onClickListener(itemChat)
+                }
+            })
         }
     }
 

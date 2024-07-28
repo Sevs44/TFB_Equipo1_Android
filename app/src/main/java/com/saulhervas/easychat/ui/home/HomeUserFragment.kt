@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,10 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
+import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,26 +39,46 @@ class HomeUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
-        loadImageUri()
+        setUpStatusbar()
+        setUpProfileBaseImage()
         setOnclickListener()
         return binding.root
     }
 
+    private fun setUpStatusbar() {
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.color_app)
+    }
+
     private fun setOnclickListener() {
-        binding.btnAdd.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
-            findNavController().navigate(action)
-        }
-        binding.imBtnSettings.setOnClickListener {
-            val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
-            findNavController().navigate(action)
-        }
+        binding.btnAdd.setOnClickListener(object : DebouncedOnClickListener() {
+            override fun onDebouncedClick(v: View) {
+                val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+                findNavController().navigate(action)
+            }
+        })
+        binding.imBtnSettings.setOnClickListener(object : DebouncedOnClickListener() {
+            override fun onDebouncedClick(v: View) {
+                val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
+                findNavController().navigate(action)
+            }
+        })
+        binding.ivProfile.setOnClickListener(object : DebouncedOnClickListener() {
+            override fun onDebouncedClick(v: View) {
+                val action = HomeUserFragmentDirections.actionHomeUserToPhotoEditFragment()
+                findNavController().navigate(action)
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+    }
+    private fun setUpProfileBaseImage() {
+        loadImageUri()
+        if (binding.ivProfile.drawable == null) binding.ivProfile.setImageResource(R.drawable.usuario_1)
     }
 
     private fun loadImageUri() {
@@ -90,13 +113,8 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun showBackgroundImage(show: Boolean) {
-        if (!show) {
-            binding.ivChat.visibility = View.GONE
-            binding.tvTextChat.visibility = View.GONE
-        } else {
-            binding.ivChat.visibility = View.VISIBLE
-            binding.tvTextChat.visibility = View.VISIBLE
-        }
+        binding.ivChat.visibility = if (show) View.VISIBLE else View.GONE
+        binding.tvTextChat.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun setUpRecyclerView(itemList: MutableList<OpenChatItemModel>) {
@@ -158,7 +176,6 @@ class HomeUserFragment : Fragment() {
             val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
             itemTouchHelper.attachToRecyclerView(this)
         }
-
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
@@ -188,10 +205,6 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun checkAndShowBackgroundImage() {
-        if (allChats.isEmpty()) {
-            showBackgroundImage(true)
-        } else {
-            showBackgroundImage(false)
-        }
+        showBackgroundImage(allChats.isEmpty())
     }
 }
