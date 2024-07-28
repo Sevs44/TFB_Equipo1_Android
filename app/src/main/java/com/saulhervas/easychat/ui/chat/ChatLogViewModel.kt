@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.model.messages_list.MessagesModel
+import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.domain.usecases.MessageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,12 +20,15 @@ import javax.inject.Inject
 class ChatLogViewModel @Inject constructor(
     private val messageUseCases: MessageUseCases
 ) : ViewModel() {
-    private val _messagesMutableState = MutableStateFlow(MessagesModel(0, ArrayList(emptyList())))
-    val messagesState: StateFlow<MessagesModel> = _messagesMutableState
 
-    private val _messageSentMutableState = MutableStateFlow("")
-    val messagesSentState: StateFlow<String> = _messageSentMutableState
+    private val messagesCountMutableState = MutableStateFlow(0)
+    val messagesCountState: StateFlow<Int> = messagesCountMutableState
 
+    private val messagesMutableState = MutableStateFlow<ArrayList<MessageItemModel>>(ArrayList(emptyList()))
+    val messagesState: StateFlow<ArrayList<MessageItemModel>> = messagesMutableState
+
+    private val messageSentMutableState = MutableSharedFlow<Boolean>()
+    val messagesSentState: SharedFlow<Boolean> = messageSentMutableState
 
     fun getOpenChats(id: String, offset: Int, limit: Int) {
         viewModelScope.launch {
@@ -34,11 +40,20 @@ class ChatLogViewModel @Inject constructor(
                     }
                     is BaseResponse.Success -> {
                         Log.d("TAG", "Success ${it.data}")
-                        _messagesMutableState.value = it.data
+                        messagesCountMutableState.value = it.data.nMessages!!
+                        mergeAndSortMessages(it.data.messageList ?: emptyList())
                     }
                 }
             }
         }
+    }
+
+    private fun mergeAndSortMessages(newMessages: List<MessageItemModel>) {
+        val combinedMessages = (messagesMutableState.value + newMessages).distinctBy { it.idMessage }
+
+        val sortedMessages = combinedMessages.sortedByDescending { it.idMessage }
+
+        messagesMutableState.value = ArrayList(sortedMessages)
     }
 
     fun sendMessage(newMessageRequest: NewMessageRequest) {
@@ -51,9 +66,18 @@ class ChatLogViewModel @Inject constructor(
                     }
                     is BaseResponse.Success -> {
                         Log.d("TAG", "Success ${it.data}")
-                        _messageSentMutableState.value = it.data.success
+                        messageSentMutableState.emit(it.data.success.toBoolean())
                     }
                 }
+            }
+        }
+    }
+
+    fun startPeriodicRefresh(id: String, offset: Int, limit: Int) {
+        viewModelScope.launch() {
+            while (true) {
+                delay(5000)
+                getOpenChats(id, offset, limit)
             }
         }
     }

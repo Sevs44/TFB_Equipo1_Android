@@ -1,15 +1,15 @@
 package com.saulhervas.easychat.domain.mappers
 
 import com.saulhervas.easychat.data.repository.response.user_list.UserListResponse
-import com.saulhervas.easychat.domain.model.UserItemModel
+import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 
 class UserListMapper {
     companion object {
-        fun userListResponseToUserListModel(userListResponse: UserListResponse?): ArrayList<UserItemModel> {
-            val list: ArrayList<UserItemModel> = arrayListOf()
+        fun userListResponseToUserListModel(userListResponse: UserListResponse?): ArrayList<UserNewChatItemModel> {
+            val list: ArrayList<UserNewChatItemModel> = arrayListOf()
             userListResponse?.forEach { user ->
                 list.add(
-                    UserItemModel(
+                    UserNewChatItemModel(
                         id = user.id,
                         nick = user.nick,
                         onlineStatus = user.onlineStatus

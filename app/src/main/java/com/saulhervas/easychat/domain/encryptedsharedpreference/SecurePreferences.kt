@@ -12,6 +12,7 @@ object SecurePreferences {
     private const val KEY_ONLINE_STATUS = "online_status"
     private const val PROFILE_IMAGE = "profile_image"
     private const val LANGUAGE_KEY = "language_key"
+    private const val ID_USER_KEY = "id_user_key"
 
     private fun getEncryptedSharedPreferences(context: Context) =
         EncryptedSharedPreferences.create(
@@ -86,6 +87,19 @@ object SecurePreferences {
     fun getLanguage(context: Context): String? {
         val sharedPreferences = getEncryptedSharedPreferences(context)
         return sharedPreferences.getString(LANGUAGE_KEY, null)
+    }
+
+    fun saveIdUser(context: Context, idUser: String) {
+        val sharedPreferences = getEncryptedSharedPreferences(context)
+        with(sharedPreferences.edit()) {
+            putString(ID_USER_KEY, idUser)
+            apply()
+        }
+    }
+
+    fun getIdUser(context: Context): String? {
+        val sharedPreferences = getEncryptedSharedPreferences(context)
+        return sharedPreferences.getString(ID_USER_KEY, null)
     }
 
 }

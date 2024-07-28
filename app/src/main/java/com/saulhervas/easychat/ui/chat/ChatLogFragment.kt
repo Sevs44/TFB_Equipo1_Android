@@ -10,34 +10,41 @@ import android.widget.EditText
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
 import com.saulhervas.easychat.domain.model.UserSession
-import com.saulhervas.easychat.domain.model.messages_list.MessageItemModel
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val LIMIT_MESSAGES = 20
+private const val OFFSET_0_MESSAGE_SENT = 0
 
 @AndroidEntryPoint
 class ChatLogFragment @Inject constructor() : Fragment() {
     private lateinit var binding: FragmentChatLogBinding
-    private val viewModel: ChatLogViewModel by activityViewModels<ChatLogViewModel>()
+    private val viewModel: ChatLogViewModel by viewModels<ChatLogViewModel>()
 
     private val args: ChatLogFragmentArgs by navArgs()
-    @Inject lateinit var userSession: UserSession
+    @Inject
+    lateinit var userSession: UserSession
     private lateinit var nickUser: String
     private lateinit var idChat: String
     private var isOnlineUser: Boolean = true
     private var offset: Int = 0
+    private var nMessages: Int = 0
+
+    private val messagesAdapter: MessagesAdapter by lazy {
+        MessagesAdapter(userSession.id)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +64,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
             tvNameUser.text = nickUser
             setIsOnlineUser()
             imBtnBack.setOnClickListener {
-                showProgressBar()  // Show progress bar when going back
                 findNavController().popBackStack()
             }
             btnSend.setOnClickListener {
@@ -67,8 +73,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                     etSendMessage.text.toString()
                 )
                 viewModel.sendMessage(newMessage)
-                cleanText(etSendMessage)
-                viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
             }
             //ivProfile.setOnClickListener {
             //}
@@ -76,7 +80,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     }
 
     private fun setIsOnlineUser() {
-        if (isOnlineUser == true) {
+        if (isOnlineUser) {
             binding.tvOnline.text = getString(R.string.isUserOnline)
         }
     }
@@ -90,8 +94,34 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+        setupRecyclerView()
         configClickListeners()
+        setOnScrollRecyclerView()
         adjustNestedScrollViewFillPortKeyboardEvent()
+        startTimerRefresh()
+    }
+
+    private fun startTimerRefresh() {
+        viewModel.startPeriodicRefresh(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
+    }
+
+    private fun setOnScrollRecyclerView() {
+        binding.rvMessage.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as? LinearLayoutManager
+                layoutManager?.let {
+                    if (it.findLastVisibleItemPosition() == messagesAdapter.itemCount - 1) {
+                        onScrolledToTop()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun onScrolledToTop() {
+        updateOffset()
+        viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
     }
 
     private fun adjustNestedScrollViewFillPortKeyboardEvent() {
@@ -117,18 +147,38 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             viewModel.messagesState.collect {
                 Log.i("TAG", "observeViewModel: it $it")
-                setupRecyclerView(it.messageList)
+                messagesAdapter.submitList(it)
+                Log.i("TAG", "observeViewModel: list ==> $it")
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.messagesCountState.collect {
+                nMessages = it
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.messagesSentState.collect {
+                if (it) {
+                    cleanText(binding.etSendMessage)
+                    viewModel.getOpenChats(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
+                }
             }
         }
     }
 
-    private fun setupRecyclerView(messages: ArrayList<MessageItemModel>?) {
-        Log.i("TAG", "setupRecyclerView: messages => $messages")
+    private fun updateOffset() {
+        offset += LIMIT_MESSAGES
+        if (offset > nMessages) {
+            offset = nMessages
+        }
+    }
+
+    private fun setupRecyclerView() {
         binding.rvMessage.layoutManager =
             LinearLayoutManager(requireContext()).apply {
                 reverseLayout = true
             }
-        binding.rvMessage.adapter = MessagesAdapter(messages, userSession.id)
+        binding.rvMessage.adapter = messagesAdapter
     }
 
     private fun setUpViewModel() {
