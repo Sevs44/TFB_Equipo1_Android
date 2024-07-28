@@ -81,8 +81,12 @@
     <string name="cancel">Cancelar</string>
     <string name="isUserOnline">En línea</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Error responses -->
+    <string name="error_response_base">Ha ocurrido un error inesperado: %s</string>
+    <string name="error_response_101">Los protocolos de red han cambiado</string>
+    <string name="error_response_401">No autorizado</string>
+    <string name="error_response_403">No hay acceso al recurso</string>
+    <string name="error_response_404">Error en la solicitud</string>
+    <string name="error_response_5xx">Error en el servidor</string>
 
 </resources>
