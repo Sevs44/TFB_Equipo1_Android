@@ -5,11 +5,15 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -61,6 +65,10 @@ class UserConfigFragment : Fragment() {
             val bottomSheet = LanguageBottomSheetDialogFragment()
             bottomSheet.show(parentFragmentManager, "languageBottomSheet")
         }
+        binding.btnStorage.setOnClickListener {
+            showAlertStorage()
+        }
+
     }
 
     private fun observeViewModel() {
@@ -104,5 +112,35 @@ class UserConfigFragment : Fragment() {
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
+
+    private fun getUserArgs() {
+        token = args.token
+    }
+
+    private fun showAlertStorage() {
+        val customTitleLayout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(100, 50, 100, 30)
+        }
+        val customTitle = TextView(requireContext()).apply {
+            text = getString(R.string.title_alert)
+            textSize = 20f
+            setTypeface(null, android.graphics.Typeface.BOLD)
+            gravity = Gravity.CENTER
+        }
+
+        customTitleLayout.addView(customTitle)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setCustomTitle(customTitleLayout)
+            .setMessage(getString(R.string.message_alert))
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+        dialog.show()
+    }
+
+
 }
 
