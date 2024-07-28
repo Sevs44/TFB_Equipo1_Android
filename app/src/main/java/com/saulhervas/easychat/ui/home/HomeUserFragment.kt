@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -155,21 +156,33 @@ class HomeUserFragment : Fragment() {
                     val position = viewHolder.bindingAdapterPosition
                     val idChat = chatAdapter.getIdChat(position)
 
-                    lifecycleScope.launch {
-                        try {
-                            if (idChat != null) {
-                                viewModel.deleteChats(idChat)
-                                allChats.removeAt(position)
-                                chatAdapter.notifyItemRemoved(position)
-                                checkAndShowBackgroundImage()
-                                chatAdapter.notifyItemChanged(position)
+                    val alertDialog = AlertDialog.Builder(requireContext())
+                        .setTitle(getString(R.string.alert_swiped))
+                        .setMessage(getString(R.string.alert_swiped_message))
+                        .setPositiveButton("Sí") { dialog, _ ->
+                            lifecycleScope.launch {
+                                try {
+                                    if (idChat != null) {
+                                        viewModel.deleteChats(idChat)
+                                        allChats.removeAt(position)
+                                        chatAdapter.notifyItemRemoved(position)
+                                        checkAndShowBackgroundImage()
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e(TAG, "Error deleting chat", e)
+                                    e.printStackTrace()
+                                    chatAdapter.notifyItemChanged(position)
+                                }
                             }
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error deleting chat", e)
-                            e.printStackTrace()
-                            chatAdapter.notifyItemChanged(position)
+                            dialog.dismiss()
                         }
-                    }
+                        .setNegativeButton("No") { dialog, _ ->
+                            chatAdapter.notifyItemChanged(position)
+                            dialog.dismiss()
+                        }
+                        .create()
+
+                    alertDialog.show()
                 }
             }
 
