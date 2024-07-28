@@ -61,7 +61,6 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="28dp"
                 android:background="@color/white"
-                android:src="@mipmap/ic_pepe"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"

@@ -28,9 +28,6 @@ import kotlinx.coroutines.launch
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
     private val viewModel: UserConfigViewModel by viewModels()
-
-    private lateinit var imageUri: Uri
-
     private var imageUri: Uri? = null
 
 
@@ -136,7 +133,7 @@ class UserConfigFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setCustomTitle(customTitleLayout)
             .setMessage(getString(R.string.message_alert))
-            .setPositiveButton("Aceptar") { dialog, _ ->
+            .setPositiveButton(getString(R.string.aceptDialog)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
