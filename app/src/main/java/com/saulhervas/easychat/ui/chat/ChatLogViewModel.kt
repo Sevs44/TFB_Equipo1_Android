@@ -27,21 +27,26 @@ class ChatLogViewModel @Inject constructor(
     private val messagesMutableState = MutableStateFlow<ArrayList<MessageItemModel>>(ArrayList(emptyList()))
     val messagesState: StateFlow<ArrayList<MessageItemModel>> = messagesMutableState
 
-    private val messageSentMutableState = MutableSharedFlow<Boolean>()
-    val messagesSentState: SharedFlow<Boolean> = messageSentMutableState
+    private val messageSentMutableShared = MutableSharedFlow<Boolean>()
+    val messagesSentShared: SharedFlow<Boolean> = messageSentMutableShared
 
-    fun getOpenChats(id: String, offset: Int, limit: Int) {
+    private val loadingMutableShared = MutableSharedFlow<Boolean>()
+    val loadingShared: SharedFlow<Boolean> = loadingMutableShared
+
+    fun getMessages(id: String, offset: Int, limit: Int) {
         viewModelScope.launch {
+            loadingMutableShared.emit(true)
             messageUseCases.getMessagesList(id, offset, limit).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         Log.d("TAG", "Error: ${it.error.message}")
-                        // Handle error
+                        loadingMutableShared.emit(false)
                     }
                     is BaseResponse.Success -> {
                         Log.d("TAG", "Success ${it.data}")
                         messagesCountMutableState.value = it.data.nMessages!!
                         mergeAndSortMessages(it.data.messageList ?: emptyList())
+                        loadingMutableShared.emit(false)
                     }
                 }
             }
@@ -57,16 +62,21 @@ class ChatLogViewModel @Inject constructor(
     }
 
     fun sendMessage(newMessageRequest: NewMessageRequest) {
-        viewModelScope.launch {
-            messageUseCases.newMessage(newMessageRequest).collect {
-                when (it) {
-                    is BaseResponse.Error -> {
-                        Log.d("TAG", "Error: ${it.error.message}")
-                        // Handle error
-                    }
-                    is BaseResponse.Success -> {
-                        Log.d("TAG", "Success ${it.data}")
-                        messageSentMutableState.emit(it.data.success.toBoolean())
+        if (newMessageRequest.messageContent != "") {
+            viewModelScope.launch {
+                loadingMutableShared.emit(true)
+                messageUseCases.newMessage(newMessageRequest).collect {
+                    when (it) {
+                        is BaseResponse.Error -> {
+                            Log.d("TAG", "Error: ${it.error.message}")
+                            loadingMutableShared.emit(false)
+                        }
+
+                        is BaseResponse.Success -> {
+                            Log.d("TAG", "Success ${it.data}")
+                            messageSentMutableShared.emit(it.data.success.toBoolean())
+                            loadingMutableShared.emit(false)
+                        }
                     }
                 }
             }
@@ -74,10 +84,10 @@ class ChatLogViewModel @Inject constructor(
     }
 
     fun startPeriodicRefresh(id: String, offset: Int, limit: Int) {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             while (true) {
                 delay(5000)
-                getOpenChats(id, offset, limit)
+                getMessages(id, offset, limit)
             }
         }
     }
