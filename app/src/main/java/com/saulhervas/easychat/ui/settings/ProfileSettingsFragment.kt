@@ -44,7 +44,7 @@ class ProfileSettingsFragment : Fragment() {
         binding = FragmentProfileSettingsBinding.inflate(inflater, container, false)
         setupUI(binding.root)
         setOnClickListener()
-        loadImageUri()
+        setUpProfileBaseImage()
         return binding.root
     }
 
@@ -71,6 +71,10 @@ class ProfileSettingsFragment : Fragment() {
 
     private fun navigateToPhotoEdit() {
         findNavController().navigate(R.id.action_profileSettingsFragment_to_photoEditFragment)
+    }
+    private fun setUpProfileBaseImage() {
+        loadImageUri()
+        if (binding.ivProfile.drawable == null) binding.ivProfile.setImageResource(R.drawable.usuario_1)
     }
 
     private fun loadImageUri() {

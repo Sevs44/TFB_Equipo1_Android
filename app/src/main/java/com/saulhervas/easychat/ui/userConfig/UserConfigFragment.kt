@@ -27,18 +27,16 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
-
     private val viewModel: UserConfigViewModel by viewModels()
-    private lateinit var token: String
-    private lateinit var imageUri: Uri
+    private var imageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserConfigBinding.inflate(inflater, container, false)
+        setUpProfileBaseImage()
         setOnClickListener()
-        loadImageUri()
         setupUI(binding.root)
         return binding.root
     }
@@ -68,20 +66,24 @@ class UserConfigFragment : Fragment() {
         binding.btnStorage.setOnClickListener {
             showAlertStorage()
         }
-
+        binding.ivProfile.setOnClickListener {
+            val action = UserConfigFragmentDirections.actionUserConfigToPhotoEditFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userConfig.collect { userProfile ->
                 if (userProfile != null) {
-                    Log.d("ProfileSettingsFragment", "nick: ${userProfile.nick}")
-                }
-                if (userProfile != null) {
                     binding.tvNameUser.text = userProfile.nick
                 }
             }
         }
+    }
+    private fun setUpProfileBaseImage() {
+        loadImageUri()
+        if (binding.ivProfile.drawable == null) binding.ivProfile.setImageResource(R.drawable.usuario_1)
     }
 
     private fun loadImageUri() {
@@ -113,10 +115,6 @@ class UserConfigFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
-    private fun getUserArgs() {
-        token = args.token
-    }
-
     private fun showAlertStorage() {
         val customTitleLayout = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
@@ -140,7 +138,4 @@ class UserConfigFragment : Fragment() {
             .create()
         dialog.show()
     }
-
-
 }
-

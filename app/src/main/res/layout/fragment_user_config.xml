@@ -41,8 +41,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/circle_shape"
                     android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/pepe" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/tv_name_user"

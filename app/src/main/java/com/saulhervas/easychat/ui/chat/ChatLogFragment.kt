@@ -74,8 +74,10 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 )
                 viewModel.sendMessage(newMessage)
             }
-            //ivProfile.setOnClickListener {
-            //}
+            ivProfile.setOnClickListener() {
+                val action = ChatLogFragmentDirections.actionChatLogToChatDetailFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 

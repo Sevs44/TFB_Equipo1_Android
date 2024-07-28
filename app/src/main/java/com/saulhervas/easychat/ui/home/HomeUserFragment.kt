@@ -40,7 +40,7 @@ class HomeUserFragment : Fragment() {
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
         setUpStatusbar()
-        loadImageUri()
+        setUpProfileBaseImage()
         setOnclickListener()
         return binding.root
     }
@@ -75,6 +75,10 @@ class HomeUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         observeViewModel()
+    }
+    private fun setUpProfileBaseImage() {
+        loadImageUri()
+        if (binding.ivProfile.drawable == null) binding.ivProfile.setImageResource(R.drawable.usuario_1)
     }
 
     private fun loadImageUri() {
