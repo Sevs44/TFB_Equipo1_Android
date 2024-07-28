@@ -75,9 +75,9 @@ class NewChatFragment : Fragment() {
         viewModel.filterUsers(userSession.id)
     }
 
-    private fun openChatCreated(chat: UserNewChatItemModel) {
+    private fun openChatCreated(chat: UserNewChatItemModel, idChat: String) {
         Log.d("openChatCreated", "openChatCreated: $chat")
-        changeScreen(chat)
+        changeScreen(chat, idChat)
     }
 
     private fun setUpRecyclerView(userList: List<UserNewChatItemModel>) {
@@ -89,12 +89,12 @@ class NewChatFragment : Fragment() {
             }
     }
 
-    private fun changeScreen(openChatItemModel: UserNewChatItemModel?) {
+    private fun changeScreen(openChatItemModel: UserNewChatItemModel?, idChat: String) {
         Log.d("changeScreen", "changeScreen: $openChatItemModel")
         lifecycleScope.launch {
             delay(300)
             val action = NewChatFragmentDirections.actionNewChatFragmentToChatLog(
-                openChatItemModel?.id.toString(),
+                idChat,
                 openChatItemModel?.nick.toString(),
                 openChatItemModel?.onlineStatus ?: true
             )
@@ -117,13 +117,13 @@ class NewChatFragment : Fragment() {
                     }
                     lifecycleScope.launch {
                         Log.d("newChatItem", "handleCreateChat: $newChatItem")
-                        viewModel.isChatCreatedSharedFlow.collect { isChatCreated ->
-                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $isChatCreated")
-                            if (isChatCreated) {
+                        viewModel.chatCreatedSharedFlow.collect { chatCreated ->
+                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $chatCreated")
+                            if (chatCreated.success) {
                                 viewModel.openChatsState.collect {
                                     Log.d("newChatItem", "handleCreateChatasd: $it")
                                     Log.d("newChatItem", "handleCreateChat: $newChatItem")
-                                    openChatCreated(newChatItem)
+                                    openChatCreated(newChatItem, chatCreated.chat.id)
                                 }
                             } else {
                                 Toast.makeText(
