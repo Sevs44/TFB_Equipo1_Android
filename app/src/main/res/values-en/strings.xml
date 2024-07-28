@@ -64,5 +64,8 @@
     <string name="user_already_exists">The user already exists</string>
     <string name="title_alert">At this precise moment, we are in the development phase of this section.</string>
     <string name="message_alert">We apologize for the inconvenience.</string>
+    <string name="message_alert_logout">Are you sure you want to log out?</string>
+    <string name="alert_swiped">Confirm deletion</string>
+    <string name="alert_swiped_message">Are you sure you want to delete this chat?</string>
 
 </resources>
