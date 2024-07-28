@@ -10,23 +10,23 @@ data class OpenChatsItem(
     @SerializedName("chatcreated")
     val chatCreatedAt: String?,
     @SerializedName("source")
-    val idUser1: String?,
+    val idSource: String?,
     @SerializedName("sourceavatar")
-    val user1Avatar: String?,
+    val sourceAvatar: String?,
     @SerializedName("sourcenick")
-    val user1Nick: String?,
+    val sourceNick: String?,
     @SerializedName("sourceonline")
-    val user1IsOnline: Boolean?,
+    val sourceIsOnline: Boolean?,
     @SerializedName("sourcetoken")
-    val user1Token: String?,
+    val sorceToken: String?,
     @SerializedName("target")
-    val idUser2: String?,
+    val idTarget: String?,
     @SerializedName("targetavatar")
-    val user2Avatar: String?,
+    val targetAvatar: String?,
     @SerializedName("targetnick")
-    val user2Nick: String?,
+    val targetNick: String?,
     @SerializedName("targetonline")
-    val user2IsOnline: Boolean?,
+    val targetIsOnline: Boolean?,
     @SerializedName("targettoken")
-    val user2Token: String?
+    val targetToken: String?
 )

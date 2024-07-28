@@ -11,7 +11,7 @@ import com.saulhervas.easychat.data.repository.response.register.RegisterRespons
 import com.saulhervas.easychat.domain.mappers.UserListMapper
 import com.saulhervas.easychat.domain.mappers.UsersMappers
 import com.saulhervas.easychat.domain.model.BaseResponse
-import com.saulhervas.easychat.domain.model.UserItemModel
+import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -60,7 +60,7 @@ class UsersDataSource @Inject constructor(
             }
         }
 
-    fun getUserList(): Flow<BaseResponse<ArrayList<UserItemModel>>> =
+    fun getUserList(): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> =
         flow {
             val apiResult = userCalls.callUserList()
             if (apiResult is BaseResponse.Success) {

@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import javax.inject.Inject
 
-class ApiClient @Inject constructor(private val userSession: UserSession) {
+class ApiClient @Inject constructor(userSession: UserSession) {
 
     companion object {
         private const val BASE_URL = "https://mock-movilidad.vass.es/chatvass/api/"
