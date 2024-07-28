@@ -81,6 +81,8 @@
     <string name="cancel">Cancelar</string>
     <string name="isUserOnline">En línea</string>
     <string name="aceptDialog">Aceptar</string>
+    <string name="FailedPhoto">Failed to do photo</string>
+    <string name="messageGalleryPermision">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
