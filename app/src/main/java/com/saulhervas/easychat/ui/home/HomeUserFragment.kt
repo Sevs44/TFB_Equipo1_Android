@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
@@ -42,9 +47,21 @@ class HomeUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
+        setUpToolbar()
         loadImageUri()
         setOnclickListener()
         return binding.root
+    }
+
+    private fun setUpToolbar() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { v, insets ->
+            val statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            v.updatePadding(top = statusBarInsets.top)
+            insets
+        }
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.color_app)
+
     }
 
     private fun setOnclickListener() {
@@ -54,6 +71,10 @@ class HomeUserFragment : Fragment() {
         }
         binding.imBtnSettings.setOnClickListener {
             val action = HomeUserFragmentDirections.actionHomeUserToUserConfig(token, idUser)
+            findNavController().navigate(action)
+        }
+        binding.ivProfile.setOnClickListener() {
+            val action = HomeUserFragmentDirections.actionHomeUserToPhotoEditFragment()
             findNavController().navigate(action)
         }
     }

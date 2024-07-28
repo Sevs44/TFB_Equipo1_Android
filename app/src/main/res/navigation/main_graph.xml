@@ -60,9 +60,7 @@
 
     <fragment
         android:id="@+id/userRecoverPass"
-        android:name="com.saulhervas.easychat.ui.user_recoverpass.UserRecoverPassFragment"
-        android:label="fragment_recover_pass"
-        tools:layout="@layout/fragment_recover_pass">
+        android:label="fragment_recover_pass">
         <action
             android:id="@+id/action_userRecoverPass_to_userLogin"
             app:destination="@id/userLogin"
@@ -176,6 +174,13 @@
                 android:name="id"
                 app:argType="string" />
         </action>
+        <action
+            android:id="@+id/action_homeUser_to_photoEditFragment"
+            app:destination="@id/photoEditFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 
     <fragment
