@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.home.list
+package com.saulhervas.easychat.ui.home.open_chats_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -30,5 +30,8 @@ class OpenChatAdapter(
     fun updateList(newList: List<OpenChatItemModel>) {
         itemList = newList.toMutableList()
         notifyDataSetChanged()
+    }
+    fun getIdChat(position: Int): String? {
+        return itemList[position].idChat
     }
 }
