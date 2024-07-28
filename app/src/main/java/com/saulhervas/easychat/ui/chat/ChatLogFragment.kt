@@ -24,6 +24,7 @@ import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreference
 import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -82,7 +83,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     }
 
     private fun observeViewModel() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             viewModel.messagesState.collect {
                 Log.i("TAG", "observeViewModel: it $it")
                 messagesAdapter.submitList(it)
