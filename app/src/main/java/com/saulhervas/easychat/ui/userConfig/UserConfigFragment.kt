@@ -27,9 +27,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
-
     private val viewModel: UserConfigViewModel by viewModels()
-    private lateinit var token: String
     private lateinit var imageUri: Uri
 
     override fun onCreateView(
@@ -113,9 +111,6 @@ class UserConfigFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
-    private fun getUserArgs() {
-        token = args.token
-    }
 
     private fun showAlertStorage() {
         val customTitleLayout = LinearLayout(requireContext()).apply {
