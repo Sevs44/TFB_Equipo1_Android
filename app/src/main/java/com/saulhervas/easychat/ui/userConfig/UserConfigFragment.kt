@@ -29,7 +29,6 @@ class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
 
     private val viewModel: UserConfigViewModel by viewModels()
-    private lateinit var token: String
     private lateinit var imageUri: Uri
 
     override fun onCreateView(
@@ -111,10 +110,6 @@ class UserConfigFragment : Fragment() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
-    }
-
-    private fun getUserArgs() {
-        token = args.token
     }
 
     private fun showAlertStorage() {
