@@ -29,8 +29,6 @@ class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
     private val viewModel: UserConfigViewModel by viewModels()
 
-    private lateinit var imageUri: Uri
-
     private var imageUri: Uri? = null
 
 
