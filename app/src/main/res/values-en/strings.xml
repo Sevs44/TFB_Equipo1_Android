@@ -64,5 +64,11 @@
     <string name="user_already_exists">The user already exists</string>
     <string name="title_alert">At this precise moment, we are in the development phase of this section.</string>
     <string name="message_alert">We apologize for the inconvenience.</string>
+    <string name="error_response_base">"An unexpected error has occurred: %s "</string>
+    <string name="error_response_401">Not authorized</string>
+    <string name="error_response_403">No access to resource</string>
+    <string name="error_response_101">Network protocols have changed</string>
+    <string name="error_response_404">"Network request error "</string>
+    <string name="error_response_5xx">Server error</string>
 
 </resources>
