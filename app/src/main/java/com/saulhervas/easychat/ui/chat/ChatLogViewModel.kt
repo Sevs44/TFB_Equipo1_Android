@@ -16,9 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val LIMIT_MESSAGES = 100
-private const val OFFSET_0_MESSAGE_SENT = 0
-
 @HiltViewModel
 class ChatLogViewModel @Inject constructor(
     private val messageUseCases: MessageUseCases
@@ -87,7 +84,7 @@ class ChatLogViewModel @Inject constructor(
     }
 
     fun startPeriodicRefresh(id: String, offset: Int, limit: Int) {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             while (true) {
                 delay(5000)
                 getMessages(id, offset, limit)
