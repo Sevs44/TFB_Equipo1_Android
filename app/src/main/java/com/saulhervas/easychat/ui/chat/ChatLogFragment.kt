@@ -1,6 +1,7 @@
 package com.saulhervas.easychat.ui.chat
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,13 +20,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val LIMIT_MESSAGES = 20
+private const val LIMIT_MESSAGES = 100
 private const val OFFSET_0_MESSAGE_SENT = 0
 
 @AndroidEntryPoint
@@ -41,6 +43,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private var isOnlineUser: Boolean = true
     private var offset: Int = 0
     private var nMessages: Int = 0
+    private var imageUri: Uri? = null
 
     private val messagesAdapter: MessagesAdapter by lazy {
         MessagesAdapter(userSession.id)
@@ -56,13 +59,75 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatLogBinding.inflate(inflater, container, false)
+        loadImageUri()
+        inflateBinding()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViewModel()
+        observeViewModel()
+        setupRecyclerView()
+        configClickListeners()
+        setOnScrollRecyclerView()
+        adjustNestedScrollViewFillPortKeyboardEvent()
+        startTimerRefresh()
+    }
+
+    private fun setUpViewModel() {
+        lifecycleScope.launch {
+            viewModel.getMessages(idChat, offset, LIMIT_MESSAGES)
+        }
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.messagesState.collect {
+                Log.i("TAG", "observeViewModel: it $it")
+                messagesAdapter.submitList(it)
+                Log.i("TAG", "observeViewModel: list ==> $it")
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.messagesCountState.collect {
+                nMessages = it
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.messagesSentShared.collect {
+                if (it) {
+                    cleanText(binding.etSendMessage)
+                    viewModel.getMessages(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
+                    binding.rvMessage.smoothScrollToPosition(0)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.loadingShared.collect {
+                if (it) {
+                    showProgressBar()
+                } else {
+                    hideProgressBar()
+                }
+            }
+        }
+    }
+
+    private fun inflateBinding() {
+        binding.tvNameUser.text = nickUser
+        setIsOnlineUser()
+    }
+
+    private fun loadImageUri() {
+        SecurePreferences.getProfileImage(requireContext())?.let {
+            binding.ivProfile.setImageURI(it)
+            imageUri = it
+        }
     }
 
     private fun configClickListeners() {
         binding.apply {
-            tvNameUser.text = nickUser
-            setIsOnlineUser()
             imBtnBack.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -74,8 +139,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 )
                 viewModel.sendMessage(newMessage)
             }
-            //ivProfile.setOnClickListener {
-            //}
         }
     }
 
@@ -88,17 +151,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun cleanText(editText: EditText) {
         editText.setText("")
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpViewModel()
-        observeViewModel()
-        setupRecyclerView()
-        configClickListeners()
-        setOnScrollRecyclerView()
-        adjustNestedScrollViewFillPortKeyboardEvent()
-        startTimerRefresh()
     }
 
     private fun startTimerRefresh() {
@@ -121,7 +173,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun onScrolledToTop() {
         updateOffset()
-        viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
+        viewModel.getMessages(idChat, offset, LIMIT_MESSAGES)
     }
 
     private fun adjustNestedScrollViewFillPortKeyboardEvent() {
@@ -143,29 +195,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         }
     }
 
-    private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel.messagesState.collect {
-                Log.i("TAG", "observeViewModel: it $it")
-                messagesAdapter.submitList(it)
-                Log.i("TAG", "observeViewModel: list ==> $it")
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.messagesCountState.collect {
-                nMessages = it
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.messagesSentState.collect {
-                if (it) {
-                    cleanText(binding.etSendMessage)
-                    viewModel.getOpenChats(idChat, OFFSET_0_MESSAGE_SENT, LIMIT_MESSAGES)
-                }
-            }
-        }
-    }
-
     private fun updateOffset() {
         offset += LIMIT_MESSAGES
         if (offset > nMessages) {
@@ -179,13 +208,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 reverseLayout = true
             }
         binding.rvMessage.adapter = messagesAdapter
-    }
-
-    private fun setUpViewModel() {
-        lifecycleScope.launch {
-            Log.i("TAG", "setUpViewModel: id => $idChat")
-            viewModel.getOpenChats(idChat, offset, LIMIT_MESSAGES)
-        }
     }
 
     private fun getUserArgs() {
