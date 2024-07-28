@@ -35,6 +35,6 @@ class LanguageBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     private fun changeLanguage(languageCode: String) {
         LocaleManager.setNewLocale(requireContext(), languageCode)
-        activity?.recreate()  // Reinicia la actividad para aplicar el cambio de idioma
+        activity?.recreate()
     }
 }

@@ -119,7 +119,7 @@ class UserLoginFragment : Fragment() {
                     alertDialog.dismiss()
                 }
             } else {
-                showProgressBar(true) // Mostrar el ProgressBar
+                showProgressBar(true)
                 userLoginViewModel.loginUser(userName, password)
             }
         }
