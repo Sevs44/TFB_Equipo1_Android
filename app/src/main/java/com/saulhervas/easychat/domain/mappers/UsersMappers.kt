@@ -1,7 +1,7 @@
 package com.saulhervas.easychat.domain.mappers
 
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
-import com.saulhervas.easychat.domain.model.modelsregister.UserRegister
+import com.saulhervas.easychat.data.repository.response.register.UserRegister
 
 class UsersMappers {
     companion object {
