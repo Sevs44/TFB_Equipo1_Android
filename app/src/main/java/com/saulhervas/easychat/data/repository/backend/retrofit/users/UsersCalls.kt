@@ -5,6 +5,7 @@ import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.online_status.OnlineStatusResponse
 import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
@@ -36,5 +37,13 @@ class UsersCalls @Inject constructor(
 
     suspend fun callUserList(): BaseResponse<UserListResponse> {
         return apiCall { apiService.getUserList() }
+    }
+
+    suspend fun callUserOnlineTrue(): BaseResponse<OnlineStatusResponse> {
+        return apiCall { apiService.putOnlineStatusTrue() }
+    }
+
+    suspend fun callUserOnlineFalse(): BaseResponse<OnlineStatusResponse> {
+        return apiCall { apiService.putOnlineStatusFalse() }
     }
 }

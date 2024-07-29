@@ -10,6 +10,7 @@ import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageResponse
+import com.saulhervas.easychat.data.repository.response.online_status.OnlineStatusResponse
 import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
@@ -19,6 +20,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -62,4 +64,10 @@ interface ApiService {
 
     @DELETE("chats/{id}")
     suspend fun deleteUser(@Path("id") id: String): Response<DeleteChatResponse>
+
+    @PUT("users/online/true")
+    suspend fun putOnlineStatusTrue(): Response<OnlineStatusResponse>
+
+    @PUT("users/online/false")
+    suspend fun putOnlineStatusFalse(): Response<OnlineStatusResponse>
 }

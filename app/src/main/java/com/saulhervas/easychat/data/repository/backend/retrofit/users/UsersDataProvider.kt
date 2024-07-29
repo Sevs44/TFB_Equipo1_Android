@@ -3,6 +3,7 @@ package com.saulhervas.easychat.data.repository.backend.retrofit.users
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.online_status.OnlineStatusResponse
 import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
@@ -24,6 +25,7 @@ class UsersDataProvider @Inject constructor(
     fun getUserName(): Flow<BaseResponse<UserProfileResponse>> {
         return remoteDataSource.getUserProfile()
     }
+
     fun getLogoutUser(): Flow<BaseResponse<LogoutResponse>> {
         return remoteDataSource.getLogoutUser()
     }
@@ -34,5 +36,13 @@ class UsersDataProvider @Inject constructor(
 
     fun getUserList(): Flow<BaseResponse<ArrayList<UserNewChatItemModel>>> {
         return remoteDataSource.getUserList()
+    }
+
+    fun getOnlineTrue(): Flow<BaseResponse<OnlineStatusResponse>> {
+        return remoteDataSource.getOnlineTrue()
+    }
+
+    fun getOnlineFalse(): Flow<BaseResponse<OnlineStatusResponse>> {
+        return remoteDataSource.getOnlineFalse()
     }
 }

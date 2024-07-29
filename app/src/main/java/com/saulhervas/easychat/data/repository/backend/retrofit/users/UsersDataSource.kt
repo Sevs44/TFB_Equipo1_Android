@@ -4,6 +4,7 @@ import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
 import com.saulhervas.easychat.data.repository.response.logout.LogoutResponse
+import com.saulhervas.easychat.data.repository.response.online_status.OnlineStatusResponse
 import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
 import com.saulhervas.easychat.data.repository.response.register.RegisterResponse
@@ -71,6 +72,26 @@ class UsersDataSource @Inject constructor(
     fun getUserProfile(): Flow<BaseResponse<UserProfileResponse>> =
         flow {
             val apiResult = userCalls.callUserProfile()
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getOnlineTrue(): Flow<BaseResponse<OnlineStatusResponse>> =
+        flow {
+            val apiResult = userCalls.callUserOnlineTrue()
+            if (apiResult is BaseResponse.Success) {
+                emit(BaseResponse.Success(apiResult.data))
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    fun getOnlineFalse(): Flow<BaseResponse<OnlineStatusResponse>> =
+        flow {
+            val apiResult = userCalls.callUserOnlineFalse()
             if (apiResult is BaseResponse.Success) {
                 emit(BaseResponse.Success(apiResult.data))
             } else if (apiResult is BaseResponse.Error) {
