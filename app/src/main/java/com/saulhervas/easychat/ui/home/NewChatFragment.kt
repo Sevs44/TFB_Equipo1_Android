@@ -59,7 +59,7 @@ class NewChatFragment : Fragment() {
 
     private fun setOnClickListener() {
         binding.imBtnBack.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 
@@ -70,6 +70,9 @@ class NewChatFragment : Fragment() {
                 allChats = it
                 setUpRecyclerView(it)
             }
+        }
+        lifecycleScope.launch {
+
         }
     }
 
@@ -85,7 +88,7 @@ class NewChatFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
-        newChatAdapter = NewChatAdapter(userList) { user ->
+        newChatAdapter = NewChatAdapter(userList, viewModel.colorMap) { user ->
             Log.d("el usuario que clico", "setUpRecyclerView: $user")
             showCreateChatDialog(user)
         }

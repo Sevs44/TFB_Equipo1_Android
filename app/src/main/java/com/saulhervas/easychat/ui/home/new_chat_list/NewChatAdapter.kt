@@ -8,6 +8,7 @@ import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 
 class NewChatAdapter(
     private var items: MutableList<UserNewChatItemModel>,
+    private val colorMap: MutableMap<String, Int>,
     private val onClickListener: (UserNewChatItemModel?) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -18,7 +19,7 @@ class NewChatAdapter(
         return if (viewType == userType) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_user_row_message, parent, false)
-            UserNameViewHolder(view)
+            UserNameViewHolder(view, colorMap)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_header_new_chat, parent, false)
