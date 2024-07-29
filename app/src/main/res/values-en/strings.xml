@@ -73,5 +73,12 @@
     <string name="error_response_101">Network protocols have changed</string>
     <string name="error_response_404">"Network request error "</string>
     <string name="error_response_5xx">Server error</string>
+    <string name="aceptDialog">Accept</string>
+    <string name="FailedPhoto">Failed to do photo</string>
+    <string name="messageGalleryPermision">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
+    <string name="noDeleteChat">Could not delete chat</string>
+    <string name="noDeleteChatExplication">You cannot delete a chat that you have not created</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>
