@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.ui.home.open_chats_list
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 
 class OpenChatAdapter(
+    private val context: Context,
     private var itemList: MutableList<OpenChatItemModel>,
     private val colorMap: MutableMap<String, Int>,
     private val onClickListener: (OpenChatItemModel?) -> Unit
@@ -15,7 +17,7 @@ class OpenChatAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_user_row_message, parent, false)
-        return OpenChatViewHolder(view, colorMap)
+        return OpenChatViewHolder(view, colorMap, context)
     }
 
     override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {
@@ -31,7 +33,11 @@ class OpenChatAdapter(
         itemList = newList.toMutableList()
         notifyDataSetChanged()
     }
+
     fun getIdChat(position: Int): String? {
         return itemList[position].idChat
+    }
+    fun getIdSource(position: Int): String? {
+        return itemList[position].idSource
     }
 }

@@ -15,6 +15,7 @@ class ChatsMappers {
                             idTargetUser = it.idTarget,
                             nickTargetUser = it.targetNick,
                             isOnlineUser = it.targetIsOnline,
+                            idSource = it.idSource,
                         )
                     )
                 } else {
@@ -24,6 +25,7 @@ class ChatsMappers {
                             idTargetUser = it.idSource,
                             nickTargetUser = it.sourceNick,
                             isOnlineUser = it.sourceIsOnline,
+                            idSource = it.idSource
                         )
                     )
                 }

@@ -15,7 +15,6 @@
     <string name="welcome">Bienvenido,</string>
     <string name="users_not_founds">El usuario no existe. Verifique sus credenciales.</string>
 
-
     //Register
     <string name="hint_password">Contraseña</string>
     <string name="hint_repeat_password">Repetir Contraseña</string>
@@ -58,6 +57,8 @@
     <string name="message_alert">Disculpe las molestias.</string>
     <string name="message_alert_logout">¿Estás seguro de que deseas cerrar sesión?</string>
 
+    //Home and New Chat
+    <string name="unknown_user">Usuario desconodido %1$s</string>
 
     //Chat
     <string name="notifications">Notificaciones</string>
@@ -81,8 +82,19 @@
     <string name="cancel">Cancelar</string>
     <string name="isUserOnline">En línea</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Error responses -->
+    <string name="error_response_base">Ha ocurrido un error inesperado: %s</string>
+    <string name="error_response_101">Los protocolos de red han cambiado</string>
+    <string name="error_response_401">No autorizado</string>
+    <string name="error_response_403">No hay acceso al recurso</string>
+    <string name="error_response_404">Error en la solicitud</string>
+    <string name="error_response_5xx">Error en el servidor</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="aceptDialog">Aceptar</string>
+    <string name="FailedPhoto">Fallo al tomar foto</string>
+    <string name="messageGalleryPermision">El permiso a la galería es necesario para seleccionar una foto. Por favor ceda el permiso en los ajustes de la aplicación.</string>
+    <string name="noDeleteChat">No se pudo eliminar el chat</string>
+    <string name="noDeleteChatExplication">No puedes borrar un chat que no hayas creado</string>
 
 </resources>
