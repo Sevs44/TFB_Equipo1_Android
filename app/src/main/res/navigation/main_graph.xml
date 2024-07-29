@@ -136,10 +136,10 @@
         <action
             android:id="@+id/action_homeUser_to_newChatFragment"
             app:destination="@id/newChatFragment"
-            app:enterAnim="@anim/slide_in_bottom"
-            app:exitAnim="@anim/slide_out_bottom"
-            app:popEnterAnim="@anim/slide_in_bottom"
-            app:popExitAnim="@anim/slide_out_bottom">
+            app:enterAnim="@anim/exit_in_bottom"
+            app:exitAnim="@anim/exit_out_bottom"
+            app:popEnterAnim="@anim/exit_in_bottom"
+            app:popExitAnim="@anim/exit_out_bottom">
         </action>
         <action
             android:id="@+id/action_homeUser_to_userConfig"
