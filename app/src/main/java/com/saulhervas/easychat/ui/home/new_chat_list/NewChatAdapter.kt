@@ -7,7 +7,8 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 
 class NewChatAdapter(
-    private val items: List<Any>,
+    private var items: MutableList<UserNewChatItemModel>,
+    private val colorMap: MutableMap<String, Int>,
     private val onClickListener: (UserNewChatItemModel?) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -18,7 +19,7 @@ class NewChatAdapter(
         return if (viewType == userType) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_user_row_message, parent, false)
-            UserNameViewHolder(view)
+            UserNameViewHolder(view, colorMap)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_header_new_chat, parent, false)
@@ -45,12 +46,13 @@ class NewChatAdapter(
 
     fun getPositionForSection(letter: Char): Int {
         return items.indexOfFirst {
-            if (it is String) {
-                it[0] == letter
-            } else {
-                false
-            }
+            (it.nick?.get(0) ?: ' ') == letter
         }
+    }
+
+    fun updateItems(newItems: List<UserNewChatItemModel>) {
+        items = newItems.toMutableList()
+        notifyDataSetChanged()
     }
 
 }

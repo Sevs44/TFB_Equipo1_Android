@@ -58,11 +58,6 @@ class UserLogoutFragment : Fragment() {
                 val action =
                     UserLogoutFragmentDirections.actionUserLogoutFragmentToUserLogin()
                 findNavController().navigate(action)
-                Toast.makeText(
-                    requireContext(),
-                    "User logged out",
-                    Toast.LENGTH_LONG
-                ).show()
             }
         }
         lifecycleScope.launch {

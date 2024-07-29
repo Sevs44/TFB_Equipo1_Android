@@ -6,5 +6,7 @@ data class NewChatResponse(
     @SerializedName("success")
     val success: Boolean,
     @SerializedName("created")
-    val created: Boolean
+    val created: Boolean,
+    @SerializedName("chat")
+    val chat: ChatResponse
 )

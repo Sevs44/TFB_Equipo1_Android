@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
+import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
 import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
@@ -31,9 +32,8 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow<ArrayList<UserNewChatItemModel>>(ArrayList(emptyList()))
     val newChatsState: StateFlow<ArrayList<UserNewChatItemModel>> = newChatsMutableState
 
-    private val _isChatCreatedSharedFlow = MutableSharedFlow<Boolean>()
-    val isChatCreatedSharedFlow: SharedFlow<Boolean> = _isChatCreatedSharedFlow
-
+    private val _chatCreatedSharedFlow = MutableSharedFlow<NewChatResponse>()
+    val chatCreatedSharedFlow: SharedFlow<NewChatResponse> = _chatCreatedSharedFlow
 
     private val showImageBackgroundMutableState = MutableStateFlow(true)
     val showImageBackgroundState: StateFlow<Boolean> = showImageBackgroundMutableState
@@ -123,7 +123,7 @@ class HomeViewModel @Inject constructor(
 
                     is BaseResponse.Success -> {
                         loadingMutableState.value = false
-                        _isChatCreatedSharedFlow.emit(true)
+                        _chatCreatedSharedFlow.emit(it.data)
                     }
                 }
             }

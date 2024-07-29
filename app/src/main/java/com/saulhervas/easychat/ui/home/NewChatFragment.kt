@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -36,6 +37,7 @@ class NewChatFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentNewChatBinding
     private lateinit var newChatAdapter: NewChatAdapter
+    private var allChats: MutableList<UserNewChatItemModel> = mutableListOf()
 
     @Inject
     lateinit var userSession: UserSession
@@ -52,11 +54,12 @@ class NewChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
+        setUpAlphabetScroller()
     }
 
     private fun setOnClickListener() {
         binding.imBtnBack.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 
@@ -64,8 +67,12 @@ class NewChatFragment : Fragment() {
         updateLists()
         lifecycleScope.launch {
             viewModel.newChatsState.collect {
-                setUpRecyclerView(viewModel.getFilteredList(it))
+                allChats = it
+                setUpRecyclerView(it)
             }
+        }
+        lifecycleScope.launch {
+
         }
     }
 
@@ -75,26 +82,49 @@ class NewChatFragment : Fragment() {
         viewModel.filterUsers(userSession.id)
     }
 
-    private fun openChatCreated(chat: UserNewChatItemModel) {
+    private fun openChatCreated(chat: UserNewChatItemModel, idChat: String) {
         Log.d("openChatCreated", "openChatCreated: $chat")
-        changeScreen(chat)
+        changeScreen(chat, idChat)
     }
 
-    private fun setUpRecyclerView(userList: List<UserNewChatItemModel>) {
+    private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
+        newChatAdapter = NewChatAdapter(userList, viewModel.colorMap) { user ->
+            Log.d("el usuario que clico", "setUpRecyclerView: $user")
+            showCreateChatDialog(user)
+        }
         binding.rvUsersNewChat.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvUsersNewChat.adapter =
-            NewChatAdapter(userList) { user ->
-                Log.d("el usuario que clico", "setUpRecyclerView: $user")
-                showCreateChatDialog(user)
+        binding.rvUsersNewChat.adapter = newChatAdapter
+
+        binding.swChat.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterUsers(newText.orEmpty())
+                return true
+            }
+
+        })
+        
     }
 
-    private fun changeScreen(openChatItemModel: UserNewChatItemModel?) {
+    private fun filterUsers(query: String) {
+        val filteredUsers = if (query.isEmpty()) {
+            allChats
+        } else {
+            allChats.filter { it.nick?.contains(query, ignoreCase = true) ?: false }
+        }
+
+        newChatAdapter.updateItems(filteredUsers)
+    }
+
+    private fun changeScreen(openChatItemModel: UserNewChatItemModel?, idChat: String) {
         Log.d("changeScreen", "changeScreen: $openChatItemModel")
         lifecycleScope.launch {
             delay(300)
             val action = NewChatFragmentDirections.actionNewChatFragmentToChatLog(
-                openChatItemModel?.id.toString(),
+                idChat,
                 openChatItemModel?.nick.toString(),
                 openChatItemModel?.onlineStatus ?: true
             )
@@ -117,13 +147,13 @@ class NewChatFragment : Fragment() {
                     }
                     lifecycleScope.launch {
                         Log.d("newChatItem", "handleCreateChat: $newChatItem")
-                        viewModel.isChatCreatedSharedFlow.collect { isChatCreated ->
-                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $isChatCreated")
-                            if (isChatCreated) {
+                        viewModel.chatCreatedSharedFlow.collect { chatCreated ->
+                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $chatCreated")
+                            if (chatCreated.success) {
                                 viewModel.openChatsState.collect {
                                     Log.d("newChatItem", "handleCreateChatasd: $it")
                                     Log.d("newChatItem", "handleCreateChat: $newChatItem")
-                                    openChatCreated(newChatItem)
+                                    openChatCreated(newChatItem, chatCreated.chat.id)
                                 }
                             } else {
                                 Toast.makeText(

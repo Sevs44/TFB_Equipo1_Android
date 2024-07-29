@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 class UserConfigFragment : Fragment() {
     private lateinit var binding: FragmentUserConfigBinding
     private val viewModel: UserConfigViewModel by viewModels()
+
     private var imageUri: Uri? = null
 
 

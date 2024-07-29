@@ -3,8 +3,6 @@ package com.saulhervas.easychat.ui.home
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -157,56 +155,40 @@ class HomeUserFragment : Fragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.bindingAdapterPosition
                     val idChat = chatAdapter.getIdChat(position)
-                    val idSource = chatAdapter.getIdSource(position)
 
-                    lifecycleScope.launch {
-                        try {
-                            if (idChat != null) {
-                                if (idChat != idSource) {
-                                    showAlertDialog(
-                                        getString(R.string.noDeleteChat),
-                                        getString(R.string.noDeleteChatExplication)
-                                    )
-                                    chatAdapter.notifyItemChanged(position)
-                                } else {
-                                    viewModel.deleteChats(idChat)
-                                    allChats.removeAt(position)
-                                    chatAdapter.notifyItemRemoved(position)
-                                    checkAndShowBackgroundImage()
+                    val alertDialog = AlertDialog.Builder(requireContext())
+                        .setTitle(getString(R.string.alert_swiped))
+                        .setMessage(getString(R.string.alert_swiped_message))
+                        .setPositiveButton("Sí") { dialog, _ ->
+                            lifecycleScope.launch {
+                                try {
+                                    if (idChat != null) {
+                                        viewModel.deleteChats(idChat)
+                                        allChats.removeAt(position)
+                                        chatAdapter.notifyItemRemoved(position)
+                                        checkAndShowBackgroundImage()
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e(TAG, "Error deleting chat", e)
+                                    e.printStackTrace()
                                     chatAdapter.notifyItemChanged(position)
                                 }
                             }
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error deleting chat", e)
-                            e.printStackTrace()
-                            chatAdapter.notifyItemChanged(position)
+                            dialog.dismiss()
                         }
-                    }
+                        .setNegativeButton("No") { dialog, _ ->
+                            chatAdapter.notifyItemChanged(position)
+                            dialog.dismiss()
+                        }
+                        .create()
+
+                    alertDialog.show()
                 }
             }
 
             val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
             itemTouchHelper.attachToRecyclerView(this)
         }
-    }
-
-    private fun showAlertDialog(
-        title: String,
-        message: String,
-        onDismiss: (() -> Unit)? = null
-    ) {
-        val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setCancelable(true)
-            .show()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (alertDialog.isShowing) {
-                alertDialog.dismiss()
-                onDismiss?.invoke()
-            }
-        }, 2000)
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
