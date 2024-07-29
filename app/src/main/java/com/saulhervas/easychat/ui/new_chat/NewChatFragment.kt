@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.ui.home
+package com.saulhervas.easychat.ui.new_chat
 
 import android.animation.ValueAnimator
 import android.graphics.Color
@@ -26,7 +26,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.FragmentNewChatBinding
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import com.saulhervas.easychat.domain.model.UserSession
-import com.saulhervas.easychat.ui.home.new_chat_list.NewChatAdapter
+import com.saulhervas.easychat.ui.home.HomeViewModel
+import com.saulhervas.easychat.ui.new_chat.new_chat_list.NewChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -88,7 +89,7 @@ class NewChatFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
-        newChatAdapter = NewChatAdapter(userList, viewModel.colorMap) { user ->
+        newChatAdapter = NewChatAdapter(requireContext(), userList, viewModel.colorMap) { user ->
             Log.d("el usuario que clico", "setUpRecyclerView: $user")
             showCreateChatDialog(user)
         }
@@ -116,7 +117,7 @@ class NewChatFragment : Fragment() {
             allChats.filter { it.nick?.contains(query, ignoreCase = true) ?: false }
         }
 
-        newChatAdapter.updateItems(filteredUsers)
+        newChatAdapter.updateList(filteredUsers)
     }
 
     private fun changeScreen(openChatItemModel: UserNewChatItemModel?, idChat: String) {

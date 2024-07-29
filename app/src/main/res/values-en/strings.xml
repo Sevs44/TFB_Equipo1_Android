@@ -73,5 +73,6 @@
     <string name="error_response_101">Network protocols have changed</string>
     <string name="error_response_404">"Network request error "</string>
     <string name="error_response_5xx">Server error</string>
+    <string name="unknown_user">Unknown user %1$s</string>
 
 </resources>

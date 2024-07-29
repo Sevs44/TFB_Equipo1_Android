@@ -58,6 +58,8 @@
     <string name="message_alert">Disculpe las molestias.</string>
     <string name="message_alert_logout">¿Estás seguro de que deseas cerrar sesión?</string>
 
+    //Home and New Chat
+    <string name="unknown_user">Usuario desconodido %1$s</string>
 
     //Chat
     <string name="notifications">Notificaciones</string>

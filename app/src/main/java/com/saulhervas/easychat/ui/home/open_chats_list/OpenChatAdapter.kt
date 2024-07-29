@@ -31,6 +31,7 @@ class OpenChatAdapter(
         itemList = newList.toMutableList()
         notifyDataSetChanged()
     }
+
     fun getIdChat(position: Int): String? {
         return itemList[position].idChat
     }
