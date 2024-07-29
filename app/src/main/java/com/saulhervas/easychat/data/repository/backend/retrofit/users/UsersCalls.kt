@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 class UsersCalls @Inject constructor(
     private val apiService: ApiService,
-    //val context: Context
 ) : BaseService() {
     suspend fun callLogin(loginRequest: LoginRequest): BaseResponse<LoginResponse> {
         return apiCall { apiService.loginUser(loginRequest) }
