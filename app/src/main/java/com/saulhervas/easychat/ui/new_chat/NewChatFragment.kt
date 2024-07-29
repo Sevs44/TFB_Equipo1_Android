@@ -52,8 +52,8 @@ class NewChatFragment : Fragment() {
     }
 
     private fun setOnClickListener() {
-        binding.imBtnBack.setOnClickListener {
-            findNavController().popBackStack()
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

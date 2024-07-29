@@ -9,6 +9,7 @@ import com.saulhervas.easychat.domain.usecases.ChatUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +28,9 @@ class HomeViewModel @Inject constructor(
     private val loadingMutableState = MutableStateFlow(false)
     val loadingState: StateFlow<Boolean> = loadingMutableState
 
+    private val navigateMutableState = MutableStateFlow(false)
+    val navigateState: StateFlow<Boolean> = navigateMutableState.asStateFlow()
+
     val colorMap = mutableMapOf<String, Int>()
 
     fun getOpenChats() {
@@ -35,12 +39,9 @@ class HomeViewModel @Inject constructor(
             chatUseCases.getOpenChats().collect {
                 when (it) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "l> Error: ${it.error.message}")
+                        Log.e("TAG", "l> Error: ${it.error.message}")
                     }
-
                     is BaseResponse.Success -> {
-                        Log.d("TAG", "l> Success ${it.data.size}")
-                        Log.d("TAG", "l> Success ${it.data}")
                         if (it.data.isNotEmpty()) {
                             openChatsMutableState.value = it.data
                             showImageBackgroundMutableState.value = false
@@ -60,8 +61,8 @@ class HomeViewModel @Inject constructor(
             chatUseCases.deleteChat(idChat).collect {
                 when (it) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "Error: ${it.error.message}")
-                        Log.d("TAG", "Error: ${it.error.token}")
+                        Log.e("TAG", "Error: ${it.error.message}")
+                        Log.e("TAG", "Error: ${it.error.token}")
                         loadingMutableState.value = false
                     }
 
@@ -72,5 +73,13 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onAddButtonClicked() {
+        navigateMutableState.value = true
+    }
+
+    fun resetNavigation() {
+        navigateMutableState.value = false
     }
 }

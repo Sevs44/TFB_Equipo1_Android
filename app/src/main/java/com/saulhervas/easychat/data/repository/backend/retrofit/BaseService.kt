@@ -41,7 +41,8 @@ abstract class BaseService {
                 403 -> parsedData.message = context.getString(R.string.error_response_403)
                 404 -> parsedData.message = context.getString(R.string.error_response_404)
                 in 500..600 -> parsedData.message = context.getString(R.string.error_response_5xx)
-                else -> parsedData.message = context.getString(R.string.error_response_base, response.code().toString())
+                else -> parsedData.message =
+                    context.getString(R.string.error_response_base, response.code().toString())
             }
             parsedData
         } catch (exception: java.lang.Exception) {

@@ -27,6 +27,7 @@ import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -134,6 +135,15 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             viewModel.loadingState.collect { isLoading ->
                 showProgressBar(isLoading)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigateState.collectLatest { shouldNavigate ->
+                if (shouldNavigate) {
+                    val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+                    findNavController().navigate(action)
+                    viewModel.resetNavigation()
+                }
             }
         }
     }
