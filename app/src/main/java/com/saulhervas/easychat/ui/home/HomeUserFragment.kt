@@ -27,7 +27,6 @@ import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +40,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     @Inject
     lateinit var userSession: UserSession
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
+    private var filteredChats: MutableList<OpenChatItemModel> = mutableListOf()
     private lateinit var chatAdapter: OpenChatAdapter
 
     override fun onCreateView(
@@ -124,7 +124,9 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             viewModel.openChatsState.collect {
                 allChats = it
-                setupRecyclerView(allChats)
+                filteredChats = ArrayList(allChats) // Inicializar la lista filtrada
+                setupRecyclerView(filteredChats)
+                chatAdapter.updateList(filteredChats)
             }
         }
         lifecycleScope.launch {
@@ -135,15 +137,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             viewModel.loadingState.collect { isLoading ->
                 showProgressBar(isLoading)
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigateState.collectLatest { shouldNavigate ->
-                if (shouldNavigate) {
-                    val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
-                    findNavController().navigate(action)
-                    viewModel.resetNavigation()
-                }
             }
         }
     }
@@ -221,8 +214,8 @@ class HomeUserFragment @Inject constructor() : Fragment() {
                     Log.e("TAG", "Deleting chat ${userSession.id}")
                     if (userSession.id == idSource) {
                         viewModel.deleteChats(idChat)
-                        allChats.removeAt(position)
-                        chatAdapter.notifyItemRemoved(position)
+                        allChats.removeAll { it.idChat == idChat } // Elimina el chat de todas las listas
+                        filterUsers(binding.swChat.query.toString()) // Actualizar la lista filtrada
                         checkAndShowBackgroundImage()
                     } else {
                         showAlertDialog(
@@ -255,12 +248,14 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     }
 
     private fun filterUsers(query: String) {
-        val filteredUsers = if (query.isEmpty()) {
-            allChats
+        filteredChats = if (query.isEmpty()) {
+            ArrayList(allChats)
         } else {
             allChats.filter { it.nickTargetUser?.contains(query, ignoreCase = true) == true }
+                .toMutableList()
         }
-        chatAdapter.updateList(filteredUsers)
+        chatAdapter.updateList(filteredChats)
+        chatAdapter.notifyDataSetChanged() // Notificar cambios en el adaptador
     }
 
     private fun showProgressBar(show: Boolean) {
