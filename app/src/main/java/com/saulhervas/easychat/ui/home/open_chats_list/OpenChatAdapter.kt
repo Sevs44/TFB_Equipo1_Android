@@ -35,4 +35,7 @@ class OpenChatAdapter(
     fun getIdChat(position: Int): String? {
         return itemList[position].idChat
     }
+    fun getIdSource(position: Int): String? {
+        return itemList[position].idSource
+    }
 }

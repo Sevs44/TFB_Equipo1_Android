@@ -134,7 +134,7 @@ class UserConfigFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setCustomTitle(customTitleLayout)
             .setMessage(getString(R.string.message_alert))
-            .setPositiveButton("Aceptar") { dialog, _ ->
+            .setPositiveButton(getString(R.string.aceptDialog)) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
