@@ -43,7 +43,7 @@
     <string name="alert_tune">Alert tone</string>
     <string name="send_messages">Send a message</string>
     <string name="recent_photos">Recent photos</string>
-    <string name="new_chat">Start a new chat</string>
+    <string name="new_chat">New chat</string>
     <string name="string_errorresponsetoken">Sorry, we are having connection problems.</string>
     <string name="errorResponseTryBefore">Try again later.</string>
     <string name="failTakePicture">Failed to take picture</string>

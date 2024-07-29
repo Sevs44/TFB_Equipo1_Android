@@ -67,7 +67,7 @@
     <string name="alert_tune">Tono de alerta</string>
     <string name="send_messages">Enviar un mensaje</string>
     <string name="recent_photos">Fotos Recientes</string>
-    <string name="new_chat">Empieza un nuevo chat</string>
+    <string name="new_chat">Nuevo chat</string>
     <string name="alert_swiped">Confirmar eliminación</string>
     <string name="alert_swiped_message">¿Estás seguro de que deseas eliminar este chat?</string>
 

@@ -25,6 +25,7 @@ import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -54,8 +55,7 @@ class HomeUserFragment : Fragment() {
     private fun setOnclickListener() {
         binding.btnAdd.setOnClickListener(object : DebouncedOnClickListener() {
             override fun onDebouncedClick(v: View) {
-                val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
-                findNavController().navigate(action)
+                viewModel.onAddButtonClicked()
             }
         })
         binding.imBtnSettings.setOnClickListener(object : DebouncedOnClickListener() {
@@ -109,6 +109,15 @@ class HomeUserFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.loadingState.collect { isLoading ->
                 showProgressBar(isLoading)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigateState.collectLatest { shouldNavigate ->
+                if (shouldNavigate) {
+                    val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+                    findNavController().navigate(action)
+                    viewModel.resetNavigation()
+                }
             }
         }
     }

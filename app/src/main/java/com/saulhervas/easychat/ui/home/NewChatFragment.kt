@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -58,8 +57,8 @@ class NewChatFragment : Fragment() {
     }
 
     private fun setOnClickListener() {
-        binding.imBtnBack.setOnClickListener {
-            findNavController().popBackStack()
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
@@ -83,13 +82,11 @@ class NewChatFragment : Fragment() {
     }
 
     private fun openChatCreated(chat: UserNewChatItemModel) {
-        Log.d("openChatCreated", "openChatCreated: $chat")
         changeScreen(chat)
     }
 
     private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
         newChatAdapter = NewChatAdapter(userList, viewModel.colorMap) { user ->
-            Log.d("el usuario que clico", "setUpRecyclerView: $user")
             showCreateChatDialog(user)
         }
         binding.rvUsersNewChat.layoutManager = LinearLayoutManager(requireContext())
@@ -120,7 +117,6 @@ class NewChatFragment : Fragment() {
     }
 
     private fun changeScreen(openChatItemModel: UserNewChatItemModel?) {
-        Log.d("changeScreen", "changeScreen: $openChatItemModel")
         lifecycleScope.launch {
             delay(300)
             val action = NewChatFragmentDirections.actionNewChatFragmentToChatLog(
@@ -137,7 +133,6 @@ class NewChatFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage(message)
             .setPositiveButton("Yes") { dialog, _ ->
-                Log.d("newChatItem", "YES: $newChatItem")
                 if (newChatItem != null) {
                     newChatItem.id?.let {
                         viewModel.createChat(
@@ -146,13 +141,9 @@ class NewChatFragment : Fragment() {
                         )
                     }
                     lifecycleScope.launch {
-                        Log.d("newChatItem", "handleCreateChat: $newChatItem")
                         viewModel.isChatCreatedSharedFlow.collect { isChatCreated ->
-                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $isChatCreated")
                             if (isChatCreated) {
                                 viewModel.openChatsState.collect {
-                                    Log.d("newChatItem", "handleCreateChatasd: $it")
-                                    Log.d("newChatItem", "handleCreateChat: $newChatItem")
                                     openChatCreated(newChatItem)
                                 }
                             } else {
