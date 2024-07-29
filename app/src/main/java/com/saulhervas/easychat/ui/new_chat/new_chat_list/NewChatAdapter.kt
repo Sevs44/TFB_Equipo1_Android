@@ -9,7 +9,7 @@ import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 
 class NewChatAdapter(
     private val context: Context,
-    private var itemList: MutableList<UserNewChatItemModel>,
+    private var itemList: List<UserNewChatItemModel>,
     private val colorMap: MutableMap<String, Int>,
     private val onClickListener: (UserNewChatItemModel?) -> Unit
 ) : RecyclerView.Adapter<UserNameViewHolder>() {
@@ -30,12 +30,6 @@ class NewChatAdapter(
     fun updateList(newItems: List<UserNewChatItemModel>) {
         itemList = newItems.toMutableList()
         notifyDataSetChanged()
-    }
-
-    fun getPositionForSection(letter: Char): Int {
-        return itemList.indexOfFirst {
-            (it.nick?.get(0) ?: ' ') == letter
-        }
     }
 
 }

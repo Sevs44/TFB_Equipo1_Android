@@ -1,10 +1,6 @@
 package com.saulhervas.easychat.ui.new_chat
 
-import android.animation.ValueAnimator
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -15,18 +11,14 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.databinding.FragmentNewChatBinding
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
 import com.saulhervas.easychat.domain.model.UserSession
-import com.saulhervas.easychat.ui.home.HomeViewModel
 import com.saulhervas.easychat.ui.new_chat.new_chat_list.NewChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -35,7 +27,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewChatFragment : Fragment() {
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: NewChatViewModel by viewModels()
     private lateinit var binding: FragmentNewChatBinding
     private lateinit var newChatAdapter: NewChatAdapter
     private var allChats: MutableList<UserNewChatItemModel> = mutableListOf()
@@ -48,14 +40,15 @@ class NewChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewChatBinding.inflate(inflater, container, false)
+        setUpAlphabetScroller()
         setOnClickListener()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpViewModel()
         observeViewModel()
-        setUpAlphabetScroller()
     }
 
     private fun setOnClickListener() {
@@ -65,22 +58,16 @@ class NewChatFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        updateLists()
         lifecycleScope.launch {
-            viewModel.newChatsState.collect {
-                allChats = it
-                setUpRecyclerView(it)
+            viewModel.newChatsState.collect { allUsers ->
+                setUpRecyclerView(viewModel.getFilteredList(allUsers))
             }
-        }
-        lifecycleScope.launch {
-
         }
     }
 
-    private fun updateLists() {
-        viewModel.getOpenChats()
+    private fun setUpViewModel() {
         viewModel.getUserList()
-        viewModel.filterUsers(userSession.id)
+        viewModel.getOpenChats()
     }
 
     private fun openChatCreated(chat: UserNewChatItemModel, idChat: String) {
@@ -88,7 +75,7 @@ class NewChatFragment : Fragment() {
         changeScreen(chat, idChat)
     }
 
-    private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
+    private fun setUpRecyclerView(userList: List<UserNewChatItemModel>) {
         newChatAdapter = NewChatAdapter(requireContext(), userList, viewModel.colorMap) { user ->
             Log.d("el usuario que clico", "setUpRecyclerView: $user")
             showCreateChatDialog(user)
@@ -149,10 +136,10 @@ class NewChatFragment : Fragment() {
                     lifecycleScope.launch {
                         Log.d("newChatItem", "handleCreateChat: $newChatItem")
                         viewModel.chatCreatedSharedFlow.collect { chatCreated ->
-                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $chatCreated")
+                            Log.d("newChatItem", "handleCreateChat: $chatCreated")
                             if (chatCreated.success) {
                                 viewModel.openChatsState.collect {
-                                    Log.d("newChatItem", "handleCreateChatasd: $it")
+                                    Log.d("newChatItem", "handleCreateChat: $it")
                                     Log.d("newChatItem", "handleCreateChat: $newChatItem")
                                     openChatCreated(newChatItem, chatCreated.chat.id)
                                 }
@@ -165,7 +152,8 @@ class NewChatFragment : Fragment() {
                             }
                         }
                     }
-                }
+                } else
+                    Log.d("newChat", "newChatItem is null")
                 dialog.dismiss()
             }
             .setNegativeButton("No") { dialog, _ ->
@@ -188,47 +176,8 @@ class NewChatFragment : Fragment() {
                 ).apply {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
-                setOnClickListener {
-                    scrollToLetter(letter, this)
-                }
             }
             binding.alphabetScroller.addView(textView)
         }
-    }
-
-    private fun scrollToLetter(letter: Char, tv: TextView) {
-        val position = newChatAdapter.getPositionForSection(letter)
-        if (position >= 0) {
-            highlightLetter(tv, Color.CYAN)
-            val smoothScroller: RecyclerView.SmoothScroller =
-                object : LinearSmoothScroller(requireContext()) {
-                    override fun getVerticalSnapPreference(): Int {
-                        return SNAP_TO_START
-                    }
-                }
-            smoothScroller.targetPosition = position
-            binding.rvUsersNewChat.layoutManager?.startSmoothScroll(smoothScroller)
-        } else {
-            highlightLetter(tv, Color.RED)
-        }
-    }
-
-    private fun highlightLetter(textView: TextView, color: Int) {
-        val originalColor = textView.currentTextColor
-
-        val colorAnimator = ValueAnimator.ofArgb(color, originalColor).apply {
-            duration = 1000
-            addUpdateListener { animator ->
-                textView.setTextColor(animator.animatedValue as Int)
-            }
-            doOnEnd {
-                textView.setTextColor(originalColor)
-            }
-        }
-
-        textView.setTextColor(color)
-        Handler(Looper.getMainLooper()).postDelayed({
-            colorAnimator.start()
-        }, 1000)
     }
 }

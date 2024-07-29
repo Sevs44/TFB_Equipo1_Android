@@ -15,7 +15,6 @@
     <string name="welcome">Bienvenido,</string>
     <string name="users_not_founds">El usuario no existe. Verifique sus credenciales.</string>
 
-
     //Register
     <string name="hint_password">Contraseña</string>
     <string name="hint_repeat_password">Repetir Contraseña</string>
@@ -82,11 +81,6 @@
     <string name="goToSettings">Ir a la configuracion</string>
     <string name="cancel">Cancelar</string>
     <string name="isUserOnline">En línea</string>
-    <string name="aceptDialog">Aceptar</string>
-    <string name="FailedPhoto">No se pudo hacer la foto</string>
-    <string name="messageGalleryPermision">Se necesita permiso de la galería para seleccionar una foto. Permítalo en la configuración de la aplicación.</string>
-    <string name="noDeleteChat">No se pudo borrar el chat</string>
-    <string name="noDeleteChatExplication">No puede borrar un chat que no has creado tu</string>
 
     <!-- Error responses -->
     <string name="error_response_base">Ha ocurrido un error inesperado: %s</string>
@@ -95,7 +89,12 @@
     <string name="error_response_403">No hay acceso al recurso</string>
     <string name="error_response_404">Error en la solicitud</string>
     <string name="error_response_5xx">Error en el servidor</string>
-    <string name="yes">Si</string>
+    <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="aceptDialog">Aceptar</string>
+    <string name="FailedPhoto">Fallo al tomar foto</string>
+    <string name="messageGalleryPermision">El permiso a la galería es necesario para seleccionar una foto. Por favor ceda el permiso en los ajustes de la aplicación.</string>
+    <string name="noDeleteChat">No se pudo eliminar el chat</string>
+    <string name="noDeleteChatExplication">No puedes borrar un chat que no hayas creado</string>
 
 </resources>

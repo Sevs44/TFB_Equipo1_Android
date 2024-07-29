@@ -144,7 +144,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     }
 
     private fun setupRecyclerView(itemList: MutableList<OpenChatItemModel>) {
-        chatAdapter = OpenChatAdapter(itemList, viewModel.colorMap) { chat ->
+        chatAdapter = OpenChatAdapter(requireContext(), itemList, viewModel.colorMap) { chat ->
             showProgressBar(true)
             changeScreen(chat)
         }
