@@ -81,5 +81,19 @@
     <string name="noDeleteChatExplication">You cannot delete a chat that you have not created</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="welcome_to_easychat">Welcome to EasyChat</string>
+    <string name="welcome_to_easychat_description">It is an app where you can communicate with your best friends, send online messages, and create chats with users who have the app.</string>
+    <string name="welcome_to_easychat_send_message">Send Messages</string>
+    <string name="welcome_to_easychat_send_message_description">Communicate with your friends in real time.</string>
+    <string name="welcome_to_easychat_world_message">See the current status of your friends</string>
+    <string name="welcome_to_easychat_world_message_description">You can see if your friends are online or not.</string>
+    <string name="welcome_to_easychat_delete_message">Delete Chats</string>
+    <string name="welcome_to_easychat_delete_message_description">Delete a chat, but you can only delete a chat that you created.</string>
+    <string name="welcome_to_easychat_user_message">Custom Profile</string>
+    <string name="welcome_to_easychat_user_message_description">Select a local profile photo and personalize your experience.</string>
+    <string name="welcome_to_easychat_last_message">let\'s start</string>
+    <string name="welcome_to_easychat_last_message_description">Thank you for choosing EasyChat! Press the button to start using the app and communicate with your friends.</string>
+    <string name="welcome_to_easychat_start">Start</string>
+    <string name="start_new_chat">Start a new chat</string>
 
 </resources>

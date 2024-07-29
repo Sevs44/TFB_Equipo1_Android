@@ -56,6 +56,9 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userRegister_to_dashboardFirstPageFragment"
+            app:destination="@id/dashboardFirstPageFragment" />
     </fragment>
 
     <fragment
@@ -234,5 +237,53 @@
         android:id="@+id/photoEditFragment"
         android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
         android:label="PhotoEditFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFirstPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardFirstPageFragment"
+        android:label="DashboardFirstPageFragment">
+        <action
+            android:id="@+id/action_dashboardFirstPageFragment_to_dashboardSecondPageFragment"
+            app:destination="@id/dashboardSecondPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardSecondPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardSecondPageFragment"
+        android:label="DashboardSecondPageFragment">
+        <action
+            android:id="@+id/action_dashboardSecondPageFragment_to_dashboardThirdPageFragment"
+            app:destination="@id/dashboardThirdPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardThirdPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardThirdPageFragment"
+        android:label="DashboardThirdPageFragment">
+        <action
+            android:id="@+id/action_dashboardThirdPageFragment_to_dashboardFourthPageFragment"
+            app:destination="@id/dashboardFourthPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFourthPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardFourthPageFragment"
+        android:label="DashboardFourthPageFragment">
+        <action
+            android:id="@+id/action_dashboardFourthPageFragment_to_dashboardFifthPageFragment"
+            app:destination="@id/dashboardFifthPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFifthPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardFifthPageFragment"
+        android:label="DashboardFifthPageFragment">
+        <action
+            android:id="@+id/action_dashboardFifthPageFragment_to_dashboardLastPageFragment"
+            app:destination="@id/dashboardLastPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardLastPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardLastPageFragment"
+        android:label="DashboardLastPageFragment">
+        <action
+            android:id="@+id/action_dashboardLastPageFragment_to_userLogin"
+            app:destination="@id/userLogin" />
     </fragment>
 </navigation>

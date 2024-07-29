@@ -63,7 +63,7 @@ class UserRegisterFragment : Fragment() {
                         getString(R.string.user_register),
                         getString(R.string.user_success)
                     ) {
-                        findNavController().popBackStack()
+                        findNavController().navigate(R.id.action_userRegister_to_dashboardFirstPageFragment)
                     }
                 }
             }
@@ -188,6 +188,7 @@ class UserRegisterFragment : Fragment() {
                 }
             }
         }
+
     }
 
     private fun showAlertDialog(
