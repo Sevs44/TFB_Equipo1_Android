@@ -83,6 +83,8 @@
     <string name="aceptDialog">Aceptar</string>
     <string name="FailedPhoto">Failed to do photo</string>
     <string name="messageGalleryPermision">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
+    <string name="noDeleteChat">No se pudo borrar el chat</string>
+    <string name="noDeleteChatExplication">No puede borrar un chat que no has creado tu</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
