@@ -185,6 +185,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
 
     private fun handleSwipe(position: Int) {
         val idChat = chatAdapter.getIdChat(position)
+        Log.e("TAG", "Chat deletedaaaaaaaaaaaaaaaaaa: $idChat")
         val idSource = chatAdapter.getIdSource(position)
 
         val alertDialog = AlertDialog.Builder(requireContext())
@@ -207,8 +208,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             try {
                 if (idChat != null) {
-                    Log.e("TAG", "Deleting chat $idSource")
-                    Log.e("TAG", "Deleting chat ${userSession.id}")
                     if (userSession.id == idSource) {
                         viewModel.deleteChats(idChat)
                         allChats.removeAt(position)
@@ -260,7 +259,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private fun checkAndShowBackgroundImage() {
         showBackgroundImage(allChats.isEmpty())
     }
-
     private fun showAlertDialog(title: String, message: String, onDismiss: (() -> Unit)? = null) {
         val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle(title)
