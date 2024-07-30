@@ -28,7 +28,7 @@ class UserLogoutViewModel @Inject constructor(
             logoutUserCase.logoutUser().collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "Error: ${response.error.message}")
+                        Log.e("TAG", "Error: ${response.error.message}")
                         _logoutResultError.emit(response.error.message)
                     }
 

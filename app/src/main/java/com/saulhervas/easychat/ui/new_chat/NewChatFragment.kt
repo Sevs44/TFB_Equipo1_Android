@@ -90,7 +90,6 @@ class NewChatFragment : Fragment() {
 
     private fun setUpRecyclerView(userList: MutableList<UserNewChatItemModel>) {
         newChatAdapter = NewChatAdapter(userList, viewModel.colorMap) { user ->
-            Log.d("el usuario que clico", "setUpRecyclerView: $user")
             showCreateChatDialog(user)
         }
         binding.rvUsersNewChat.layoutManager = LinearLayoutManager(requireContext())
@@ -102,7 +101,7 @@ class NewChatFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterUsers(newText.orEmpty())
+                filterUsers(newText.orEmpty(), userSession.id)
                 return true
             }
 
@@ -110,18 +109,19 @@ class NewChatFragment : Fragment() {
 
     }
 
-    private fun filterUsers(query: String) {
+    private fun filterUsers(query: String, currentUserId: String) {
         val filteredUsers = if (query.isEmpty()) {
-            allChats
+            allChats.filter { it.id != currentUserId }
         } else {
-            allChats.filter { it.nick?.contains(query, ignoreCase = true) ?: false }
+            allChats.filter {
+                it.id != currentUserId && (it.nick?.contains(query, ignoreCase = true) ?: false)
+            }
         }
 
         newChatAdapter.updateItems(filteredUsers)
     }
 
     private fun changeScreen(openChatItemModel: UserNewChatItemModel?, idChat: String) {
-        Log.d("changeScreen", "changeScreen: $openChatItemModel")
         lifecycleScope.launch {
             delay(300)
             val action = NewChatFragmentDirections.actionNewChatFragmentToChatLog(
@@ -138,7 +138,6 @@ class NewChatFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage(message)
             .setPositiveButton("Yes") { dialog, _ ->
-                Log.d("newChatItem", "YES: $newChatItem")
                 if (newChatItem != null) {
                     newChatItem.id?.let {
                         viewModel.createChat(
@@ -147,13 +146,10 @@ class NewChatFragment : Fragment() {
                         )
                     }
                     lifecycleScope.launch {
-                        Log.d("newChatItem", "handleCreateChat: $newChatItem")
                         viewModel.chatCreatedSharedFlow.collect { chatCreated ->
-                            Log.d("newChatItem", "handleCreateChateeeeeeeeeeeeeeee: $chatCreated")
-                            if (chatCreated.success) {
+
+                        if (chatCreated.success) {
                                 viewModel.openChatsState.collect {
-                                    Log.d("newChatItem", "handleCreateChatasd: $it")
-                                    Log.d("newChatItem", "handleCreateChat: $newChatItem")
                                     openChatCreated(newChatItem, chatCreated.chat.id)
                                 }
                             } else {
