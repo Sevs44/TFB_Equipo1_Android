@@ -147,7 +147,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     }
 
     private fun setupRecyclerView(itemList: MutableList<OpenChatItemModel>) {
-        chatAdapter = OpenChatAdapter(requireContext(), itemList, viewModel.colorMap) { chat ->
+        chatAdapter = OpenChatAdapter(itemList, viewModel.colorMap) { chat ->
             showProgressBar(true)
             changeScreen(chat)
         }
@@ -255,7 +255,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
                 .toMutableList()
         }
         chatAdapter.updateList(filteredChats)
-        chatAdapter.notifyDataSetChanged() // Notificar cambios en el adaptador
+        chatAdapter.notifyDataSetChanged()
     }
 
     private fun showProgressBar(show: Boolean) {
