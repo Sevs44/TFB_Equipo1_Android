@@ -10,6 +10,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -72,8 +73,9 @@ class UserRegisterFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.errorState.collect { errorMsg ->
                 errorMsg?.let {
+                    Log.e("UserRegisterFragment", "Error received: $it")
                     when {
-                        it.contains("401") -> {
+                        it.contains("Not authorized") -> {
                             showAlertDialog(
                                 getString(R.string.error),
                                 getString(R.string.user_already_exists)

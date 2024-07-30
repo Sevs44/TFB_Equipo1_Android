@@ -50,15 +50,12 @@
             app:popEnterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_left" />
         <action
-            android:id="@+id/action_userRegister_to_userRecoverPass"
-            app:destination="@id/userRecoverPass"
+            android:id="@+id/action_userRegister_to_dashboardFirstPageFragment"
+            app:destination="@id/dashboardFirstPageFragment"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_userRegister_to_dashboardFirstPageFragment"
-            app:destination="@id/dashboardFirstPageFragment" />
     </fragment>
 
     <fragment
@@ -244,7 +241,11 @@
         android:label="DashboardFirstPageFragment">
         <action
             android:id="@+id/action_dashboardFirstPageFragment_to_dashboardSecondPageFragment"
-            app:destination="@id/dashboardSecondPageFragment" />
+            app:destination="@id/dashboardSecondPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/dashboardSecondPageFragment"
@@ -252,7 +253,11 @@
         android:label="DashboardSecondPageFragment">
         <action
             android:id="@+id/action_dashboardSecondPageFragment_to_dashboardThirdPageFragment"
-            app:destination="@id/dashboardThirdPageFragment" />
+            app:destination="@id/dashboardThirdPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/dashboardThirdPageFragment"
@@ -260,7 +265,11 @@
         android:label="DashboardThirdPageFragment">
         <action
             android:id="@+id/action_dashboardThirdPageFragment_to_dashboardFourthPageFragment"
-            app:destination="@id/dashboardFourthPageFragment" />
+            app:destination="@id/dashboardFourthPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFourthPageFragment"
@@ -268,7 +277,11 @@
         android:label="DashboardFourthPageFragment">
         <action
             android:id="@+id/action_dashboardFourthPageFragment_to_dashboardFifthPageFragment"
-            app:destination="@id/dashboardFifthPageFragment" />
+            app:destination="@id/dashboardFifthPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFifthPageFragment"
@@ -276,7 +289,11 @@
         android:label="DashboardFifthPageFragment">
         <action
             android:id="@+id/action_dashboardFifthPageFragment_to_dashboardLastPageFragment"
-            app:destination="@id/dashboardLastPageFragment" />
+            app:destination="@id/dashboardLastPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/dashboardLastPageFragment"
@@ -284,6 +301,10 @@
         android:label="DashboardLastPageFragment">
         <action
             android:id="@+id/action_dashboardLastPageFragment_to_userLogin"
-            app:destination="@id/userLogin" />
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 </navigation>
