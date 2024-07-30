@@ -1,8 +1,9 @@
 package com.saulhervas.easychat.ui.home
 
-import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,66 +22,51 @@ import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.FragmentHomeUserBinding
 import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeUserFragment : Fragment() {
+class HomeUserFragment @Inject constructor() : Fragment() {
+
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
     private var imageUri: Uri? = null
+
+    @Inject
+    lateinit var userSession: UserSession
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
+    private var filteredChats: MutableList<OpenChatItemModel> = mutableListOf()
     private lateinit var chatAdapter: OpenChatAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeUserBinding.inflate(inflater, container, false)
-        setUpStatusbar()
-        setUpProfileBaseImage()
-        setOnclickListener()
+        setupUI()
         return binding.root
     }
 
-    private fun setUpStatusbar() {
+    private fun setupUI() {
+        setupStatusBar()
+        setupProfileImage()
+        setupClickListeners()
+    }
+
+    private fun setupStatusBar() {
         activity?.window?.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.color_app)
     }
 
-    private fun setOnclickListener() {
-        binding.btnAdd.setOnClickListener(object : DebouncedOnClickListener() {
-            override fun onDebouncedClick(v: View) {
-                val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
-                findNavController().navigate(action)
-            }
-        })
-        binding.imBtnSettings.setOnClickListener(object : DebouncedOnClickListener() {
-            override fun onDebouncedClick(v: View) {
-                val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
-                findNavController().navigate(action)
-            }
-        })
-        binding.ivProfile.setOnClickListener(object : DebouncedOnClickListener() {
-            override fun onDebouncedClick(v: View) {
-                val action = HomeUserFragmentDirections.actionHomeUserToPhotoEditFragment()
-                findNavController().navigate(action)
-            }
-        })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpViewModel()
-        observeViewModel()
-    }
-
-    private fun setUpProfileBaseImage() {
+    private fun setupProfileImage() {
         loadImageUri()
-        if (binding.ivProfile.drawable == null) binding.ivProfile.setImageResource(R.drawable.usuario_1)
+        if (binding.ivProfile.drawable == null) {
+            binding.ivProfile.setImageResource(R.drawable.usuario_1)
+        }
     }
 
     private fun loadImageUri() {
@@ -90,16 +76,57 @@ class HomeUserFragment : Fragment() {
         }
     }
 
-    private fun setUpViewModel() {
+    private fun setupClickListeners() {
+        binding.btnAdd.setOnClickListener(createDebouncedClickListener {
+            navigateToNewChat()
+        })
+        binding.imBtnSettings.setOnClickListener(createDebouncedClickListener {
+            navigateToUserConfig()
+        })
+        binding.ivProfile.setOnClickListener(createDebouncedClickListener {
+            navigateToPhotoEdit()
+        })
+    }
+
+    private fun createDebouncedClickListener(action: () -> Unit) =
+        object : DebouncedOnClickListener() {
+            override fun onDebouncedClick(v: View) {
+                action()
+            }
+        }
+
+    private fun navigateToNewChat() {
+        val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToUserConfig() {
+        val action = HomeUserFragmentDirections.actionHomeUserToUserConfig()
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToPhotoEdit() {
+        val action = HomeUserFragmentDirections.actionHomeUserToPhotoEditFragment()
+        findNavController().navigate(action)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewModel()
+        observeViewModel()
+    }
+
+    private fun setupViewModel() {
         viewModel.getOpenChats()
     }
 
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.openChatsState.collect {
-                Log.i("TAG", "observeViewModel: it $it")
                 allChats = it
-                setUpRecyclerView(allChats)
+                filteredChats = ArrayList(allChats) // Inicializar la lista filtrada
+                setupRecyclerView(filteredChats)
+                chatAdapter.updateList(filteredChats)
             }
         }
         lifecycleScope.launch {
@@ -119,7 +146,7 @@ class HomeUserFragment : Fragment() {
         binding.tvTextChat.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    private fun setUpRecyclerView(itemList: MutableList<OpenChatItemModel>) {
+    private fun setupRecyclerView(itemList: MutableList<OpenChatItemModel>) {
         chatAdapter = OpenChatAdapter(itemList, viewModel.colorMap) { chat ->
             showProgressBar(true)
             changeScreen(chat)
@@ -127,80 +154,93 @@ class HomeUserFragment : Fragment() {
         binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChats.adapter = chatAdapter
 
+        setupSearchView()
+        setupSwipeToDelete()
+    }
+
+    private fun setupSearchView() {
         binding.swChat.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 filterUsers(newText.orEmpty())
                 return true
             }
         })
+    }
 
-        binding.rvChats.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
+    private fun setupSwipeToDelete() {
+        val itemTouchHelperCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
 
-            val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-                0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val position = viewHolder.bindingAdapterPosition
-                    val idChat = chatAdapter.getIdChat(position)
-
-                    val alertDialog = AlertDialog.Builder(requireContext())
-                        .setTitle(getString(R.string.alert_swiped))
-                        .setMessage(getString(R.string.alert_swiped_message))
-                        .setPositiveButton("Sí") { dialog, _ ->
-                            lifecycleScope.launch {
-                                try {
-                                    if (idChat != null) {
-                                        viewModel.deleteChats(idChat)
-                                        allChats.removeAt(position)
-                                        chatAdapter.notifyItemRemoved(position)
-                                        checkAndShowBackgroundImage()
-                                    }
-                                } catch (e: Exception) {
-                                    Log.e(TAG, "Error deleting chat", e)
-                                    e.printStackTrace()
-                                    chatAdapter.notifyItemChanged(position)
-                                }
-                            }
-                            dialog.dismiss()
-                        }
-                        .setNegativeButton("No") { dialog, _ ->
-                            chatAdapter.notifyItemChanged(position)
-                            dialog.dismiss()
-                        }
-                        .create()
-
-                    alertDialog.show()
-                }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                handleSwipe(viewHolder.bindingAdapterPosition)
             }
+        }
 
-            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-            itemTouchHelper.attachToRecyclerView(this)
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.rvChats)
+    }
+
+    private fun handleSwipe(position: Int) {
+        val idChat = chatAdapter.getIdChat(position)
+        val idSource = chatAdapter.getIdSource(position)
+
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.alert_swiped))
+            .setMessage(getString(R.string.alert_swiped_message))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                handleDeleteChat(position, idChat, idSource)
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                chatAdapter.notifyItemChanged(position)
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
+    }
+
+    private fun handleDeleteChat(position: Int, idChat: String?, idSource: String?) {
+        lifecycleScope.launch {
+            try {
+                if (idChat != null) {
+                    Log.e("TAG", "Deleting chat $idSource")
+                    Log.e("TAG", "Deleting chat ${userSession.id}")
+                    if (userSession.id == idSource) {
+                        viewModel.deleteChats(idChat)
+                        allChats.removeAll { it.idChat == idChat } // Elimina el chat de todas las listas
+                        filterUsers(binding.swChat.query.toString()) // Actualizar la lista filtrada
+                        checkAndShowBackgroundImage()
+                    } else {
+                        showAlertDialog(
+                            getString(R.string.noDeleteChat),
+                            getString(R.string.noDeleteChatExplication)
+                        )
+                        chatAdapter.notifyItemChanged(position)
+                    }
+                } else {
+                    Log.e("TAG", "Error deleting chat")
+                }
+            } catch (e: Exception) {
+                Log.e("TAG", "Error deleting chat", e)
+                chatAdapter.notifyItemChanged(position)
+            }
         }
     }
 
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
         lifecycleScope.launch {
             delay(300)
-            val color = viewModel.colorMap[openChatItemModel?.nickTargetUser].toString()
             val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
                 openChatItemModel?.idChat.toString(),
                 openChatItemModel?.nickTargetUser.toString(),
-                openChatItemModel?.isOnlineUser ?: true,
-                color
+                openChatItemModel?.isOnlineUser ?: true
             )
             findNavController().navigate(action)
             showProgressBar(false)
@@ -208,12 +248,14 @@ class HomeUserFragment : Fragment() {
     }
 
     private fun filterUsers(query: String) {
-        val filteredUsers = if (query.isEmpty()) {
-            allChats
+        filteredChats = if (query.isEmpty()) {
+            ArrayList(allChats)
         } else {
             allChats.filter { it.nickTargetUser?.contains(query, ignoreCase = true) == true }
+                .toMutableList()
         }
-        chatAdapter.updateList(filteredUsers)
+        chatAdapter.updateList(filteredChats)
+        chatAdapter.notifyDataSetChanged()
     }
 
     private fun showProgressBar(show: Boolean) {
@@ -223,5 +265,19 @@ class HomeUserFragment : Fragment() {
     private fun checkAndShowBackgroundImage() {
         showBackgroundImage(allChats.isEmpty())
     }
-}
 
+    private fun showAlertDialog(title: String, message: String, onDismiss: (() -> Unit)? = null) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(true)
+            .show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (alertDialog.isShowing) {
+                alertDialog.dismiss()
+                onDismiss?.invoke()
+            }
+        }, 2000)
+    }
+}
