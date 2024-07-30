@@ -37,7 +37,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
     private var imageUri: Uri? = null
-
     @Inject
     lateinit var userSession: UserSession
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
@@ -217,8 +216,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             try {
                 if (idChat != null) {
-                    Log.e("TAG", "Deleting chat $idSource")
-                    Log.e("TAG", "Deleting chat ${userSession.id}")
                     if (userSession.id == idSource) {
                         viewModel.deleteChats(idChat)
                         allChats.removeAt(position)
@@ -244,10 +241,12 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
         lifecycleScope.launch {
             delay(300)
+            val colorMaped = chatAdapter.colorMap[openChatItemModel?.idTargetUser].toString()
             val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
                 openChatItemModel?.idChat.toString(),
                 openChatItemModel?.nickTargetUser.toString(),
-                openChatItemModel?.isOnlineUser ?: true
+                openChatItemModel?.isOnlineUser ?: true,
+                colorMaped
             )
             findNavController().navigate(action)
             showProgressBar(false)

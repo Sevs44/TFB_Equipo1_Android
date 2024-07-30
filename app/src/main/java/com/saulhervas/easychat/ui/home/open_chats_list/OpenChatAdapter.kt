@@ -10,7 +10,7 @@ import com.saulhervas.easychat.domain.model.OpenChatItemModel
 class OpenChatAdapter(
     private val context: Context,
     private var itemList: MutableList<OpenChatItemModel>,
-    private val colorMap: MutableMap<String, Int>,
+    val colorMap: MutableMap<String, Int>,
     private val onClickListener: (OpenChatItemModel?) -> Unit
 ) : RecyclerView.Adapter<OpenChatViewHolder>() {
 

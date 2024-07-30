@@ -73,7 +73,7 @@
     <string name="error_response_101">Network protocols have changed</string>
     <string name="error_response_404">"Network request error "</string>
     <string name="error_response_5xx">Server error</string>
-    <string name="unknown_user">Unknown user %1$s</string>
+    <string name="unknown_user">Unknown user</string>
     <string name="aceptDialog">Accept</string>
     <string name="FailedPhoto">Failed to do photo</string>
     <string name="messageGalleryPermision">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
