@@ -138,7 +138,6 @@ class HomeUserFragment : Fragment() {
             }
         })
 
-
         binding.rvChats.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
@@ -153,31 +152,6 @@ class HomeUserFragment : Fragment() {
                 ): Boolean {
                     return false
                 }
-
-        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.rvChats)
-    }
-
-    private fun handleSwipe(position: Int) {
-        val idChat = chatAdapter.getIdChat(position)
-        Log.e("TAG", "Chat deletedaaaaaaaaaaaaaaaaaa: $idChat")
-        val idSource = chatAdapter.getIdSource(position)
-
-        val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.alert_swiped))
-            .setMessage(getString(R.string.alert_swiped_message))
-            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
-                handleDeleteChat(position, idChat, idSource)
-                dialog.dismiss()
-            }
-            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
-                chatAdapter.notifyItemChanged(position)
-                dialog.dismiss()
-            }
-            .create()
-
-        alertDialog.show()
-    }
-
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.bindingAdapterPosition
@@ -247,22 +221,5 @@ class HomeUserFragment : Fragment() {
     private fun checkAndShowBackgroundImage() {
         showBackgroundImage(allChats.isEmpty())
     }
-
-
-    private fun showAlertDialog(title: String, message: String, onDismiss: (() -> Unit)? = null) {
-        val alertDialog = AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setCancelable(true)
-            .show()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (alertDialog.isShowing) {
-                alertDialog.dismiss()
-                onDismiss?.invoke()
-            }
-        }, 2000)
-    }
-
 }
 
