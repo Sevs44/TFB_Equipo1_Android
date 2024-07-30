@@ -175,6 +175,10 @@
             android:name="isUserOnline"
             app:argType="boolean"
             android:defaultValue="true"/>
+        <argument
+            android:name="colorUser"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_chatLog_to_chatDetailFragment"
             app:destination="@id/chatDetailFragment"
