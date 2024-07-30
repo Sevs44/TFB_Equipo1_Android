@@ -19,3 +19,21 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Firebase
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.gms.** { *; }
+
+# Mantén los nombres de campo anotados con @SerializedName
+-keepattributes *Annotation*
+-keepattributes Signature
+
+# Mantén las clases de modelo de respuesta del backend
+-keep class com.saulhervas.easychat.data.repository.response.** { *; }
+
+# Deshabilitar la ofuscación de logs (opcional)
+-assumenosideeffects class android.util.Log {
+    public static *** v(...);
+    public static *** d(...);
+    public static *** i(...);
+}

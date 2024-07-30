@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/userLogin"
-        android:name="com.saulhervas.easychat.ui.navigation.UserLogin"
+        android:name="com.saulhervas.easychat.ui.user_login.UserLoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -24,32 +24,43 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userLogin_to_homeUser"
+            app:destination="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/homeUser"
+            app:popUpToInclusive="true">
+        </action>
+
     </fragment>
+
     <fragment
         android:id="@+id/userRegister"
-        android:name="com.saulhervas.easychat.ui.navigation.UserRegister"
+        android:name="com.saulhervas.easychat.ui.user_register.UserRegisterFragment"
         android:label="fragment_user_register"
         tools:layout="@layout/fragment_user_register">
         <action
             android:id="@+id/action_userRegister_to_userLogin"
             app:destination="@id/userLogin"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_left"
-            app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_left" />
         <action
-            android:id="@+id/action_userRegister_to_userRecoverPass"
-            app:destination="@id/userRecoverPass"
+            android:id="@+id/action_userRegister_to_dashboardFirstPageFragment"
+            app:destination="@id/dashboardFirstPageFragment"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/userRecoverPass"
-        android:name="com.saulhervas.easychat.ui.navigation.UserRecoverPass"
-        android:label="fragment_recover_pass"
-        tools:layout="@layout/fragment_recover_pass">
+        android:label="fragment_recover_pass">
         <action
             android:id="@+id/action_userRecoverPass_to_userLogin"
             app:destination="@id/userLogin"
@@ -60,6 +71,241 @@
         <action
             android:id="@+id/action_userRecoverPass_to_userRegister"
             app:destination="@id/userRegister"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userConfig"
+        android:name="com.saulhervas.easychat.ui.userConfig.UserConfigFragment"
+        android:label="UserConfig"
+        tools:layout="@layout/fragment_user_config">
+        <action
+            android:id="@+id/action_userConfig_to_homeUser"
+            app:destination="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userConfig_to_profileSettingsFragment"
+            app:destination="@id/profileSettingsFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right">
+        </action>
+
+        <action
+            android:id="@+id/action_userConfig_to_userLogoutFragment"
+            app:destination="@id/userLogoutFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_userConfig_to_photoEditFragment"
+            app:destination="@id/photoEditFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/homeUser"
+        android:name="com.saulhervas.easychat.ui.home.HomeUserFragment"
+        android:label="fragment_home_user"
+        tools:layout="@layout/fragment_home_user">
+        <action
+            android:id="@+id/action_homeUser_to_userLogin"
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeUser_to_chatLog"
+            app:destination="@id/chatLog"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_homeUser_to_newChatFragment"
+            app:destination="@id/newChatFragment"
+            app:enterAnim="@anim/exit_in_bottom"
+            app:exitAnim="@anim/exit_out_bottom"
+            app:popEnterAnim="@anim/exit_in_bottom"
+            app:popExitAnim="@anim/exit_out_bottom">
+        </action>
+        <action
+            android:id="@+id/action_homeUser_to_userConfig"
+            app:destination="@id/userConfig"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right">
+        </action>
+        <action
+            android:id="@+id/action_homeUser_to_photoEditFragment"
+            app:destination="@id/photoEditFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatLog"
+        android:name="com.saulhervas.easychat.ui.chat.ChatLogFragment"
+        android:label="fragment_chat_log"
+        tools:layout="@layout/fragment_chat_log" >
+        <argument
+            android:name="idChat"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument
+            android:name="nickTarget"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument
+            android:name="isUserOnline"
+            app:argType="boolean"
+            android:defaultValue="true"/>
+        <argument
+            android:name="colorUser"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_chatLog_to_chatDetailFragment"
+            app:destination="@id/chatDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/newChatFragment"
+        android:name="com.saulhervas.easychat.ui.new_chat.NewChatFragment"
+        android:label="fragment_new_chat"
+        tools:layout="@layout/fragment_new_chat">
+        <action
+            android:id="@+id/action_newChatFragment_to_chatLog"
+            app:destination="@id/chatLog"
+            app:popUpTo="@id/homeUser"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSettingsFragment"
+        android:name="com.saulhervas.easychat.ui.settings.ProfileSettingsFragment"
+        android:label="fragment_profile_settings"
+        tools:layout="@layout/fragment_profile_settings">
+
+        <action
+            android:id="@+id/action_profileSettingsFragment_to_photoEditFragment"
+            app:destination="@id/photoEditFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.saulhervas.easychat.ui.chat_detail.ChatDetailFragment"
+        android:label="fragment_chat_detail"
+        tools:layout="@layout/fragment_chat_detail" />
+    <fragment
+        android:id="@+id/userLogoutFragment"
+        android:name="com.saulhervas.easychat.ui.user_logout.UserLogoutFragment"
+        android:label="fragment_user_logout"
+        tools:layout="@layout/fragment_user_logout">
+        <action
+            android:id="@+id/action_userLogoutFragment_to_userLogin"
+            app:destination="@id/userLogin"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoEditFragment"
+        android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
+        android:label="PhotoEditFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFirstPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardFirstPageFragment"
+        android:label="DashboardFirstPageFragment">
+        <action
+            android:id="@+id/action_dashboardFirstPageFragment_to_dashboardSecondPageFragment"
+            app:destination="@id/dashboardSecondPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardSecondPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardSecondPageFragment"
+        android:label="DashboardSecondPageFragment">
+        <action
+            android:id="@+id/action_dashboardSecondPageFragment_to_dashboardThirdPageFragment"
+            app:destination="@id/dashboardThirdPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardThirdPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardThirdPageFragment"
+        android:label="DashboardThirdPageFragment">
+        <action
+            android:id="@+id/action_dashboardThirdPageFragment_to_dashboardFourthPageFragment"
+            app:destination="@id/dashboardFourthPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFourthPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardFourthPageFragment"
+        android:label="DashboardFourthPageFragment">
+        <action
+            android:id="@+id/action_dashboardFourthPageFragment_to_dashboardFifthPageFragment"
+            app:destination="@id/dashboardFifthPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFifthPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardFifthPageFragment"
+        android:label="DashboardFifthPageFragment">
+        <action
+            android:id="@+id/action_dashboardFifthPageFragment_to_dashboardLastPageFragment"
+            app:destination="@id/dashboardLastPageFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardLastPageFragment"
+        android:name="com.saulhervas.easychat.ui.dashboard.DashboardLastPageFragment"
+        android:label="DashboardLastPageFragment">
+        <action
+            android:id="@+id/action_dashboardLastPageFragment_to_userLogin"
+            app:destination="@id/userLogin"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"

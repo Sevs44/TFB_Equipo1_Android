@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.navigationSafeArgs)
+    alias(libs.plugins.kotlinParcelize)
+    alias(libs.plugins.pluginDaggerHilt)
+    alias(libs.plugins.pluginDevKsp)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 android {
@@ -22,13 +24,25 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+//        release {
+//            isDebuggable = false
+//            isMinifyEnabled = true
+//            isShrinkResources = true
+//            applicationIdSuffix = ".release"
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -49,10 +63,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     implementation (libs.androidx.recyclerview)
     implementation (libs.androidx.lifecycle.runtime.ktx)
 
@@ -62,7 +74,6 @@ dependencies {
 
     // ViewModel
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation (libs.androidx.lifecycle.livedata.ktx)
 
     // Coroutines
     implementation (libs.kotlinx.coroutines.core)
@@ -71,12 +82,22 @@ dependencies {
     /// Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     //Lottie
     implementation(libs.lottie)
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
+    //Biometric
+    implementation(libs.androidxBiometric)
+    //Encrypted Shared Preferences
+    implementation(libs.androidxCryptoSharedPreferences)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
 }

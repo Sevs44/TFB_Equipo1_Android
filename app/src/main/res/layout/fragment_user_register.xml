@@ -1,144 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.navigation.UserRegister">
+    android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="199dp"
-        android:layout_height="205dp"
-        android:layout_marginTop="45dp"
-        android:src="@mipmap/ic_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- FrameLayout para superponer el ProgressBar sobre el contenido principal -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/et_user"
-        android:layout_width="240dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_background"
-        android:drawableStart="@drawable/ic_user"
-        android:elevation="25dp"
-        android:hint="@string/hint_user"
-        android:inputType="text"
-        android:paddingStart="18dp"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+                <!-- Contenido principal del layout -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="240dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/rounded_background"
-        android:drawableStart="@drawable/ic_block"
-        android:drawableEnd="@drawable/ic_password_visibility"
-        android:elevation="25dp"
-        android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        android:paddingHorizontal="15dp"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_user" />
+                        <ImageView
+                            android:id="@+id/iv_logo"
+                            android:layout_width="199dp"
+                            android:layout_height="205dp"
+                            android:layout_marginTop="45dp"
+                            android:src="@mipmap/ic_logo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_password_repeat"
-        android:layout_width="240dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/rounded_background"
-        android:drawableStart="@drawable/ic_block"
-        android:drawableEnd="@drawable/ic_password_visibility"
-        android:elevation="25dp"
-        android:hint="@string/hint_repeat_password"
-        android:inputType="textPassword"
-        android:paddingHorizontal="15dp"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+                        <EditText
+                            android:id="@+id/et_user"
+                            android:layout_width="300dp"
+                            android:layout_height="43dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_background"
+                            android:drawableStart="@drawable/ic_user"
+                            android:drawablePadding="20dp"
+                            android:elevation="15dp"
+                            android:hint="@string/hint_user"
+                            android:inputType="text"
+                            android:paddingStart="18dp"
+                            android:textSize="17sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_login"
-        android:layout_width="240dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/btn_shadow"
-        android:text="@string/btn_register"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password_repeat" />
+                        <EditText
+                            android:id="@+id/et_nick"
+                            android:layout_width="300dp"
+                            android:layout_height="43dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_background"
+                            android:drawableStart="@drawable/ic_user"
+                            android:drawablePadding="20dp"
+                            android:elevation="15dp"
+                            android:hint="@string/hint_nick"
+                            android:inputType="text"
+                            android:paddingStart="18dp"
+                            android:textSize="17sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_user" />
 
-    <TextView
-        android:id="@+id/tv_no_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:text="@string/tv_have_account"
-        app:layout_constraintEnd_toStartOf="@+id/tv_session"
-        app:layout_constraintHorizontal_bias="0.778"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+                        <EditText
+                            android:id="@+id/et_password"
+                            android:layout_width="300dp"
+                            android:layout_height="43dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_background"
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawableEnd="@drawable/ic_password_visibility"
+                            android:drawablePadding="20dp"
+                            android:elevation="15dp"
+                            android:hint="@string/hint_password"
+                            android:inputType="textPassword"
+                            android:paddingHorizontal="15dp"
+                            android:textSize="17sp"
+                            android:longClickable="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_nick" />
 
-    <TextView
-        android:id="@+id/tv_session"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="96dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="onClickSession"
-        android:padding="10dp"
-        android:text="@string/tv_login"
-        android:textColor="@color/color_app"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+                        <EditText
+                            android:id="@+id/et_password_repeat"
+                            android:layout_width="300dp"
+                            android:layout_height="43dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/rounded_background"
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawableEnd="@drawable/ic_password_visibility"
+                            android:drawablePadding="20dp"
+                            android:elevation="15dp"
+                            android:hint="@string/hint_repeat_password"
+                            android:inputType="textPassword"
+                            android:paddingHorizontal="15dp"
+                            android:textSize="17sp"
+                            android:longClickable="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:background="@color/white"
-        android:padding="15dp"
-        android:src="@drawable/ic_back"
-        app:layout_constraintEnd_toStartOf="@+id/iv_logo"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_register"
+                            android:layout_width="300dp"
+                            android:layout_height="43dp"
+                            android:layout_marginTop="40dp"
+                            android:background="@drawable/btn_shadow"
+                            android:text="@string/btn_register"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/et_password_repeat" />
 
-    <TextView
-        android:id="@+id/tv_recover_pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="44dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="onClickRecoverPass"
-        android:padding="10dp"
-        android:text="@string/tv_recover_password"
-        android:textColor="@color/color_app"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_session" />
+                        <TextView
+                            android:id="@+id/tv_no_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="46dp"
+                            android:text="@string/tv_have_account"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_session"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+
+                        <TextView
+                            android:id="@+id/tv_session"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="36dp"
+                            android:layout_marginEnd="96dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:onClick="onClickSession"
+                            android:padding="10dp"
+                            android:text="@string/tv_login"
+                            android:textColor="@color/color_app"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="52dp"
+                            android:background="@color/white"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_back"
+                            app:layout_constraintEnd_toStartOf="@+id/iv_logo"
+                            app:layout_constraintHorizontal_bias="0.517"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+        </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
