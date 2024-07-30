@@ -2,6 +2,7 @@ package com.saulhervas.easychat.ui.settings
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.profile.UserProfileResponse
