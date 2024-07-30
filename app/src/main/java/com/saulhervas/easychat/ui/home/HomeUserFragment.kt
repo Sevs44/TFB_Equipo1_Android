@@ -55,6 +55,11 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         setupStatusBar()
         setupProfileImage()
         setupClickListeners()
+        setOnlineStatus()
+    }
+
+    private fun setOnlineStatus() {
+        viewModel.checkOnlineStatus(requireContext())
     }
 
     private fun setupStatusBar() {
