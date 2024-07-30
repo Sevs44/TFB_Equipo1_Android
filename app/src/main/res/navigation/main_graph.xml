@@ -32,8 +32,7 @@
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right"
             app:popUpTo="@id/homeUser"
-            app:popUpToInclusive="true">
-        </action>
+            app:popUpToInclusive="true"></action>
 
     </fragment>
 
@@ -95,8 +94,7 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right">
-        </action>
+            app:popExitAnim="@anim/exit_to_right"></action>
 
         <action
             android:id="@+id/action_userConfig_to_userLogoutFragment"
@@ -139,16 +137,14 @@
             app:enterAnim="@anim/exit_in_bottom"
             app:exitAnim="@anim/exit_out_bottom"
             app:popEnterAnim="@anim/exit_in_bottom"
-            app:popExitAnim="@anim/exit_out_bottom">
-        </action>
+            app:popExitAnim="@anim/exit_out_bottom"></action>
         <action
             android:id="@+id/action_homeUser_to_userConfig"
             app:destination="@id/userConfig"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right">
-        </action>
+            app:popExitAnim="@anim/exit_to_right"></action>
         <action
             android:id="@+id/action_homeUser_to_photoEditFragment"
             app:destination="@id/photoEditFragment"
@@ -162,19 +158,23 @@
         android:id="@+id/chatLog"
         android:name="com.saulhervas.easychat.ui.chat.ChatLogFragment"
         android:label="fragment_chat_log"
-        tools:layout="@layout/fragment_chat_log" >
+        tools:layout="@layout/fragment_chat_log">
         <argument
             android:name="idChat"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
         <argument
             android:name="nickTarget"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
         <argument
             android:name="isUserOnline"
-            app:argType="boolean"
-            android:defaultValue="true"/>
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <argument
+            android:name="colorUser"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_chatLog_to_chatDetailFragment"
             app:destination="@id/chatDetailFragment"
@@ -191,11 +191,11 @@
         <action
             android:id="@+id/action_newChatFragment_to_chatLog"
             app:destination="@id/chatLog"
-            app:popUpTo="@id/homeUser"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/homeUser" />
     </fragment>
     <fragment
         android:id="@+id/profileSettingsFragment"
@@ -233,6 +233,5 @@
     <fragment
         android:id="@+id/photoEditFragment"
         android:name="com.saulhervas.easychat.ui.photo_edit.PhotoEditFragment"
-        android:label="PhotoEditFragment">
-    </fragment>
+        android:label="PhotoEditFragment"></fragment>
 </navigation>
