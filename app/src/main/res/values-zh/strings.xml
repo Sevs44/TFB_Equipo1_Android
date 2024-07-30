@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">用户</string>
+    <string name="biometric">使用生物识别登录</string>
+    <string name="keep_session">保持登录状态</string>
+    <string name="btn_login">登录</string>
+    <string name="tv_no_account">没有账户？</string>
+    <string name="tv_register">注册</string>
+    <string name="error_no_data_found">数据为空</string>
+    <string name="error_login">请输入用户名和密码</string>
+    <string name="error">错误</string>
+    <string name="login_success">登录成功</string>
+    <string name="welcome">欢迎,</string>
+    <string name="users_not_founds">用户不存在。请检查您的凭据。</string>
+
+    //Register
+    <string name="hint_password">密码</string>
+    <string name="hint_repeat_password">重复密码</string>
+    <string name="hint_nick">昵称</string>
+    <string name="btn_register">注册</string>
+    <string name="tv_have_account">已有账户？</string>
+    <string name="tv_login">登录</string>
+    <string name="user_success">用户创建成功</string>
+    <string name="user_register">注册成功</string>
+    <string name="user_register_error">所有字段都是必填项</string>
+    <string name="error_password_mismatch">密码不匹配</string>
+    <string name="user_already_exists">用户已存在</string>
+
+    //Recover Password
+    <string name="tv_recover_password">找回密码</string>
+    <string name="hint_email">电子邮件</string>
+    <string name="btn_recover">发送</string>
+
+    //Profile
+    <string name="profile_settings">个人资料设置</string>
+    <string name="privacity">隐私</string>
+    <string name="chat_setings">聊天设置</string>
+    <string name="storage">存储</string>
+    <string name="language_settings">语言设置</string>
+    <string name="delete_account">删除账户</string>
+    <string name="close_session">退出登录</string>
+    <string name="edit_photo">编辑个人资料照片</string>
+    <string name="photo_profile">个人资料照片</string>
+    <string name="take_photo">拍照</string>
+    <string name="select_photo">选择照片</string>
+    <string name="delete_photo">删除照片</string>
+    <string name="edit">编辑</string>
+    <string name="user_block">已屏蔽</string>
+    <string name="tv_profile">输入您的姓名并添加个人资料照片（可选）</string>
+    <string name="tv_logout">您想要退出此设备的登录吗？</string>
+    <string name="name">姓名</string>
+    <string name="et_profile">输入您的姓名</string>
+    <string name="tv_online">显示在线状态</string>
+    <string name="title_alert">目前我们正在开发这个部分。</string>
+    <string name="message_alert">对不起，给您带来不便。</string>
+    <string name="message_alert_logout">您确定要退出登录吗？</string>
+
+    //Home and New Chat
+    <string name="unknown_user">未知用户</string>
+
+    //Chat
+    <string name="notifications">通知</string>
+    <string name="block">屏蔽</string>
+    <string name="messages">消息</string>
+    <string name="mute_notifications">静音通知</string>
+    <string name="alert_tune">警报音</string>
+    <string name="send_messages">发送消息</string>
+    <string name="recent_photos">最近的照片</string>
+    <string name="new_chat">新聊天</string>
+    <string name="start_new_chat">开始新聊天</string>
+    <string name="alert_swiped">确认删除</string>
+    <string name="alert_swiped_message">您确定要删除此聊天吗？</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">抱歉，我们遇到了连接问题。</string>
+    <string name="errorResponseTryBefore">请稍后再试。</string>
+    <string name="failTakePicture">拍照错误</string>
+    <string name="permisionDenied">权限被拒绝</string>
+    <string name="permissionIsNeeded">需要图库权限</string>
+    <string name="goToSettings">前往设置</string>
+    <string name="cancel">取消</string>
+    <string name="isUserOnline">在线</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">发生了意外错误：%s</string>
+    <string name="error_response_101">网络协议已更改</string>
+    <string name="error_response_401">未经授权</string>
+    <string name="error_response_403">无访问资源权限</string>
+    <string name="error_response_404">请求错误</string>
+    <string name="error_response_5xx">服务器错误</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="aceptDialog">接受</string>
+    <string name="FailedPhoto">拍照失败</string>
+    <string name="messageGalleryPermision">选择照片需要图库权限。请在应用设置中授予权限。</string>
+    <string name="noDeleteChat">无法删除聊天</string>
+    <string name="noDeleteChatExplication">您不能删除您未创建的聊天</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">欢迎来到 EasyChat</string>
+    <string name="welcome_to_easychat_description">这是一个应用程序，您可以通过它与您最好的朋友在线发送消息，创建聊天。</string>
+    <string name="welcome_to_easychat_send_message">发送消息</string>
+    <string name="welcome_to_easychat_send_message_description">与您的朋友实时沟通。</string>
+    <string name="welcome_to_easychat_world_message">查看您的朋友的当前状态</string>
+    <string name="welcome_to_easychat_world_message_description">您可以看到您的朋友是否在线。</string>
+    <string name="welcome_to_easychat_delete_message">删除聊天</string>
+    <string name="welcome_to_easychat_delete_message_description">删除聊天，但您只能删除您创建的聊天。</string>
+    <string name="welcome_to_easychat_user_message">个性化资料</string>
+    <string name="welcome_to_easychat_user_message_description">选择本地的个人资料照片，个性化您的体验。</string>
+    <string name="welcome_to_easychat_last_message">是时候开始了</string>
+    <string name="welcome_to_easychat_last_message_description">感谢您选择 EasyChat！按下按钮开始使用应用程序并与朋友联系。</string>
+    <string name="welcome_to_easychat_start">开始</string>
+</resources>

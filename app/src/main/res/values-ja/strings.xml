@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">ユーザー</string>
+    <string name="biometric">生体認証でログイン</string>
+    <string name="keep_session">ログイン状態を保持</string>
+    <string name="btn_login">ログイン</string>
+    <string name="tv_no_account">アカウントを持っていませんか？</string>
+    <string name="tv_register">登録</string>
+    <string name="error_no_data_found">データがありません</string>
+    <string name="error_login">ユーザー名とパスワードを入力してください</string>
+    <string name="error">エラー</string>
+    <string name="login_success">ログイン成功</string>
+    <string name="welcome">ようこそ,</string>
+    <string name="users_not_founds">ユーザーが存在しません。認証情報を確認してください。</string>
+
+    //Register
+    <string name="hint_password">パスワード</string>
+    <string name="hint_repeat_password">パスワードを再入力</string>
+    <string name="hint_nick">ニックネーム</string>
+    <string name="btn_register">登録</string>
+    <string name="tv_have_account">すでにアカウントをお持ちですか？</string>
+    <string name="tv_login">ログイン</string>
+    <string name="user_success">ユーザー作成成功</string>
+    <string name="user_register">登録成功</string>
+    <string name="user_register_error">すべてのフィールドは必須です</string>
+    <string name="error_password_mismatch">パスワードが一致しません</string>
+    <string name="user_already_exists">ユーザーはすでに存在します</string>
+
+    //Recover Password
+    <string name="tv_recover_password">パスワードを回復</string>
+    <string name="hint_email">メールアドレス</string>
+    <string name="btn_recover">送信</string>
+
+    //Profile
+    <string name="profile_settings">プロフィール設定</string>
+    <string name="privacity">プライバシー</string>
+    <string name="chat_setings">チャット設定</string>
+    <string name="storage">ストレージ</string>
+    <string name="language_settings">言語設定</string>
+    <string name="delete_account">アカウント削除</string>
+    <string name="close_session">ログアウト</string>
+    <string name="edit_photo">プロフィール写真を編集</string>
+    <string name="photo_profile">プロフィール写真</string>
+    <string name="take_photo">写真を撮る</string>
+    <string name="select_photo">写真を選択</string>
+    <string name="delete_photo">写真を削除</string>
+    <string name="edit">編集</string>
+    <string name="user_block">ブロック済み</string>
+    <string name="tv_profile">名前を入力し、プロフィール写真を追加（オプション）</string>
+    <string name="tv_logout">このデバイスからログアウトしますか？</string>
+    <string name="name">名前</string>
+    <string name="et_profile">名前を入力</string>
+    <string name="tv_online">オンライン状態を表示</string>
+    <string name="title_alert">現在、このセクションの開発中です。</string>
+    <string name="message_alert">ご不便をおかけして申し訳ありません。</string>
+    <string name="message_alert_logout">ログアウトしてもよろしいですか？</string>
+
+    //Home and New Chat
+    <string name="unknown_user">不明なユーザー</string>
+
+    //Chat
+    <string name="notifications">通知</string>
+    <string name="block">ブロック</string>
+    <string name="messages">メッセージ</string>
+    <string name="mute_notifications">通知をミュート</string>
+    <string name="alert_tune">アラート音</string>
+    <string name="send_messages">メッセージを送信</string>
+    <string name="recent_photos">最近の写真</string>
+    <string name="new_chat">新しいチャット</string>
+    <string name="start_new_chat">新しいチャットを開始</string>
+    <string name="alert_swiped">削除を確認</string>
+    <string name="alert_swiped_message">このチャットを削除してもよろしいですか？</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">申し訳ありませんが、接続の問題が発生しています。</string>
+    <string name="errorResponseTryBefore">後でもう一度お試しください。</string>
+    <string name="failTakePicture">写真の撮影エラー</string>
+    <string name="permisionDenied">権限が拒否されました</string>
+    <string name="permissionIsNeeded">ギャラリーの権限が必要です</string>
+    <string name="goToSettings">設定に移動</string>
+    <string name="cancel">キャンセル</string>
+    <string name="isUserOnline">オンライン</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">予期しないエラーが発生しました: %s</string>
+    <string name="error_response_101">ネットワークプロトコルが変更されました</string>
+    <string name="error_response_401">認証されていません</string>
+    <string name="error_response_403">リソースへのアクセスが拒否されました</string>
+    <string name="error_response_404">リクエストエラー</string>
+    <string name="error_response_5xx">サーバーエラー</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="aceptDialog">承認</string>
+    <string name="FailedPhoto">写真撮影失敗</string>
+    <string name="messageGalleryPermision">写真を選択するにはギャラリーの権限が必要です。アプリの設定で権限を付与してください。</string>
+    <string name="noDeleteChat">チャットの削除に失敗しました</string>
+    <string name="noDeleteChatExplication">自分が作成していないチャットを削除することはできません</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">EasyChatへようこそ</string>
+    <string name="welcome_to_easychat_description">これは、あなたが最良の友達とオンラインでメッセージを送信し、アプリを持つユーザーとチャットを作成できるアプリです。</string>
+    <string name="welcome_to_easychat_send_message">メッセージを送信</string>
+    <string name="welcome_to_easychat_send_message_description">リアルタイムで友達とコミュニケーションを取る。</string>
+    <string name="welcome_to_easychat_world_message">友達の現在の状態を確認</string>
+    <string name="welcome_to_easychat_world_message_description">友達がオンラインかどうかを確認できます。</string>
+    <string name="welcome_to_easychat_delete_message">チャットを削除</string>
+    <string name="welcome_to_easychat_delete_message_description">チャットを削除できますが、自分が作成したチャットのみ削除できます。</string>
+    <string name="welcome_to_easychat_user_message">カスタマイズプロフィール</string>
+    <string name="welcome_to_easychat_user_message_description">ローカルのプロフィール写真を選択して、体験をカスタマイズしてください。</string>
+    <string name="welcome_to_easychat_last_message">始める時が来ました</string>
+    <string name="welcome_to_easychat_last_message_description">EasyChatを選んでいただきありがとうございます！アプリを使い始めて友達と連絡を取るためにボタンを押してください。</string>
+    <string name="welcome_to_easychat_start">開始</string>
+</resources>

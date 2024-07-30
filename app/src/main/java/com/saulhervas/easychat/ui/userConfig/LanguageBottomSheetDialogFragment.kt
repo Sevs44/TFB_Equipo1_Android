@@ -12,8 +12,23 @@ import com.saulhervas.easychat.utils.LocaleManager
 
 class LanguageBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
-    private val languages = arrayOf("English", "Spanish", "French")
-    private val languageCodes = arrayOf("en", "es", "fr")
+    private val languages = arrayOf(
+        "English",
+        "Spanish",
+        "French",
+        "African",
+        "Albanian",
+        "Arabic",
+        "Bulgarian",
+        "Catalan",
+        "Chinese",
+        "Japanese",
+        "Portuguese",
+        "Turkish",
+        "Vietnamese"
+    )
+    private val languageCodes =
+        arrayOf("en", "es", "fr", "af", "sq", "ar", "bg", "ca", "zh", "ja", "pt", "tr", "vi")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

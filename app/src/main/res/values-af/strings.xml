@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Gebruiker</string>
+    <string name="biometric">Meld aan met Biometrie</string>
+    <string name="keep_session">Hou sessie aan</string>
+    <string name="btn_login">Meld aan</string>
+    <string name="tv_no_account">Het jy nie \'n rekening nie?</string>
+    <string name="tv_register">Registreer</string>
+    <string name="error_no_data_found">Leë data</string>
+    <string name="error_login">Voer naam en wagwoord in</string>
+    <string name="error">Fout</string>
+    <string name="login_success">Suksesvolle aanmelding</string>
+    <string name="welcome">Welkom,</string>
+    <string name="users_not_founds">Die gebruiker bestaan nie. Verifieer jou geloofsbriewe.</string>
+
+    //Register
+    <string name="hint_password">Wagwoord</string>
+    <string name="hint_repeat_password">Herhaal Wagwoord</string>
+    <string name="hint_nick">Bynaam</string>
+    <string name="btn_register">Registreer</string>
+    <string name="tv_have_account">Het jy al \'n rekening?</string>
+    <string name="tv_login">Meld aan</string>
+    <string name="user_success">Gebruiker geskep</string>
+    <string name="user_register">Suksesvolle registrasie</string>
+    <string name="user_register_error">Alle velde is verpligtend</string>
+    <string name="error_password_mismatch">Wagwoorde stem nie ooreen nie</string>
+    <string name="user_already_exists">Die gebruiker bestaan reeds</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Herstel wagwoord</string>
+    <string name="hint_email">E-pos adres</string>
+    <string name="btn_recover">Stuur</string>"
+
+    //Profile
+    <string name="profile_settings">Profiel instellings</string>
+    <string name="privacity">Privaatheid</string>
+    <string name="chat_setings">Klets instellings</string>
+    <string name="storage">Berging</string>
+    <string name="language_settings">Taal instellings</string>
+    <string name="delete_account">Verwyder rekening</string>
+    <string name="close_session">Sluit sessie</string>
+    <string name="edit_photo">Wysig profielfoto</string>
+    <string name="photo_profile">Profielfoto</string>
+    <string name="take_photo">Neem foto</string>
+    <string name="select_photo">Kies foto</string>
+    <string name="delete_photo">Verwyder foto</string>
+    <string name="edit">Wysig</string>
+    <string name="user_block">Geblokkeer</string>
+    <string name="tv_profile">Voer jou naam in en voeg \'n profielfoto by (opsioneel)</string>
+    <string name="tv_logout">Wil jy die sessie op hierdie toestel sluit?</string>
+    <string name="name">Naam</string>
+    <string name="et_profile">Voer jou naam in</string>
+    <string name="tv_online">Wys aanlynstatus</string>
+    <string name="title_alert">Ons is tans besig om hierdie afdeling te ontwikkel.</string>
+    <string name="message_alert">Verskoon die ongerief.</string>
+    <string name="message_alert_logout">Is jy seker jy wil afmeld?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Onbekende gebruiker</string>
+
+    //Chat
+    <string name="notifications">Kennisgewings</string>
+    <string name="block">Blokkeer</string>
+    <string name="messages">Boodskappe</string>
+    <string name="mute_notifications">Stil kennisgewings</string>
+    <string name="alert_tune">Waarskuwingstoon</string>
+    <string name="send_messages">Stuur \'n boodskap</string>
+    <string name="recent_photos">Onlangse foto\'s</string>
+    <string name="new_chat">Nuwe klets</string>
+    <string name="start_new_chat">Begin \'n nuwe klets</string>
+    <string name="alert_swiped">Bevestig verwydering</string>
+    <string name="alert_swiped_message">Is jy seker jy wil hierdie klets verwyder?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Ons is jammer, ons ondervind verbindingsprobleme.</string>
+    <string name="errorResponseTryBefore">Probeer later weer.</string>
+    <string name="failTakePicture">Fout met neem van foto</string>
+    <string name="permisionDenied">Toestemming geweier</string>
+    <string name="permissionIsNeeded">Jy benodig galery toestemming</string>
+    <string name="goToSettings">Gaan na instellings</string>
+    <string name="cancel">Kanselleer</string>
+    <string name="isUserOnline">Aanlyn</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">\'n Onverwagte fout het voorgekom: %s</string>
+    <string name="error_response_101">Netwerk protokolle het verander</string>
+    <string name="error_response_401">Nie gemagtig nie</string>
+    <string name="error_response_403">Geen toegang tot die bron nie</string>
+    <string name="error_response_404">Fout in die versoek</string>
+    <string name="error_response_5xx">Bediener fout</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="aceptDialog">Aanvaar</string>
+    <string name="FailedPhoto">Mislukking om foto te neem</string>
+    <string name="messageGalleryPermision">Toestemming vir die galery is nodig om \'n foto te kies. Gee asseblief toestemming in die toepassingsinstellings.</string>
+    <string name="noDeleteChat">Kon nie die klets verwyder nie</string>
+    <string name="noDeleteChatExplication">Jy kan nie \'n klets verwyder wat jy nie geskep het nie</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Welkom by EasyChat</string>
+    <string name="welcome_to_easychat_description">Dit is \'n app waarmee jy met jou beste vriende kan kommunikeer, boodskappe aanlyn kan stuur, en kletse kan skep met gebruikers wat die app het.</string>
+    <string name="welcome_to_easychat_send_message">Stuur Boodskappe</string>
+    <string name="welcome_to_easychat_send_message_description">Kommunikeer met jou vriende in reële tyd.</string>
+    <string name="welcome_to_easychat_world_message">Kyk die huidige status van jou vriende</string>
+    <string name="welcome_to_easychat_world_message_description">Jy kan sien of jou vriende aanlyn is of nie.</string>
+    <string name="welcome_to_easychat_delete_message">Verwyder Kletse</string>
+    <string name="welcome_to_easychat_delete_message_description">Verwyder \'n klets, maar jy kan slegs \'n klets wat jy geskep het, verwyder.</string>
+    <string name="welcome_to_easychat_user_message">Gepersonaliseerde Profiel</string>
+    <string name="welcome_to_easychat_user_message_description">Kies \'n profielfoto plaaslik en personaliseer jou ervaring.</string>
+    <string name="welcome_to_easychat_last_message">Dit is tyd om te begin</string>
+    <string name="welcome_to_easychat_last_message_description">Dankie dat jy EasyChat kies! Druk die knoppie om die app te begin gebruik en met jou vriende te kommunikeer.</string>
+    <string name="welcome_to_easychat_start">Begin</string>
+
+</resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Usuário</string>
+    <string name="biometric">Entrar com biometria</string>
+    <string name="keep_session">Manter sessão ativa</string>
+    <string name="btn_login">Entrar</string>
+    <string name="tv_no_account">Não tem uma conta?</string>
+    <string name="tv_register">Cadastrar</string>
+    <string name="error_no_data_found">Dados vazios</string>
+    <string name="error_login">Digite o nome de usuário e a senha</string>
+    <string name="error">Erro</string>
+    <string name="login_success">Login bem-sucedido</string>
+    <string name="welcome">Bem-vindo,</string>
+    <string name="users_not_founds">O usuário não existe. Verifique suas credenciais.</string>
+
+    //Register
+    <string name="hint_password">Senha</string>
+    <string name="hint_repeat_password">Repetir Senha</string>
+    <string name="hint_nick">Apelido</string>
+    <string name="btn_register">Cadastrar</string>
+    <string name="tv_have_account">Já tem uma conta?</string>
+    <string name="tv_login">Entrar</string>
+    <string name="user_success">Usuário criado</string>
+    <string name="user_register">Cadastro realizado com sucesso</string>
+    <string name="user_register_error">Todos os campos são obrigatórios</string>
+    <string name="error_password_mismatch">As senhas não coincidem</string>
+    <string name="user_already_exists">O usuário já existe</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Recuperar senha</string>
+    <string name="hint_email">E-mail</string>
+    <string name="btn_recover">Enviar</string>
+
+    //Profile
+    <string name="profile_settings">Configurações do perfil</string>
+    <string name="privacity">Privacidade</string>
+    <string name="chat_setings">Configurações do chat</string>
+    <string name="storage">Armazenamento</string>
+    <string name="language_settings">Configurações de idioma</string>
+    <string name="delete_account">Excluir conta</string>
+    <string name="close_session">Sair</string>
+    <string name="edit_photo">Editar foto de perfil</string>
+    <string name="photo_profile">Foto de perfil</string>
+    <string name="take_photo">Tirar foto</string>
+    <string name="select_photo">Selecionar foto</string>
+    <string name="delete_photo">Excluir foto</string>
+    <string name="edit">Editar</string>
+    <string name="user_block">Bloqueados</string>
+    <string name="tv_profile">Digite seu nome e adicione uma foto de perfil (opcional)</string>
+    <string name="tv_logout">Deseja sair deste dispositivo?</string>
+    <string name="name">Nome</string>
+    <string name="et_profile">Digite seu nome</string>
+    <string name="tv_online">Mostrar status online</string>
+    <string name="title_alert">Neste exato momento estamos desenvolvendo esta seção.</string>
+    <string name="message_alert">Desculpe o incômodo.</string>
+    <string name="message_alert_logout">Tem certeza de que deseja sair?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Usuário desconhecido</string>
+
+    //Chat
+    <string name="notifications">Notificações</string>
+    <string name="block">Bloquear</string>
+    <string name="messages">Mensagens</string>
+    <string name="mute_notifications">Silenciar notificações</string>
+    <string name="alert_tune">Tom de alerta</string>
+    <string name="send_messages">Enviar uma mensagem</string>
+    <string name="recent_photos">Fotos Recentes</string>
+    <string name="new_chat">Novo chat</string>
+    <string name="start_new_chat">Iniciar um novo chat</string>
+    <string name="alert_swiped">Confirmar exclusão</string>
+    <string name="alert_swiped_message">Tem certeza de que deseja excluir este chat?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Desculpe, estamos enfrentando problemas de conexão.</string>
+    <string name="errorResponseTryBefore">Tente novamente mais tarde.</string>
+    <string name="failTakePicture">Erro ao tirar foto</string>
+    <string name="permisionDenied">Permissão negada</string>
+    <string name="permissionIsNeeded">Você precisa de permissões da galeria</string>
+    <string name="goToSettings">Ir para as configurações</string>
+    <string name="cancel">Cancelar</string>
+    <string name="isUserOnline">Online</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">Ocorreu um erro inesperado: %s</string>
+    <string name="error_response_101">Os protocolos de rede mudaram</string>
+    <string name="error_response_401">Não autorizado</string>
+    <string name="error_response_403">Acesso ao recurso negado</string>
+    <string name="error_response_404">Erro na solicitação</string>
+    <string name="error_response_5xx">Erro no servidor</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="aceptDialog">Aceitar</string>
+    <string name="FailedPhoto">Falha ao tirar foto</string>
+    <string name="messageGalleryPermision">A permissão da galeria é necessária para selecionar uma foto. Por favor, conceda a permissão nas configurações do aplicativo.</string>
+    <string name="noDeleteChat">Não foi possível excluir o chat</string>
+    <string name="noDeleteChatExplication">Você não pode excluir um chat que não criou</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Bem-vindo ao EasyChat</string>
+    <string name="welcome_to_easychat_description">É um aplicativo onde você pode se comunicar com seus melhores amigos, enviando mensagens online e criando chats com usuários que tenham o aplicativo.</string>
+    <string name="welcome_to_easychat_send_message">Enviar Mensagens</string>
+    <string name="welcome_to_easychat_send_message_description">Comunique-se com seus amigos em tempo real.</string>
+    <string name="welcome_to_easychat_world_message">Veja o status atual dos seus amigos</string>
+    <string name="welcome_to_easychat_world_message_description">Você pode ver se seus amigos estão conectados ou não.</string>
+    <string name="welcome_to_easychat_delete_message">Excluir Chats</string>
+    <string name="welcome_to_easychat_delete_message_description">Excluir um chat, mas você só poderá excluir um chat que criou.</string>
+    <string name="welcome_to_easychat_user_message">Perfil Personalizado</string>
+    <string name="welcome_to_easychat_user_message_description">Selecione uma foto de perfil local e personalize sua experiência.</string>
+    <string name="welcome_to_easychat_last_message">É hora de começar</string>
+    <string name="welcome_to_easychat_last_message_description">Obrigado por escolher o EasyChat! Pressione o botão para começar a usar o aplicativo e se comunicar com seus amigos.</string>
+    <string name="welcome_to_easychat_start">Começar</string>
+</resources>

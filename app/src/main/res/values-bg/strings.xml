@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Потребител</string>
+    <string name="biometric">Вход с биометрия</string>
+    <string name="keep_session">Запази сесията отворена</string>
+    <string name="btn_login">Вход</string>
+    <string name="tv_no_account">Нямате акаунт?</string>
+    <string name="tv_register">Регистрирайте се</string>
+    <string name="error_no_data_found">Празни данни</string>
+    <string name="error_login">Въведете име и парола</string>
+    <string name="error">Грешка</string>
+    <string name="login_success">Успешен вход</string>
+    <string name="welcome">Добре дошли,</string>
+    <string name="users_not_founds">Потребителят не съществува. Проверете вашите данни за вход.</string>
+
+    //Register
+    <string name="hint_password">Парола</string>
+    <string name="hint_repeat_password">Повторете паролата</string>
+    <string name="hint_nick">Прякор</string>
+    <string name="btn_register">Регистрация</string>
+    <string name="tv_have_account">Имате акаунт?</string>
+    <string name="tv_login">Вход</string>
+    <string name="user_success">Потребителят е създаден</string>
+    <string name="user_register">Успешна регистрация</string>
+    <string name="user_register_error">Всички полета са задължителни</string>
+    <string name="error_password_mismatch">Паролите не съвпадат</string>
+    <string name="user_already_exists">Потребителят вече съществува</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Възстановяване на парола</string>
+    <string name="hint_email">Имейл</string>
+    <string name="btn_recover">Изпрати</string>
+
+    //Profile
+    <string name="profile_settings">Настройки на профила</string>
+    <string name="privacity">Поверителност</string>
+    <string name="chat_setings">Настройки на чата</string>
+    <string name="storage">Съхранение</string>
+    <string name="language_settings">Езикови настройки</string>
+    <string name="delete_account">Изтрий акаунт</string>
+    <string name="close_session">Изход</string>
+    <string name="edit_photo">Редактиране на профилната снимка</string>
+    <string name="photo_profile">Профилна снимка</string>
+    <string name="take_photo">Направи снимка</string>
+    <string name="select_photo">Избери снимка</string>
+    <string name="delete_photo">Изтрий снимката</string>
+    <string name="edit">Редактирай</string>
+    <string name="user_block">Блокирани потребители</string>
+    <string name="tv_profile">Въведете името си и добавете профилна снимка (по избор)</string>
+    <string name="tv_logout">Искате ли да излезете от това устройство?</string>
+    <string name="name">Име</string>
+    <string name="et_profile">Въведете името си</string>
+    <string name="tv_online">Показвай онлайн статус</string>
+    <string name="title_alert">В момента разработваме този раздел.</string>
+    <string name="message_alert">Извиняваме се за неудобството.</string>
+    <string name="message_alert_logout">Сигурни ли сте, че искате да излезете?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Непознат потребител</string>
+
+    //Chat
+    <string name="notifications">Известия</string>
+    <string name="block">Блокирай</string>
+    <string name="messages">Съобщения</string>
+    <string name="mute_notifications">Заглуши известията</string>
+    <string name="alert_tune">Звук за известия</string>
+    <string name="send_messages">Изпрати съобщение</string>
+    <string name="recent_photos">Скорошни снимки</string>
+    <string name="new_chat">Нов чат</string>
+    <string name="start_new_chat">Започни нов чат</string>
+    <string name="alert_swiped">Потвърждение за изтриване</string>
+    <string name="alert_swiped_message">Сигурни ли сте, че искате да изтриете този чат?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Съжаляваме, имаме проблеми с връзката.</string>
+    <string name="errorResponseTryBefore">Опитайте отново по-късно.</string>
+    <string name="failTakePicture">Грешка при правене на снимка</string>
+    <string name="permisionDenied">Достъпът е отказан</string>
+    <string name="permissionIsNeeded">Необходим е достъп до галерията</string>
+    <string name="goToSettings">Отиди в настройките</string>
+    <string name="cancel">Отказ</string>
+    <string name="isUserOnline">На линия</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">Възникна неочаквана грешка: %s</string>
+    <string name="error_response_101">Мрежовите протоколи са променени</string>
+    <string name="error_response_401">Неоторизиран</string>
+    <string name="error_response_403">Няма достъп до ресурса</string>
+    <string name="error_response_404">Грешка в заявката</string>
+    <string name="error_response_5xx">Грешка в сървъра</string>
+    <string name="yes">Да</string>
+    <string name="no">Не</string>
+    <string name="aceptDialog">Приемам</string>
+    <string name="FailedPhoto">Неуспех при правене на снимка</string>
+    <string name="messageGalleryPermision">Необходим е достъп до галерията, за да изберете снимка. Моля, предоставете разрешение в настройките на приложението.</string>
+    <string name="noDeleteChat">Неуспешно изтриване на чата</string>
+    <string name="noDeleteChatExplication">Не можете да изтриете чат, който не сте създали</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Добре дошли в EasyChat</string>
+    <string name="welcome_to_easychat_description">Това е приложение, чрез което можете да комуникирате с вашите най-добри приятели, да изпращате съобщения онлайн и да създавате чатове с потребители, които имат приложението.</string>
+    <string name="welcome_to_easychat_send_message">Изпращайте съобщения</string>
+    <string name="welcome_to_easychat_send_message_description">Комуникирайте с приятелите си в реално време.</string>
+    <string name="welcome_to_easychat_world_message">Вижте текущото състояние на вашите приятели</string>
+    <string name="welcome_to_easychat_world_message_description">Можете да видите дали вашите приятели са онлайн или не.</string>
+    <string name="welcome_to_easychat_delete_message">Изтрийте чатове</string>
+    <string name="welcome_to_easychat_delete_message_description">Изтрийте чат, но можете да изтриете само чат, който сте създали вие.</string>
+    <string name="welcome_to_easychat_user_message">Персонализиран профил</string>
+    <string name="welcome_to_easychat_user_message_description">Изберете локална профилна снимка и персонализирайте вашето изживяване.</string>
+    <string name="welcome_to_easychat_last_message">Време е да започнем</string>
+    <string name="welcome_to_easychat_last_message_description">Благодарим ви, че избрахте EasyChat! Натиснете бутона, за да започнете да използвате приложението и да комуникирате с вашите приятели.</string>
+    <string name="welcome_to_easychat_start">Започнете</string>
+</resources>

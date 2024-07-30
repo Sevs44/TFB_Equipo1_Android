@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Người dùng</string>
+    <string name="biometric">Đăng nhập bằng sinh trắc học</string>
+    <string name="keep_session">Giữ phiên đăng nhập</string>
+    <string name="btn_login">Đăng Nhập</string>
+    <string name="tv_no_account">Bạn chưa có tài khoản?</string>
+    <string name="tv_register">Đăng ký</string>
+    <string name="error_no_data_found">Dữ liệu trống</string>
+    <string name="error_login">Nhập tên người dùng và mật khẩu</string>
+    <string name="error">Lỗi</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="welcome">Chào mừng,</string>
+    <string name="users_not_founds">Người dùng không tồn tại. Vui lòng kiểm tra thông tin đăng nhập của bạn.</string>
+
+    //Register
+    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_repeat_password">Nhập lại mật khẩu</string>
+    <string name="hint_nick">Tên người dùng</string>
+    <string name="btn_register">Đăng ký</string>
+    <string name="tv_have_account">Bạn đã có tài khoản?</string>
+    <string name="tv_login">Đăng nhập</string>
+    <string name="user_success">Người dùng đã được tạo</string>
+    <string name="user_register">Đăng ký thành công</string>
+    <string name="user_register_error">Tất cả các trường là bắt buộc</string>
+    <string name="error_password_mismatch">Mật khẩu không khớp</string>
+    <string name="user_already_exists">Người dùng đã tồn tại</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Khôi phục mật khẩu</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_recover">Gửi</string>
+
+    //Profile
+    <string name="profile_settings">Cài đặt hồ sơ</string>
+    <string name="privacity">Quyền riêng tư</string>
+    <string name="chat_setings">Cài đặt trò chuyện</string>
+    <string name="storage">Lưu trữ</string>
+    <string name="language_settings">Cài đặt ngôn ngữ</string>
+    <string name="delete_account">Xóa tài khoản</string>
+    <string name="close_session">Đăng xuất</string>
+    <string name="edit_photo">Chỉnh sửa ảnh hồ sơ</string>
+    <string name="photo_profile">Ảnh hồ sơ</string>
+    <string name="take_photo">Chụp ảnh</string>
+    <string name="select_photo">Chọn ảnh</string>
+    <string name="delete_photo">Xóa ảnh</string>
+    <string name="edit">Chỉnh sửa</string>
+    <string name="user_block">Người bị chặn</string>
+    <string name="tv_profile">Nhập tên của bạn và thêm một bức ảnh hồ sơ (tuỳ chọn)</string>
+    <string name="tv_logout">Bạn có muốn đăng xuất khỏi thiết bị này không?</string>
+    <string name="name">Tên</string>
+    <string name="et_profile">Nhập tên của bạn</string>
+    <string name="tv_online">Hiển thị trạng thái trực tuyến</string>
+    <string name="title_alert">Hiện tại chúng tôi đang phát triển phần này.</string>
+    <string name="message_alert">Xin lỗi vì sự bất tiện.</string>
+    <string name="message_alert_logout">Bạn có chắc chắn muốn đăng xuất không?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Người dùng không xác định</string>
+
+    //Chat
+    <string name="notifications">Thông báo</string>
+    <string name="block">Chặn</string>
+    <string name="messages">Tin nhắn</string>
+    <string name="mute_notifications">Tắt thông báo</string>
+    <string name="alert_tune">Âm thanh cảnh báo</string>
+    <string name="send_messages">Gửi tin nhắn</string>
+    <string name="recent_photos">Ảnh gần đây</string>
+    <string name="new_chat">Trò chuyện mới</string>
+    <string name="start_new_chat">Bắt đầu trò chuyện mới</string>
+    <string name="alert_swiped">Xác nhận xóa</string>
+    <string name="alert_swiped_message">Bạn có chắc chắn muốn xóa trò chuyện này không?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Xin lỗi, chúng tôi đang gặp vấn đề kết nối.</string>
+    <string name="errorResponseTryBefore">Vui lòng thử lại sau.</string>
+    <string name="failTakePicture">Lỗi khi chụp ảnh</string>
+    <string name="permisionDenied">Quyền bị từ chối</string>
+    <string name="permissionIsNeeded">Cần quyền truy cập thư viện ảnh</string>
+    <string name="goToSettings">Đi đến cài đặt</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="isUserOnline">Đang trực tuyến</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">Đã xảy ra lỗi không mong muốn: %s</string>
+    <string name="error_response_101">Giao thức mạng đã thay đổi</string>
+    <string name="error_response_401">Không được phép</string>
+    <string name="error_response_403">Không có quyền truy cập tài nguyên</string>
+    <string name="error_response_404">Lỗi yêu cầu</string>
+    <string name="error_response_5xx">Lỗi máy chủ</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+    <string name="aceptDialog">Chấp nhận</string>
+    <string name="FailedPhoto">Chụp ảnh thất bại</string>
+    <string name="messageGalleryPermision">Quyền truy cập thư viện ảnh là cần thiết để chọn một bức ảnh. Vui lòng cấp quyền trong cài đặt ứng dụng.</string>
+    <string name="noDeleteChat">Không thể xóa trò chuyện</string>
+    <string name="noDeleteChatExplication">Bạn không thể xóa một trò chuyện mà bạn không tạo ra</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Chào mừng đến với EasyChat</string>
+    <string name="welcome_to_easychat_description">Đây là một ứng dụng nơi bạn có thể giao tiếp với bạn bè tốt nhất của mình bằng cách gửi tin nhắn trực tuyến và tạo các trò chuyện với người dùng khác có ứng dụng này.</string>
+    <string name="welcome_to_easychat_send_message">Gửi Tin Nhắn</string>
+    <string name="welcome_to_easychat_send_message_description">Giao tiếp với bạn bè của bạn theo thời gian thực.</string>
+    <string name="welcome_to_easychat_world_message">Xem trạng thái hiện tại của bạn bè của bạn</string>
+    <string name="welcome_to_easychat_world_message_description">Bạn có thể xem nếu bạn bè của bạn đang trực tuyến hay không.</string>
+    <string name="welcome_to_easychat_delete_message">Xóa Trò Chuyện</string>
+    <string name="welcome_to_easychat_delete_message_description">Xóa một trò chuyện, nhưng bạn chỉ có thể xóa trò chuyện mà bạn đã tạo.</string>
+    <string name="welcome_to_easychat_user_message">Tùy chỉnh hồ sơ</string>
+    <string name="welcome_to_easychat_user_message_description">Chọn một ảnh hồ sơ cục bộ và tùy chỉnh trải nghiệm của bạn.</string>
+    <string name="welcome_to_easychat_last_message">Đã đến lúc bắt đầu</string>
+    <string name="welcome_to_easychat_last_message_description">Cảm ơn bạn đã chọn EasyChat! Nhấn nút để bắt đầu sử dụng ứng dụng và giao tiếp với bạn bè của bạn.</string>
+    <string name="welcome_to_easychat_start">Bắt đầu</string>
+</resources>
