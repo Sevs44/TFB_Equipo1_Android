@@ -1,7 +1,8 @@
 package com.saulhervas.easychat.ui.chat
 
 import android.annotation.SuppressLint
-import android.net.Uri
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saulhervas.easychat.R
 import com.saulhervas.easychat.data.repository.response.new_message.NewMessageRequest
 import com.saulhervas.easychat.databinding.FragmentChatLogBinding
-import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.UserSession
 import com.saulhervas.easychat.ui.chat.list.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,10 +41,10 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     lateinit var userSession: UserSession
     private lateinit var nickUser: String
     private lateinit var idChat: String
+    private var colorMap: String = ""
     private var isOnlineUser: Boolean = true
     private var offset: Int = 0
     private var nMessages: Int = 0
-    private var imageUri: Uri? = null
 
     private val messagesAdapter: MessagesAdapter by lazy {
         MessagesAdapter(userSession.id)
@@ -60,7 +60,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatLogBinding.inflate(inflater, container, false)
-        loadImageUri()
         inflateBinding()
         return binding.root
     }
@@ -117,13 +116,27 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun inflateBinding() {
         binding.tvNameUser.text = nickUser
+        binding.tvInitial.text = nickUser.firstOrNull()?.uppercase().toString()
+
+        val colorInt = if (colorMap.isNotEmpty()) {
+            try {
+                colorMap.toInt()
+            } catch (e: NumberFormatException) {
+                Log.e("ChatLogFragment", "Error parsing color: $colorMap", e)
+                Color.TRANSPARENT
+            }
+        } else {
+            Color.TRANSPARENT
+        }
+
+        binding.tvInitial.background = createCircleDrawable(colorInt)
         setIsOnlineUser()
     }
 
-    private fun loadImageUri() {
-        SecurePreferences.getProfileImage(requireContext())?.let {
-            binding.ivProfile.setImageURI(it)
-            imageUri = it
+    private fun createCircleDrawable(color: Int): GradientDrawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(color)
         }
     }
 
@@ -142,7 +155,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 )
                 viewModel.sendMessage(newMessage)
             }
-            ivProfile.setOnClickListener {
+            tvInitial.setOnClickListener {
                 val action = ChatLogFragmentDirections.actionChatLogToChatDetailFragment()
                 findNavController().navigate(action)
             }
@@ -221,6 +234,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         idChat = args.idChat
         nickUser = args.nickTarget
         isOnlineUser = args.isUserOnline
+        colorMap = args.colorUser ?: ""
     }
 
     private fun showProgressBar() {

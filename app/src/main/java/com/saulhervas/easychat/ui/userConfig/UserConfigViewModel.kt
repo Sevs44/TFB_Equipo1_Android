@@ -16,7 +16,6 @@ class UserConfigViewModel @Inject constructor(
     private val profileUseCase: UserUseCases
 ) : ViewModel() {
 
-    val colorMap = mutableMapOf<String, Int>()
 
     private val _userConfig = MutableStateFlow<UserProfileResponse?>(null)
     val userConfig: StateFlow<UserProfileResponse?> = _userConfig
