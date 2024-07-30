@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">مستخدم</string>
+    <string name="biometric">تسجيل الدخول بالبصمة</string>
+    <string name="keep_session">الحفاظ على الجلسة مفتوحة</string>
+    <string name="btn_login">تسجيل الدخول</string>
+    <string name="tv_no_account">لا تملك حسابًا؟</string>
+    <string name="tv_register">سجل</string>
+    <string name="error_no_data_found">بيانات فارغة</string>
+    <string name="error_login">أدخل الاسم وكلمة المرور</string>
+    <string name="error">خطأ</string>
+    <string name="login_success">تسجيل الدخول ناجح</string>
+    <string name="welcome">مرحبًا،</string>
+    <string name="users_not_founds">المستخدم غير موجود. تحقق من بيانات الاعتماد الخاصة بك.</string>
+
+    //Register
+    <string name="hint_password">كلمة المرور</string>
+    <string name="hint_repeat_password">أعد كتابة كلمة المرور</string>
+    <string name="hint_nick">اللقب</string>
+    <string name="btn_register">سجل</string>
+    <string name="tv_have_account">هل لديك حساب؟</string>
+    <string name="tv_login">تسجيل الدخول</string>
+    <string name="user_success">تم إنشاء المستخدم</string>
+    <string name="user_register">تسجيل ناجح</string>
+    <string name="user_register_error">جميع الحقول مطلوبة</string>
+    <string name="error_password_mismatch">كلمات المرور غير متطابقة</string>
+    <string name="user_already_exists">المستخدم موجود بالفعل</string>
+
+    //Recover Password
+    <string name="tv_recover_password">استعادة كلمة المرور</string>
+    <string name="hint_email">البريد الإلكتروني</string>
+    <string name="btn_recover">إرسال</string>
+
+    //Profile
+    <string name="profile_settings">إعدادات الملف الشخصي</string>
+    <string name="privacity">الخصوصية</string>
+    <string name="chat_setings">إعدادات الدردشة</string>
+    <string name="storage">التخزين</string>
+    <string name="language_settings">إعدادات اللغة</string>
+    <string name="delete_account">حذف الحساب</string>
+    <string name="close_session">تسجيل الخروج</string>
+    <string name="edit_photo">تحرير صورة الملف الشخصي</string>
+    <string name="photo_profile">صورة الملف الشخصي</string>
+    <string name="take_photo">التقاط صورة</string>
+    <string name="select_photo">اختر صورة</string>
+    <string name="delete_photo">حذف الصورة</string>
+    <string name="edit">تحرير</string>
+    <string name="user_block">المستخدمون المحظورون</string>
+    <string name="tv_profile">أدخل اسمك وأضف صورة للملف الشخصي (اختياري)</string>
+    <string name="tv_logout">هل تريد تسجيل الخروج من هذا الجهاز؟</string>
+    <string name="name">الاسم</string>
+    <string name="et_profile">أدخل اسمك</string>
+    <string name="tv_online">عرض الحالة على الإنترنت</string>
+    <string name="title_alert">نحن الآن في مرحلة تطوير هذا القسم.</string>
+    <string name="message_alert">نعتذر عن الإزعاج.</string>
+    <string name="message_alert_logout">هل أنت متأكد من أنك تريد تسجيل الخروج؟</string>
+
+    //Home and New Chat
+    <string name="unknown_user">مستخدم غير معروف</string>
+
+    //Chat
+    <string name="notifications">الإشعارات</string>
+    <string name="block">حظر</string>
+    <string name="messages">الرسائل</string>
+    <string name="mute_notifications">كتم الإشعارات</string>
+    <string name="alert_tune">نغمة التنبيه</string>
+    <string name="send_messages">إرسال رسالة</string>
+    <string name="recent_photos">الصور الحديثة</string>
+    <string name="new_chat">دردشة جديدة</string>
+    <string name="start_new_chat">ابدأ دردشة جديدة</string>
+    <string name="alert_swiped">تأكيد الحذف</string>
+    <string name="alert_swiped_message">هل أنت متأكد من أنك تريد حذف هذه الدردشة؟</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">نعتذر، نحن نواجه مشكلات في الاتصال.</string>
+    <string name="errorResponseTryBefore">حاول مرة أخرى لاحقًا.</string>
+    <string name="failTakePicture">خطأ في التقاط الصورة</string>
+    <string name="permisionDenied">الإذن مرفوض</string>
+    <string name="permissionIsNeeded">تحتاج إلى أذونات المعرض</string>
+    <string name="goToSettings">اذهب إلى الإعدادات</string>
+    <string name="cancel">إلغاء</string>
+    <string name="isUserOnline">متصل</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">حدث خطأ غير متوقع: %s</string>
+    <string name="error_response_101">تغيّرت بروتوكولات الشبكة</string>
+    <string name="error_response_401">غير مصرح</string>
+    <string name="error_response_403">لا يوجد وصول إلى المورد</string>
+    <string name="error_response_404">خطأ في الطلب</string>
+    <string name="error_response_5xx">خطأ في الخادم</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="aceptDialog">قبول</string>
+    <string name="FailedPhoto">فشل في التقاط الصورة</string>
+    <string name="messageGalleryPermision">الإذن للوصول إلى المعرض ضروري لاختيار صورة. يرجى منح الإذن في إعدادات التطبيق.</string>
+    <string name="noDeleteChat">تعذر حذف الدردشة</string>
+    <string name="noDeleteChatExplication">لا يمكنك حذف دردشة لم تقم بإنشائها</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">مرحبًا بكم في EasyChat</string>
+    <string name="welcome_to_easychat_description">إنه تطبيق يمكنك من خلاله التواصل مع أصدقائك المفضلين، وإرسال الرسائل عبر الإنترنت، وإنشاء دردشات مع المستخدمين الذين لديهم التطبيق.</string>
+    <string name="welcome_to_easychat_send_message">أرسل رسائل</string>
+    <string name="welcome_to_easychat_send_message_description">تواصل مع أصدقائك في الوقت الفعلي.</string>
+    <string name="welcome_to_easychat_world_message">شاهد الحالة الحالية لأصدقائك</string>
+    <string name="welcome_to_easychat_world_message_description">يمكنك معرفة ما إذا كان أصدقاؤك متصلين أم لا.</string>
+    <string name="welcome_to_easychat_delete_message">حذف الدردشات</string>
+    <string name="welcome_to_easychat_delete_message_description">احذف دردشة، ولكن يمكنك فقط حذف دردشة قمت بإنشائها.</string>
+    <string name="welcome_to_easychat_user_message">ملف شخصي مخصص</string>
+    <string name="welcome_to_easychat_user_message_description">اختر صورة ملف شخصي محلية وقم بتخصيص تجربتك.</string>
+    <string name="welcome_to_easychat_last_message">حان الوقت للبدء</string>
+    <string name="welcome_to_easychat_last_message_description">شكرًا لاختيارك EasyChat! اضغط على الزر لبدء استخدام التطبيق والتواصل مع أصدقائك.</string>
+    <string name="welcome_to_easychat_start">ابدأ</string>
+</resources>

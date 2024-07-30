@@ -35,6 +35,7 @@ class ProfileSettingViewModel @Inject constructor(
 
     private val _onlineStatus = MutableSharedFlow<Boolean>(replay = 1)
     val onlineStatus: SharedFlow<Boolean> = _onlineStatus
+
     init {
         viewModelScope.launch {
             _keepSession.emit(SecurePreferences.getKeepSession(context))
@@ -42,11 +43,41 @@ class ProfileSettingViewModel @Inject constructor(
         }
     }
 
+    private fun setOnlineStatus() {
+        viewModelScope.launch {
+            Log.d("ONLINE", "${!SecurePreferences.getOnlineStatus(context)}")
+            if (!SecurePreferences.getOnlineStatus(context))
+                profileUseCase.onlineFalse().collect { response ->
+                    when (response) {
+                        is BaseResponse.Success -> {
+                            Log.d("ONLINE", "False: ${response.data}")
+                        }
+
+                        is BaseResponse.Error -> {
+                            Log.e("ONLINE", "False call error")
+                        }
+                    }
+                }
+            else
+                profileUseCase.onlineTrue().collect { response ->
+                    when (response) {
+                        is BaseResponse.Success -> {
+                            Log.d("ONLINE", "True: ${response.data}")
+                        }
+
+                        is BaseResponse.Error -> {
+                            Log.e("ONLINE", "True call error")
+                        }
+                    }
+
+                }
+        }
+    }
+
     fun getUserProfile() {
         viewModelScope.launch {
             profileUseCase.userProfile().collect {
                 _userProfile.value
-                Log.d("Profile", it.toString())
                 when (it) {
                     is BaseResponse.Success -> {
                         _userProfile.value = it.data
@@ -67,7 +98,12 @@ class ProfileSettingViewModel @Inject constructor(
         }
     }
 
-    fun saveShowOnlineStatusPreference(value: Boolean) {
+    fun setOnlineChanges(value: Boolean) {
+        saveShowOnlineStatusPreference(value)
+        setOnlineStatus()
+    }
+
+    private fun saveShowOnlineStatusPreference(value: Boolean) {
         viewModelScope.launch {
             SecurePreferences.saveOnlineStatus(context, value)
             _onlineStatus.emit(value)

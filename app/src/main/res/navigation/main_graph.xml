@@ -179,6 +179,10 @@
             android:name="colorUser"
             android:defaultValue=""
             app:argType="string" />
+        <argument
+            android:name="messageSentAt"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_chatLog_to_chatDetailFragment"
             app:destination="@id/chatDetailFragment"
@@ -309,6 +313,8 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/userLogin"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

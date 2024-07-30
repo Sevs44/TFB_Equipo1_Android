@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Përdorues</string>
+    <string name="biometric">Hyr me Biometri</string>
+    <string name="keep_session">Mbaj seancën të hapur</string>
+    <string name="btn_login">Hyr</string>
+    <string name="tv_no_account">Nuk ke një llogari?</string>
+    <string name="tv_register">Regjistrohu</string>
+    <string name="error_no_data_found">Të dhëna bosh</string>
+    <string name="error_login">Fut emrin dhe fjalëkalimin</string>
+    <string name="error">Gabim</string>
+    <string name="login_success">Hyrje e suksesshme</string>
+    <string name="welcome">Mirësevini,</string>
+    <string name="users_not_founds">Përdoruesi nuk ekziston. Verifikoni kredencialet tuaja.</string>
+
+    //Register
+    <string name="hint_password">Fjalëkalim</string>
+    <string name="hint_repeat_password">Përsërit fjalëkalimin</string>
+    <string name="hint_nick">Pseudonim</string>
+    <string name="btn_register">Regjistrohu</string>
+    <string name="tv_have_account">Ke një llogari?</string>
+    <string name="tv_login">Hyr</string>
+    <string name="user_success">Përdoruesi u krijua</string>
+    <string name="user_register">Regjistrim i suksesshëm</string>
+    <string name="user_register_error">Të gjitha fushat janë të detyrueshme</string>
+    <string name="error_password_mismatch">Fjalëkalimet nuk përputhen</string>
+    <string name="user_already_exists">Përdoruesi tashmë ekziston</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Rikupero fjalëkalimin</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_recover">Dërgo</string>
+
+    //Profile
+    <string name="profile_settings">Cilësimet e profilit</string>
+    <string name="privacity">Privatësia</string>
+    <string name="chat_setings">Cilësimet e bisedës</string>
+    <string name="storage">Magazinimi</string>
+    <string name="language_settings">Cilësimet e gjuhës</string>
+    <string name="delete_account">Fshi llogarinë</string>
+    <string name="close_session">Mbyll seancën</string>
+    <string name="edit_photo">Redakto foton e profilit</string>
+    <string name="photo_profile">Foto e profilit</string>
+    <string name="take_photo">Bëj foto</string>
+    <string name="select_photo">Zgjidh foto</string>
+    <string name="delete_photo">Fshi foton</string>
+    <string name="edit">Redakto</string>
+    <string name="user_block">Të bllokuar</string>
+    <string name="tv_profile">Fut emrin dhe shto një foto profili (opsionale)</string>
+    <string name="tv_logout">Dëshironi të dilni nga ky pajisje?</string>
+    <string name="name">Emri</string>
+    <string name="et_profile">Fut emrin</string>
+    <string name="tv_online">Trego statusin online</string>
+    <string name="title_alert">Në këtë moment jemi në fazën e zhvillimit të këtij seksioni.</string>
+    <string name="message_alert">Na vjen keq për shqetësimin.</string>
+    <string name="message_alert_logout">A jeni të sigurt që dëshironi të dilni?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Përdorues i panjohur</string>
+
+    //Chat
+    <string name="notifications">Njoftime</string>
+    <string name="block">Blloko</string>
+    <string name="messages">Mesazhe</string>
+    <string name="mute_notifications">Fik njoftimet</string>
+    <string name="alert_tune">Tingulli i alarmit</string>
+    <string name="send_messages">Dërgo një mesazh</string>
+    <string name="recent_photos">Foto të fundit</string>
+    <string name="new_chat">Bisedë e re</string>
+    <string name="start_new_chat">Fillo një bisedë të re</string>
+    <string name="alert_swiped">Konfirmo fshirjen</string>
+    <string name="alert_swiped_message">A jeni të sigurt që dëshironi të fshini këtë bisedë?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Na vjen keq, po hasim probleme lidhjeje.</string>
+    <string name="errorResponseTryBefore">Provoni më vonë.</string>
+    <string name="failTakePicture">Gabim në marrjen e fotos</string>
+    <string name="permisionDenied">Leja e mohuar</string>
+    <string name="permissionIsNeeded">Ju nevojiten lejet e galerisë</string>
+    <string name="goToSettings">Shko te cilësimet</string>
+    <string name="cancel">Anulo</string>
+    <string name="isUserOnline">Në linjë</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">Ndodhi një gabim i papritur: %s</string>
+    <string name="error_response_101">Protokollet e rrjetit kanë ndryshuar</string>
+    <string name="error_response_401">Jo i autorizuar</string>
+    <string name="error_response_403">Pa akses në burim</string>
+    <string name="error_response_404">Gabim në kërkesë</string>
+    <string name="error_response_5xx">Gabim në server</string>
+    <string name="yes">Po</string>
+    <string name="no">Jo</string>
+    <string name="aceptDialog">Prano</string>
+    <string name="FailedPhoto">Dështoi marrja e fotos</string>
+    <string name="messageGalleryPermision">Leja për galerinë është e nevojshme për të zgjedhur një foto. Ju lutem jepni lejen në cilësimet e aplikacionit.</string>
+    <string name="noDeleteChat">Nuk u arrit të fshihet biseda</string>
+    <string name="noDeleteChatExplication">Nuk mund të fshini një bisedë që nuk e keni krijuar ju</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Mirësevini në EasyChat</string>
+    <string name="welcome_to_easychat_description">Është një aplikacion ku mund të komunikoni me miqtë tuaj më të mirë, duke dërguar mesazhe në linjë, duke krijuar biseda me përdoruesit që kanë aplikacionin.</string>
+    <string name="welcome_to_easychat_send_message">Dërgo Mesazhe</string>
+    <string name="welcome_to_easychat_send_message_description">Komunikoni me miqtë tuaj në kohë reale.</string>
+    <string name="welcome_to_easychat_world_message">Shiko statusin aktual të miqve tuaj</string>
+    <string name="welcome_to_easychat_world_message_description">Mund të shihni nëse miqtë tuaj janë të lidhur ose jo.</string>
+    <string name="welcome_to_easychat_delete_message">Fshi Bisedat</string>
+    <string name="welcome_to_easychat_delete_message_description">Fshi një bisedë, por mund të fshini vetëm një bisedë që e keni krijuar ju.</string>
+    <string name="welcome_to_easychat_user_message">Profil i Personalizuar</string>
+    <string name="welcome_to_easychat_user_message_description">Zgjidhni një foto profili lokal dhe personalizoni përvojën tuaj.</string>
+    <string name="welcome_to_easychat_last_message">Është koha për të filluar</string>
+    <string name="welcome_to_easychat_last_message_description">Faleminderit që zgjodhët EasyChat! Shtypni butonin për të filluar përdorimin e aplikacionit dhe për të komunikuar me miqtë tuaj.</string>
+    <string name="welcome_to_easychat_start">Fillo</string>
+
+</resources>

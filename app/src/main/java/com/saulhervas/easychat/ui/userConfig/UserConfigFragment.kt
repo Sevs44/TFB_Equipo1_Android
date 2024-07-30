@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +50,6 @@ class UserConfigFragment : Fragment() {
 
     private fun setOnClickListener() {
         binding.btnProfile.setOnClickListener {
-            Log.d("ProfileSettingsFragment", "boton perfil")
             val action = UserConfigFragmentDirections.actionUserConfigToProfileSettingsFragment()
             findNavController().navigate(action)
         }

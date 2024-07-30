@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Usuari</string>
+    <string name="biometric">Iniciar sessió amb Biometria</string>
+    <string name="keep_session">Mantenir la sessió iniciada</string>
+    <string name="btn_login">Iniciar Sessió</string>
+    <string name="tv_no_account">No tens compte?</string>
+    <string name="tv_register">Registra\'t</string>
+    <string name="error_no_data_found">Dades buides</string>
+    <string name="error_login">Introdueix nom i contrasenya</string>
+    <string name="error">Error</string>
+    <string name="login_success">Login exitós</string>
+    <string name="welcome">Benvingut,</string>
+    <string name="users_not_founds">L\'usuari no existeix. Verifica les teves credencials.</string>
+
+    //Register
+    <string name="hint_password">Contrasenya</string>
+    <string name="hint_repeat_password">Repetir Contrasenya</string>
+    <string name="hint_nick">Àlies</string>
+    <string name="btn_register">Registrar-se</string>
+    <string name="tv_have_account">Ja tens compte?</string>
+    <string name="tv_login">Iniciar sessió</string>
+    <string name="user_success">Usuari creat</string>
+    <string name="user_register">Registre exitós</string>
+    <string name="user_register_error">Tots els camps són obligatoris</string>
+    <string name="error_password_mismatch">Les contrasenyes no coincideixen</string>
+    <string name="user_already_exists">L\'usuari ja existeix</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Recuperar contrasenya</string>
+    <string name="hint_email">Correu electrònic</string>
+    <string name="btn_recover">Enviar</string>
+
+    //Profile
+    <string name="profile_settings">Configuració del perfil</string>
+    <string name="privacity">Privacitat</string>
+    <string name="chat_setings">Configuració del xat</string>
+    <string name="storage">Emmagatzematge</string>
+    <string name="language_settings">Configuració de l\'idioma</string>
+    <string name="delete_account">Esborrar compte</string>
+    <string name="close_session">Tancar Sessió</string>
+    <string name="edit_photo">Edita la foto de perfil</string>
+    <string name="photo_profile">Foto de perfil</string>
+    <string name="take_photo">Fer foto</string>
+    <string name="select_photo">Seleccionar foto</string>
+    <string name="delete_photo">Eliminar foto</string>
+    <string name="edit">Editar</string>
+    <string name="user_block">Blocats</string>
+    <string name="tv_profile">Introdueix el teu nom i afegeix una foto de perfil (opcional)</string>
+    <string name="tv_logout">Vols tancar sessió en aquest dispositiu?</string>
+    <string name="name">Nom</string>
+    <string name="et_profile">Introdueix el teu nom</string>
+    <string name="tv_online">Mostrar estat en línia</string>
+    <string name="title_alert">En aquest moment estem desenvolupant aquesta secció.</string>
+    <string name="message_alert">Disculpeu les molèsties.</string>
+    <string name="message_alert_logout">Estàs segur que vols tancar sessió?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Usuari desconegut</string>
+
+    //Chat
+    <string name="notifications">Notificacions</string>
+    <string name="block">Blocar</string>
+    <string name="messages">Missatges</string>
+    <string name="mute_notifications">Silenciar notificacions</string>
+    <string name="alert_tune">Tò de notificació</string>
+    <string name="send_messages">Enviar un missatge</string>
+    <string name="recent_photos">Fotos recents</string>
+    <string name="new_chat">Nou xat</string>
+    <string name="start_new_chat">Comença un nou xat</string>
+    <string name="alert_swiped">Confirmar eliminació</string>
+    <string name="alert_swiped_message">Estàs segur que vols eliminar aquest xat?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Ho sentim, estem tenint problemes de connexió.</string>
+    <string name="errorResponseTryBefore">Torna-ho a intentar més tard.</string>
+    <string name="failTakePicture">Error en fer una foto</string>
+    <string name="permisionDenied">Permís denegat</string>
+    <string name="permissionIsNeeded">Necessites permisos de galeria</string>
+    <string name="goToSettings">Anar a la configuració</string>
+    <string name="cancel">Cancel·lar</string>
+    <string name="isUserOnline">En línia</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">Ha ocorregut un error inesperat: %s</string>
+    <string name="error_response_101">Els protocols de xarxa han canviat</string>
+    <string name="error_response_401">No autoritzat</string>
+    <string name="error_response_403">No hi ha accés al recurs</string>
+    <string name="error_response_404">Error en la sol·licitud</string>
+    <string name="error_response_5xx">Error en el servidor</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="aceptDialog">Acceptar</string>
+    <string name="FailedPhoto">Error en fer la foto</string>
+    <string name="messageGalleryPermision">El permís a la galeria és necessari per seleccionar una foto. Si us plau concedeix el permís en la configuració de l\'aplicació.</string>
+    <string name="noDeleteChat">No s\'ha pogut eliminar el xat</string>
+    <string name="noDeleteChatExplication">No pots esborrar un xat que no hagis creat</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Benvinguts a EasyChat</string>
+    <string name="welcome_to_easychat_description">És una app en la qual pots comunicar-te amb els teus millors amics, enviant missatges en línia, creant xats amb usuaris que tinguin l\'app.</string>
+    <string name="welcome_to_easychat_send_message">Envia Missatges</string>
+    <string name="welcome_to_easychat_send_message_description">Comunica\'t amb els teus amics en temps real.</string>
+    <string name="welcome_to_easychat_world_message">Mira l\'estat actual dels teus amics</string>
+    <string name="welcome_to_easychat_world_message_description">Pots veure si els teus amics estan connectats o no.</string>
+    <string name="welcome_to_easychat_delete_message">Elimina Xats</string>
+    <string name="welcome_to_easychat_delete_message_description">Elimina un xat, però només podràs eliminar un xat que hagis creat tu.</string>
+    <string name="welcome_to_easychat_user_message">Perfil Personalitzat</string>
+    <string name="welcome_to_easychat_user_message_description">Selecciona una foto de perfil en local i personalitza la teva experiència.</string>
+    <string name="welcome_to_easychat_last_message">És hora de començar</string>
+    <string name="welcome_to_easychat_last_message_description">Gràcies per escollir EasyChat! Premeu el botó per començar a usar l\'aplicació i comunicar-vos amb els vostres amics.</string>
+    <string name="welcome_to_easychat_start">Comença</string>
+</resources>

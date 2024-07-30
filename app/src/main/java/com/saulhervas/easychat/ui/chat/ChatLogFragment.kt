@@ -5,10 +5,14 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -43,6 +47,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private lateinit var idChat: String
     private var colorMap: String = ""
     private var isOnlineUser: Boolean = true
+    private var chatCreatedAt: String = ""
     private var offset: Int = 0
     private var nMessages: Int = 0
 
@@ -116,9 +121,9 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun inflateBinding() {
         binding.tvNameUser.text = nickUser
+        binding.tvDate.text = chatCreatedAt
         binding.tvInitial.text = nickUser.firstOrNull()?.uppercase().toString()
 
-        // Verificar si colorMap no está vacío
         val colorInt = if (colorMap.isNotEmpty()) {
             try {
                 colorMap.toInt()
@@ -159,6 +164,9 @@ class ChatLogFragment @Inject constructor() : Fragment() {
             tvInitial.setOnClickListener {
                 val action = ChatLogFragmentDirections.actionChatLogToChatDetailFragment()
                 findNavController().navigate(action)
+            }
+            imBtnAttach.setOnClickListener {
+                showAlertDialog()
             }
         }
     }
@@ -236,6 +244,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         nickUser = args.nickTarget
         isOnlineUser = args.isUserOnline
         colorMap = args.colorUser ?: ""
+        chatCreatedAt = args.messageSentAt ?: ""
     }
 
     private fun showProgressBar() {
@@ -244,5 +253,29 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
+    }
+    private fun showAlertDialog() {
+        val customTitleLayout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(100, 50, 100, 30)
+        }
+        val customTitle = TextView(requireContext()).apply {
+            text = getString(R.string.title_alert)
+            textSize = 20f
+            setTypeface(null, android.graphics.Typeface.BOLD)
+            gravity = Gravity.CENTER
+        }
+
+        customTitleLayout.addView(customTitle)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setCustomTitle(customTitleLayout)
+            .setMessage(getString(R.string.message_alert))
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+        dialog.show()
+
     }
 }

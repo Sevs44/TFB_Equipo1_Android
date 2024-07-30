@@ -39,7 +39,7 @@
                 android:background="@drawable/circle_shape"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pepe" />
+                android:src="@drawable/usuario_1" />
 
             <TextView
                 android:id="@+id/tv_name_user"

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EasyChat</string>
+
+    //Login
+    <string name="hint_user">Kullanıcı</string>
+    <string name="biometric">Biyometrik ile giriş yap</string>
+    <string name="keep_session">Oturumu açık tut</string>
+    <string name="btn_login">Giriş Yap</string>
+    <string name="tv_no_account">Hesabınız yok mu?</string>
+    <string name="tv_register">Kayıt Ol</string>
+    <string name="error_no_data_found">Boş veri</string>
+    <string name="error_login">Kullanıcı adı ve şifre giriniz</string>
+    <string name="error">Hata</string>
+    <string name="login_success">Giriş başarılı</string>
+    <string name="welcome">Hoş geldiniz,</string>
+    <string name="users_not_founds">Kullanıcı mevcut değil. Kimlik bilgilerinizi kontrol edin.</string>
+
+    //Register
+    <string name="hint_password">Şifre</string>
+    <string name="hint_repeat_password">Şifreyi Tekrarla</string>
+    <string name="hint_nick">Takma Ad</string>
+    <string name="btn_register">Kayıt Ol</string>
+    <string name="tv_have_account">Zaten bir hesabınız var mı?</string>
+    <string name="tv_login">Giriş Yap</string>
+    <string name="user_success">Kullanıcı oluşturuldu</string>
+    <string name="user_register">Kayıt başarılı</string>
+    <string name="user_register_error">Tüm alanlar zorunludur</string>
+    <string name="error_password_mismatch">Şifreler uyuşmuyor</string>
+    <string name="user_already_exists">Kullanıcı zaten mevcut</string>
+
+    //Recover Password
+    <string name="tv_recover_password">Şifreyi Kurtar</string>
+    <string name="hint_email">E-posta</string>
+    <string name="btn_recover">Gönder</string>
+
+    //Profile
+    <string name="profile_settings">Profil Ayarları</string>
+    <string name="privacity">Gizlilik</string>
+    <string name="chat_setings">Sohbet Ayarları</string>
+    <string name="storage">Depolama</string>
+    <string name="language_settings">Dil Ayarları</string>
+    <string name="delete_account">Hesabı Sil</string>
+    <string name="close_session">Oturumu Kapat</string>
+    <string name="edit_photo">Profil fotoğrafını düzenle</string>
+    <string name="photo_profile">Profil Fotoğrafı</string>
+    <string name="take_photo">Fotoğraf Çek</string>
+    <string name="select_photo">Fotoğraf Seç</string>
+    <string name="delete_photo">Fotoğrafı Sil</string>
+    <string name="edit">Düzenle</string>
+    <string name="user_block">Engellenenler</string>
+    <string name="tv_profile">Adınızı girin ve profil fotoğrafı ekleyin (isteğe bağlı)</string>
+    <string name="tv_logout">Bu cihazdan çıkış yapmak istiyor musunuz?</string>
+    <string name="name">Ad</string>
+    <string name="et_profile">Adınızı girin</string>
+    <string name="tv_online">Çevrimiçi durumu göster</string>
+    <string name="title_alert">Şu anda bu bölüm üzerinde geliştirme yapıyoruz.</string>
+    <string name="message_alert">Rahatsızlık için özür dileriz.</string>
+    <string name="message_alert_logout">Çıkış yapmak istediğinizden emin misiniz?</string>
+
+    //Home and New Chat
+    <string name="unknown_user">Bilinmeyen Kullanıcı</string>
+
+    //Chat
+    <string name="notifications">Bildirimler</string>
+    <string name="block">Engelle</string>
+    <string name="messages">Mesajlar</string>
+    <string name="mute_notifications">Bildirimleri Sessize Al</string>
+    <string name="alert_tune">Alarm Sesi</string>
+    <string name="send_messages">Mesaj Gönder</string>
+    <string name="recent_photos">Son Fotoğraflar</string>
+    <string name="new_chat">Yeni sohbet</string>
+    <string name="start_new_chat">Yeni sohbet başlat</string>
+    <string name="alert_swiped">Silme Onayı</string>
+    <string name="alert_swiped_message">Bu sohbeti silmek istediğinizden emin misiniz?</string>
+
+    //BaseService
+    <string name="string_errorresponsetoken">Üzgünüz, bağlantı sorunu yaşıyoruz.</string>
+    <string name="errorResponseTryBefore">Lütfen daha sonra tekrar deneyin.</string>
+    <string name="failTakePicture">Fotoğraf çekme hatası</string>
+    <string name="permisionDenied">İzin reddedildi</string>
+    <string name="permissionIsNeeded">Galeriden izin gerek</string>
+    <string name="goToSettings">Ayarlar\'a git</string>
+    <string name="cancel">İptal</string>
+    <string name="isUserOnline">Çevrimiçi</string>
+
+    <!-- Error responses -->
+    <string name="error_response_base">Beklenmeyen bir hata oluştu: %s</string>
+    <string name="error_response_101">Ağ protokolleri değişti</string>
+    <string name="error_response_401">Yetkisiz</string>
+    <string name="error_response_403">Kaynağa erişim reddedildi</string>
+    <string name="error_response_404">İstek hatası</string>
+    <string name="error_response_5xx">Sunucu hatası</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="aceptDialog">Onayla</string>
+    <string name="FailedPhoto">Fotoğraf çekme başarısız</string>
+    <string name="messageGalleryPermision">Bir fotoğraf seçmek için galeri izni gereklidir. Lütfen uygulama ayarlarında izin verin.</string>
+    <string name="noDeleteChat">Sohbeti silme başarısız oldu</string>
+    <string name="noDeleteChatExplication">Kendi oluşturmadığınız bir sohbeti silemezsiniz</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">EasyChat\'e Hoş Geldiniz</string>
+    <string name="welcome_to_easychat_description">Bu, en iyi arkadaşlarınızla çevrimiçi olarak mesajlaşabileceğiniz ve uygulamayı kullanan diğer kullanıcılarla sohbet başlatabileceğiniz bir uygulamadır.</string>
+    <string name="welcome_to_easychat_send_message">Mesaj Gönder</string>
+    <string name="welcome_to_easychat_send_message_description">Gerçek zamanlı olarak arkadaşlarınızla iletişim kurun.</string>
+    <string name="welcome_to_easychat_world_message">Arkadaşlarınızın mevcut durumunu kontrol edin</string>
+    <string name="welcome_to_easychat_world_message_description">Arkadaşlarınızın çevrimiçi olup olmadığını görebilirsiniz.</string>
+    <string name="welcome_to_easychat_delete_message">Sohbetleri Sil</string>
+    <string name="welcome_to_easychat_delete_message_description">Bir sohbeti silebilirsiniz ancak sadece kendi oluşturduğunuz sohbetleri silebilirsiniz.</string>
+    <string name="welcome_to_easychat_user_message">Profilinizi Özelleştirin</string>
+    <string name="welcome_to_easychat_user_message_description">Yerel bir profil fotoğrafı seçin ve deneyiminizi kişiselleştirin.</string>
+    <string name="welcome_to_easychat_last_message">Başlamanın Zamanı Geldi</string>
+    <string name="welcome_to_easychat_last_message_description">EasyChat\'i seçtiğiniz için teşekkürler! Uygulamayı kullanmaya başlamak için düğmeye basın ve arkadaşlarınızla iletişime geçin.</string>
+    <string name="welcome_to_easychat_start">Başla</string>
+</resources>

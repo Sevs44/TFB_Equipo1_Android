@@ -25,7 +25,7 @@ android {
 
     buildTypes {
         debug {
-            isDebuggable = true
+            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -33,16 +33,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-//        release {
-//            isDebuggable = false
-//            isMinifyEnabled = true
-//            isShrinkResources = true
-//            applicationIdSuffix = ".release"
-//            proguardFiles(
-//                getDefaultProguardFile("proguard-android-optimize.txt"),
-//                "proguard-rules.pro"
-//            )
-//        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

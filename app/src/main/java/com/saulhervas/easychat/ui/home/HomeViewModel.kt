@@ -1,10 +1,12 @@
 package com.saulhervas.easychat.ui.home
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatRequest
 import com.saulhervas.easychat.data.repository.response.new_chat.NewChatResponse
+import com.saulhervas.easychat.domain.encryptedsharedpreference.SecurePreferences
 import com.saulhervas.easychat.domain.model.BaseResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.domain.model.UserNewChatItemModel
@@ -106,7 +108,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredList(filteredList: List<UserNewChatItemModel>) =
-        filteredList.sortedBy { user -> user.nick }
+        filteredList.sortedBy { user -> user.nick?.uppercase() }
 
     fun createChat(idUser: String, idTarget: String) {
         val newChatRequest = NewChatRequest(
@@ -149,4 +151,36 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun checkOnlineStatus(context: Context) {
+        viewModelScope.launch {
+            Log.d("ONLINE", "${SecurePreferences.getOnlineStatus(context)}")
+            if (!SecurePreferences.getOnlineStatus(context))
+                userUseCases.onlineFalse().collect { response ->
+                    when (response) {
+                        is BaseResponse.Success -> {
+                            Log.d("ONLINE", "False: ${response.data}")
+                        }
+
+                        is BaseResponse.Error -> {
+                            Log.e("ONLINE", "False call error")
+                        }
+                    }
+                }
+            else
+                userUseCases.onlineTrue().collect { response ->
+                    when (response) {
+                        is BaseResponse.Success -> {
+                            Log.d("ONLINE", "True: ${response.data}")
+                        }
+
+                        is BaseResponse.Error -> {
+                            Log.e("ONLINE", "True call error")
+                        }
+                    }
+
+                }
+        }
+    }
+
 }

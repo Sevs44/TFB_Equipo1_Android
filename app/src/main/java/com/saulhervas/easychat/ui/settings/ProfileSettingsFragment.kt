@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -95,7 +94,6 @@ class ProfileSettingsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userProfile.collect { userProfile ->
                 if (userProfile != null) {
-                    Log.d("UserProfile", "Nick: ${userProfile.nick}")
                     binding.tvNameProfile.text = userProfile.nick
                 }
             }
@@ -117,11 +115,9 @@ class ProfileSettingsFragment : Fragment() {
     private fun savePreferences() {
         binding.swSession.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveKeepSessionPreference(isChecked)
-            Log.d(TAG, "savePreferences: $isChecked")
         }
         binding.swOnline.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveShowOnlineStatusPreference(isChecked)
-            Log.d(TAG, "savePreferences: $isChecked")
+            viewModel.setOnlineChanges(isChecked)
         }
     }
 
