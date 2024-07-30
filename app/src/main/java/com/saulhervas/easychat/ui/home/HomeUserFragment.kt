@@ -27,7 +27,6 @@ import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,9 +36,11 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
     private var imageUri: Uri? = null
+
     @Inject
     lateinit var userSession: UserSession
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
+    private var filteredChats: MutableList<OpenChatItemModel> = mutableListOf()
     private lateinit var chatAdapter: OpenChatAdapter
 
     override fun onCreateView(
@@ -113,6 +114,11 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         observeViewModel()
+        setOnlineStatus()
+    }
+
+    private fun setOnlineStatus() {
+        viewModel.checkOnlineStatus(requireContext())
     }
 
     private fun setupViewModel() {
@@ -123,7 +129,9 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             viewModel.openChatsState.collect {
                 allChats = it
-                setupRecyclerView(allChats)
+                filteredChats = ArrayList(allChats) // Inicializar la lista filtrada
+                setupRecyclerView(filteredChats)
+                chatAdapter.updateList(filteredChats)
             }
         }
         lifecycleScope.launch {
@@ -136,15 +144,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
                 showProgressBar(isLoading)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.navigateState.collectLatest { shouldNavigate ->
-                if (shouldNavigate) {
-                    val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
-                    findNavController().navigate(action)
-                    viewModel.resetNavigation()
-                }
-            }
-        }
     }
 
     private fun showBackgroundImage(show: Boolean) {
@@ -153,7 +152,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     }
 
     private fun setupRecyclerView(itemList: MutableList<OpenChatItemModel>) {
-        chatAdapter = OpenChatAdapter(requireContext(), itemList, viewModel.colorMap) { chat ->
+        chatAdapter = OpenChatAdapter(itemList, viewModel.colorMap) { chat ->
             showProgressBar(true)
             changeScreen(chat)
         }
@@ -194,7 +193,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
 
     private fun handleSwipe(position: Int) {
         val idChat = chatAdapter.getIdChat(position)
-        Log.e("TAG", "Chat deletedaaaaaaaaaaaaaaaaaa: $idChat")
         val idSource = chatAdapter.getIdSource(position)
 
         val alertDialog = AlertDialog.Builder(requireContext())
@@ -217,10 +215,12 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         lifecycleScope.launch {
             try {
                 if (idChat != null) {
+                    Log.e("TAG", "Deleting chat $idSource")
+                    Log.e("TAG", "Deleting chat ${userSession.id}")
                     if (userSession.id == idSource) {
                         viewModel.deleteChats(idChat)
-                        allChats.removeAt(position)
-                        chatAdapter.notifyItemRemoved(position)
+                        allChats.removeAll { it.idChat == idChat } // Elimina el chat de todas las listas
+                        filterUsers(binding.swChat.query.toString()) // Actualizar la lista filtrada
                         checkAndShowBackgroundImage()
                     } else {
                         showAlertDialog(
@@ -242,12 +242,13 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
         lifecycleScope.launch {
             delay(300)
-            val colorMaped = chatAdapter.colorMap[openChatItemModel?.idTargetUser].toString()
+            val color = viewModel.colorMap[openChatItemModel?.nickTargetUser].toString()
             val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
                 openChatItemModel?.idChat.toString(),
                 openChatItemModel?.nickTargetUser.toString(),
                 openChatItemModel?.isOnlineUser ?: true,
-                colorMaped
+                color,
+                openChatItemModel?.chatCreatedAt!!,
             )
             findNavController().navigate(action)
             showProgressBar(false)
@@ -255,12 +256,14 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     }
 
     private fun filterUsers(query: String) {
-        val filteredUsers = if (query.isEmpty()) {
-            allChats
+        filteredChats = if (query.isEmpty()) {
+            ArrayList(allChats)
         } else {
             allChats.filter { it.nickTargetUser?.contains(query, ignoreCase = true) == true }
+                .toMutableList()
         }
-        chatAdapter.updateList(filteredUsers)
+        chatAdapter.updateList(filteredChats)
+        chatAdapter.notifyDataSetChanged()
     }
 
     private fun showProgressBar(show: Boolean) {
@@ -270,6 +273,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private fun checkAndShowBackgroundImage() {
         showBackgroundImage(allChats.isEmpty())
     }
+
     private fun showAlertDialog(title: String, message: String, onDismiss: (() -> Unit)? = null) {
         val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle(title)

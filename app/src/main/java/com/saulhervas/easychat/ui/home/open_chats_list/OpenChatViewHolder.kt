@@ -1,23 +1,15 @@
 package com.saulhervas.easychat.ui.home.open_chats_list
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat.getString
 import androidx.recyclerview.widget.RecyclerView
-import com.saulhervas.easychat.R
 import com.saulhervas.easychat.databinding.ItemUserRowMessageBinding
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import kotlin.random.Random
 
-class OpenChatViewHolder(
-    view: View,
-    private val colorMap: MutableMap<String, Int>,
-    private val context: Context
-) :
+class OpenChatViewHolder(view: View, private val colorMap: MutableMap<String, Int>) :
     RecyclerView.ViewHolder(view) {
 
     val binding = ItemUserRowMessageBinding.bind(view)
@@ -27,30 +19,12 @@ class OpenChatViewHolder(
         onClickListener: (OpenChatItemModel?) -> Unit
     ) {
         binding.apply {
-            val idTargetUser = itemChat?.idTargetUser ?: ""
-            val userNameId: String =
-                if (idTargetUser == "")
-                    context.getString(R.string.unknown_user)
-                else
-                    idTargetUser
-            val color = colorMap.getOrPut(userNameId) {
+            val userName = itemChat?.nickTargetUser ?: ""
+            val color = colorMap.getOrPut(userName) {
                 generateRandomColor()
             }
-            Log.i("TAG", "onBinddddddddddddd: $color")
-            if (itemChat?.nickTargetUser == "") {
-                tvUserName.text = getString(context, R.string.unknown_user)
-            } else {
-                if (itemChat != null) {
-                    tvUserName.text = itemChat.nickTargetUser
-                }
-            }
-            if (itemChat?.nickTargetUser == "") {
-                tvInitial.text = "?"
-            } else {
-                if (itemChat != null) {
-                    tvInitial.text = itemChat.nickTargetUser?.firstOrNull()?.uppercase().toString()
-                }
-            }
+            tvUserName.text = userName
+            tvInitial.text = userName.firstOrNull()?.uppercase().toString()
             tvInitial.background = createCircleDrawable(color)
             itemView.setOnClickListener(object : DebouncedOnClickListener() {
                 override fun onDebouncedClick(v: View) {
@@ -72,3 +46,4 @@ class OpenChatViewHolder(
         }
     }
 }
+

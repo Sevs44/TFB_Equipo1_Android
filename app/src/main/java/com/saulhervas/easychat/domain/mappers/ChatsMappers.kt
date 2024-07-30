@@ -2,6 +2,7 @@ package com.saulhervas.easychat.domain.mappers
 
 import com.saulhervas.easychat.data.repository.response.chats.OpenChatsResponse
 import com.saulhervas.easychat.domain.model.OpenChatItemModel
+import com.saulhervas.easychat.utils.DateFormatter
 
 class ChatsMappers {
     companion object {
@@ -16,6 +17,7 @@ class ChatsMappers {
                             nickTargetUser = it.targetNick,
                             isOnlineUser = it.targetIsOnline,
                             idSource = it.idSource,
+                            chatCreatedAt = DateFormatter.formatDay(it.chatCreatedAt)
                         )
                     )
                 } else {
@@ -25,7 +27,8 @@ class ChatsMappers {
                             idTargetUser = it.idSource,
                             nickTargetUser = it.sourceNick,
                             isOnlineUser = it.sourceIsOnline,
-                            idSource = it.idSource
+                            idSource = it.idSource,
+                            chatCreatedAt = DateFormatter.formatDay(it.chatCreatedAt)
                         )
                     )
                 }

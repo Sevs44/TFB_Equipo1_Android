@@ -8,16 +8,11 @@ class DateFormatter {
     companion object {
         fun formatDay(date: String?): String {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
             val dateFormatted: Date = inputFormat.parse(date.toString()) as Date
 
-            val dayOfWeekFormat = SimpleDateFormat("EEE", Locale.getDefault())
-            val dayOfWeek: String = dayOfWeekFormat.format(dateFormatted)
-
-            val dayOfMonthFormat = SimpleDateFormat("dd", Locale.getDefault())
-            val dayOfMonth: String = dayOfMonthFormat.format(dateFormatted)
-
-            return "$dayOfWeek. $dayOfMonth"
+            // Formato de salida: "dd/MM/yyyy"
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(dateFormatted)
         }
 
         fun formatHour(date: String?): String {

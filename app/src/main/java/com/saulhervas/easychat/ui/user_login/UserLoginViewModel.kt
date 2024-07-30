@@ -33,7 +33,7 @@ class UserLoginViewModel @Inject constructor(
             loginUserCase.loginUser(loginRequest).collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "Error: ${response.error.message}")
+                        Log.e("TAG", "Error: ${response.error.message}")
                         if (response.error.message.contains("user not found", ignoreCase = true)) {
                             _loginResultError.emit("El usuario no existe. Verifique sus credenciales.")
                         } else {
@@ -56,7 +56,7 @@ class UserLoginViewModel @Inject constructor(
             loginUserCase.biometricUser().collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
-                        Log.d("TAG", "Error: ${response.error.message}")
+                        Log.e("TAG", "Error: ${response.error.message}")
                         _loginResultError.emit(response.error.message)
                     }
 
