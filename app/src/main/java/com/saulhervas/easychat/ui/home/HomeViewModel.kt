@@ -108,7 +108,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getFilteredList(filteredList: List<UserNewChatItemModel>) =
-        filteredList.sortedBy { user -> user.nick }
+        filteredList.sortedBy { user -> user.nick?.uppercase() }
 
     fun createChat(idUser: String, idTarget: String) {
         val newChatRequest = NewChatRequest(
