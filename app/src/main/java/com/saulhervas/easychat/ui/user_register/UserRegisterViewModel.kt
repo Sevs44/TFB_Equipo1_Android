@@ -1,5 +1,6 @@
 package com.saulhervas.easychat.ui.user_register
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.saulhervas.easychat.data.repository.response.register.RegisterRequest
@@ -45,6 +46,7 @@ class UserRegisterViewModel @Inject constructor(
                 loadingMutableState.value = false
                 when (result) {
                     is BaseResponse.Error -> {
+                        Log.e("UserRegisterViewModel", "Error: ${result.error.message}")
                         errorMutableState.emit(result.error.message)
                         registerUserMutableState.value = false
                     }
