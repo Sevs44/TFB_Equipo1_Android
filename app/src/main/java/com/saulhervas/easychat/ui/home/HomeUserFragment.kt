@@ -114,6 +114,11 @@ class HomeUserFragment @Inject constructor() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         observeViewModel()
+        setOnlineStatus()
+    }
+
+    private fun setOnlineStatus() {
+        viewModel.checkOnlineStatus(requireContext())
     }
 
     private fun setupViewModel() {

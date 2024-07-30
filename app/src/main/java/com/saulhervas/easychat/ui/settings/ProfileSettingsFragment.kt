@@ -117,7 +117,7 @@ class ProfileSettingsFragment : Fragment() {
             viewModel.saveKeepSessionPreference(isChecked)
         }
         binding.swOnline.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveShowOnlineStatusPreference(isChecked)
+            viewModel.setOnlineChanges(isChecked)
         }
     }
 
