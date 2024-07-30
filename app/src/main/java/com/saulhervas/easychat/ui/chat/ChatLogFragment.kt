@@ -43,6 +43,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
     private lateinit var idChat: String
     private var colorMap: String = ""
     private var isOnlineUser: Boolean = true
+    private var chatCreatedAt: String = ""
     private var offset: Int = 0
     private var nMessages: Int = 0
 
@@ -116,6 +117,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun inflateBinding() {
         binding.tvNameUser.text = nickUser
+        binding.tvDate.text = chatCreatedAt
         binding.tvInitial.text = nickUser.firstOrNull()?.uppercase().toString()
 
         val colorInt = if (colorMap.isNotEmpty()) {
@@ -235,6 +237,7 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         nickUser = args.nickTarget
         isOnlineUser = args.isUserOnline
         colorMap = args.colorUser ?: ""
+        chatCreatedAt = args.messageSentAt ?: ""
     }
 
     private fun showProgressBar() {

@@ -6,4 +6,5 @@ data class OpenChatItemModel(
     val nickTargetUser: String?,
     val isOnlineUser: Boolean?,
     val idSource: String?,
+    val chatCreatedAt: String?,
 )

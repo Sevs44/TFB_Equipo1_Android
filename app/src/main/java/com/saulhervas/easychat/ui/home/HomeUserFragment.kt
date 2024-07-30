@@ -247,7 +247,8 @@ class HomeUserFragment @Inject constructor() : Fragment() {
                 openChatItemModel?.idChat.toString(),
                 openChatItemModel?.nickTargetUser.toString(),
                 openChatItemModel?.isOnlineUser ?: true,
-                color
+                color,
+                openChatItemModel?.chatCreatedAt!!,
             )
             findNavController().navigate(action)
             showProgressBar(false)

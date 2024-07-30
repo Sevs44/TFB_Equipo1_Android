@@ -179,6 +179,10 @@
             android:name="colorUser"
             android:defaultValue=""
             app:argType="string" />
+        <argument
+            android:name="messageSentAt"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_chatLog_to_chatDetailFragment"
             app:destination="@id/chatDetailFragment"
