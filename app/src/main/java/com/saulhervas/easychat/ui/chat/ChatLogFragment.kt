@@ -118,7 +118,6 @@ class ChatLogFragment @Inject constructor() : Fragment() {
         binding.tvNameUser.text = nickUser
         binding.tvInitial.text = nickUser.firstOrNull()?.uppercase().toString()
 
-        // Verificar si colorMap no está vacío
         val colorInt = if (colorMap.isNotEmpty()) {
             try {
                 colorMap.toInt()

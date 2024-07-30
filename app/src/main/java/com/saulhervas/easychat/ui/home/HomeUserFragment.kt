@@ -195,10 +195,12 @@ class HomeUserFragment : Fragment() {
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
         lifecycleScope.launch {
             delay(300)
+            val color = viewModel.colorMap[openChatItemModel?.nickTargetUser].toString()
             val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
                 openChatItemModel?.idChat.toString(),
                 openChatItemModel?.nickTargetUser.toString(),
-                openChatItemModel?.isOnlineUser ?: true
+                openChatItemModel?.isOnlineUser ?: true,
+                color
             )
             findNavController().navigate(action)
             showProgressBar(false)
