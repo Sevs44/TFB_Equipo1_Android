@@ -5,10 +5,14 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -161,6 +165,9 @@ class ChatLogFragment @Inject constructor() : Fragment() {
                 val action = ChatLogFragmentDirections.actionChatLogToChatDetailFragment()
                 findNavController().navigate(action)
             }
+            imBtnAttach.setOnClickListener {
+                showAlertDialog()
+            }
         }
     }
 
@@ -246,5 +253,29 @@ class ChatLogFragment @Inject constructor() : Fragment() {
 
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
+    }
+    private fun showAlertDialog() {
+        val customTitleLayout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(100, 50, 100, 30)
+        }
+        val customTitle = TextView(requireContext()).apply {
+            text = getString(R.string.title_alert)
+            textSize = 20f
+            setTypeface(null, android.graphics.Typeface.BOLD)
+            gravity = Gravity.CENTER
+        }
+
+        customTitleLayout.addView(customTitle)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setCustomTitle(customTitleLayout)
+            .setMessage(getString(R.string.message_alert))
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+        dialog.show()
+
     }
 }
