@@ -1,4 +1,4 @@
-package com.saulhervas.easychat.domain.model.modelsregister
+package com.saulhervas.easychat.data.repository.response.register
 
 import com.google.gson.annotations.SerializedName
 

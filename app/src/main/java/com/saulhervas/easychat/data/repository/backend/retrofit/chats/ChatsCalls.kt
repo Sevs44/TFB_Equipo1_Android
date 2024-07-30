@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class ChatsCalls @Inject constructor(
     private val apiService: ApiService,
-    //val context: Context
 ) : BaseService() {
     suspend fun callOpenChats(): BaseResponse<OpenChatsResponse> {
         return apiCall { apiService.getOpenChats() }

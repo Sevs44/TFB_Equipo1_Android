@@ -9,4 +9,5 @@
     <color name="color_user_icon">#D87878</color>
     <color name="color_card_view">#F8F8F8</color>
     <color name="color_photo">#A4A0A0</color>
+    <color name="color_grey">#A4A0A0</color>
 </resources>

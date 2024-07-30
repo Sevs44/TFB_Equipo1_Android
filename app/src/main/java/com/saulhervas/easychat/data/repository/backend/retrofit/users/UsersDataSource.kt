@@ -1,6 +1,5 @@
 package com.saulhervas.easychat.data.repository.backend.retrofit.users
 
-import android.content.Context
 import com.saulhervas.easychat.data.repository.backend.retrofit.BaseService
 import com.saulhervas.easychat.data.repository.response.login.LoginRequest
 import com.saulhervas.easychat.data.repository.response.login.LoginResponse
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 class UsersDataSource @Inject constructor(
     private val userCalls: UsersCalls,
-    //val context: Context
 ) : BaseService() {
     fun getLogin(loginRequest: LoginRequest): Flow<BaseResponse<LoginResponse>> =
         flow {

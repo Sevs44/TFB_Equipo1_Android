@@ -43,7 +43,7 @@
     <string name="alert_tune">Alert tone</string>
     <string name="send_messages">Send a message</string>
     <string name="recent_photos">Recent photos</string>
-    <string name="new_chat">Start a new chat</string>
+    <string name="new_chat">New chat</string>
     <string name="string_errorresponsetoken">Sorry, we are having connection problems.</string>
     <string name="errorResponseTryBefore">Try again later.</string>
     <string name="failTakePicture">Failed to take picture</string>
@@ -73,6 +73,7 @@
     <string name="error_response_101">Network protocols have changed</string>
     <string name="error_response_404">"Network request error "</string>
     <string name="error_response_5xx">Server error</string>
+    <string name="unknown_user">Unknown user</string>
     <string name="aceptDialog">Accept</string>
     <string name="FailedPhoto">Failed to do photo</string>
     <string name="messageGalleryPermision">Gallery permission is needed to select a photo. Please allow it in the app settings.</string>
@@ -80,5 +81,19 @@
     <string name="noDeleteChatExplication">You cannot delete a chat that you have not created</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="welcome_to_easychat">Welcome to EasyChat</string>
+    <string name="welcome_to_easychat_description">It is an app where you can communicate with your best friends, send online messages, and create chats with users who have the app.</string>
+    <string name="welcome_to_easychat_send_message">Send Messages</string>
+    <string name="welcome_to_easychat_send_message_description">Communicate with your friends in real time.</string>
+    <string name="welcome_to_easychat_world_message">See the current status of your friends</string>
+    <string name="welcome_to_easychat_world_message_description">You can see if your friends are online or not.</string>
+    <string name="welcome_to_easychat_delete_message">Delete Chats</string>
+    <string name="welcome_to_easychat_delete_message_description">Delete a chat, but you can only delete a chat that you created.</string>
+    <string name="welcome_to_easychat_user_message">Custom Profile</string>
+    <string name="welcome_to_easychat_user_message_description">Select a local profile photo and personalize your experience.</string>
+    <string name="welcome_to_easychat_last_message">let\'s start</string>
+    <string name="welcome_to_easychat_last_message_description">Thank you for choosing EasyChat! Press the button to start using the app and communicate with your friends.</string>
+    <string name="welcome_to_easychat_start">Start</string>
+    <string name="start_new_chat">Start a new chat</string>
 
 </resources>

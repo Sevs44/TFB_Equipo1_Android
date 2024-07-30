@@ -15,7 +15,6 @@
     <string name="welcome">Bienvenido,</string>
     <string name="users_not_founds">El usuario no existe. Verifique sus credenciales.</string>
 
-
     //Register
     <string name="hint_password">Contraseña</string>
     <string name="hint_repeat_password">Repetir Contraseña</string>
@@ -58,6 +57,8 @@
     <string name="message_alert">Disculpe las molestias.</string>
     <string name="message_alert_logout">¿Estás seguro de que deseas cerrar sesión?</string>
 
+    //Home and New Chat
+    <string name="unknown_user">Usuario desconodido</string>
 
     //Chat
     <string name="notifications">Notificaciones</string>
@@ -67,7 +68,8 @@
     <string name="alert_tune">Tono de alerta</string>
     <string name="send_messages">Enviar un mensaje</string>
     <string name="recent_photos">Fotos Recientes</string>
-    <string name="new_chat">Empieza un nuevo chat</string>
+    <string name="new_chat">Nuevo chat</string>
+    <string name="start_new_chat">Empieza un nuevo chat</string>
     <string name="alert_swiped">Confirmar eliminación</string>
     <string name="alert_swiped_message">¿Estás seguro de que deseas eliminar este chat?</string>
 
@@ -80,11 +82,6 @@
     <string name="goToSettings">Ir a la configuracion</string>
     <string name="cancel">Cancelar</string>
     <string name="isUserOnline">En línea</string>
-    <string name="aceptDialog">Aceptar</string>
-    <string name="FailedPhoto">No se pudo hacer la foto</string>
-    <string name="messageGalleryPermision">Se necesita permiso de la galería para seleccionar una foto. Permítalo en la configuración de la aplicación.</string>
-    <string name="noDeleteChat">No se pudo borrar el chat</string>
-    <string name="noDeleteChatExplication">No puede borrar un chat que no has creado tu</string>
 
     <!-- Error responses -->
     <string name="error_response_base">Ha ocurrido un error inesperado: %s</string>
@@ -93,7 +90,28 @@
     <string name="error_response_403">No hay acceso al recurso</string>
     <string name="error_response_404">Error en la solicitud</string>
     <string name="error_response_5xx">Error en el servidor</string>
-    <string name="yes">Si</string>
+    <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="aceptDialog">Aceptar</string>
+    <string name="FailedPhoto">Fallo al tomar foto</string>
+    <string name="messageGalleryPermision">El permiso a la galería es necesario para seleccionar una foto. Por favor ceda el permiso en los ajustes de la aplicación.</string>
+    <string name="noDeleteChat">No se pudo eliminar el chat</string>
+    <string name="noDeleteChatExplication">No puedes borrar un chat que no hayas creado</string>
+
+    <!-- Dashboard -->
+    <string name="welcome_to_easychat">Bienvenidos a EasyChat</string>
+    <string name="welcome_to_easychat_description">Es una app en la cual puedes comunicarte con tus mejores amigos, enviando mensajes en linea, creando chats con usuarios que tengan la app.</string>
+    <string name="welcome_to_easychat_send_message">Envía Mensajes</string>
+    <string name="welcome_to_easychat_send_message_description">Comunicate con tus amigos en tiempo real.</string>
+    <string name="welcome_to_easychat_world_message">Observa el estado actual de tus amigos</string>
+    <string name="welcome_to_easychat_world_message_description">Puedes ver si tus amigos están conectados o no.</string>
+    <string name="welcome_to_easychat_delete_message">Eliminar Chats</string>
+    <string name="welcome_to_easychat_delete_message_description">Eliminar un chat, pero sólo podrás eliminar un chat que has creado tú.</string>
+    <string name="welcome_to_easychat_user_message">Perfil Personalizado</string>
+    <string name="welcome_to_easychat_user_message_description">Selecciona una foto de perfil en local y personaliza tu experiencia.</string>
+    <string name="welcome_to_easychat_last_message">Es hora de comenzar</string>
+    <string name="welcome_to_easychat_last_message_description">!Gracias por elegir EasyChat! Presiona el botón para empezar a usar la aplicación y comunicarte con tus amigos.</string>
+    <string name="welcome_to_easychat_start">Empezar</string>
+
 
 </resources>

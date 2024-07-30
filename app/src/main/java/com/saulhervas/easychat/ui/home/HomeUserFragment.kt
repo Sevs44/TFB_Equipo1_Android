@@ -27,6 +27,7 @@ import com.saulhervas.easychat.ui.home.open_chats_list.OpenChatAdapter
 import com.saulhervas.easychat.utils.DebouncedOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,7 +37,6 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private lateinit var binding: FragmentHomeUserBinding
     private val viewModel: HomeViewModel by viewModels()
     private var imageUri: Uri? = null
-
     @Inject
     lateinit var userSession: UserSession
     private var allChats: MutableList<OpenChatItemModel> = mutableListOf()
@@ -136,6 +136,15 @@ class HomeUserFragment @Inject constructor() : Fragment() {
                 showProgressBar(isLoading)
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.navigateState.collectLatest { shouldNavigate ->
+                if (shouldNavigate) {
+                    val action = HomeUserFragmentDirections.actionHomeUserToNewChatFragment()
+                    findNavController().navigate(action)
+                    viewModel.resetNavigation()
+                }
+            }
+        }
     }
 
     private fun showBackgroundImage(show: Boolean) {
@@ -144,7 +153,7 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     }
 
     private fun setupRecyclerView(itemList: MutableList<OpenChatItemModel>) {
-        chatAdapter = OpenChatAdapter(itemList, viewModel.colorMap) { chat ->
+        chatAdapter = OpenChatAdapter(requireContext(), itemList, viewModel.colorMap) { chat ->
             showProgressBar(true)
             changeScreen(chat)
         }
@@ -233,10 +242,12 @@ class HomeUserFragment @Inject constructor() : Fragment() {
     private fun changeScreen(openChatItemModel: OpenChatItemModel?) {
         lifecycleScope.launch {
             delay(300)
+            val colorMaped = chatAdapter.colorMap[openChatItemModel?.idTargetUser].toString()
             val action = HomeUserFragmentDirections.actionHomeUserToChatLog(
                 openChatItemModel?.idChat.toString(),
                 openChatItemModel?.nickTargetUser.toString(),
-                openChatItemModel?.isOnlineUser ?: true
+                openChatItemModel?.isOnlineUser ?: true,
+                colorMaped
             )
             findNavController().navigate(action)
             showProgressBar(false)
