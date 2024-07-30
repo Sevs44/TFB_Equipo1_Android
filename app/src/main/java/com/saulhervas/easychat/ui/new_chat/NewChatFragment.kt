@@ -163,7 +163,7 @@ class NewChatFragment : Fragment() {
         for (letter in letters) {
             val textView = TextView(requireContext()).apply {
                 text = letter.toString()
-                textSize = 16f
+                textSize = 13f
                 setPadding(8, 8, 8, 8)
                 gravity = Gravity.CENTER
                 layoutParams = LinearLayout.LayoutParams(
